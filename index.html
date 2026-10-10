@@ -1,339 +1,333 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black & White Alora</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            luxuryGold: '#D4AF37',
-            luxuryBlack: '#111111',
-            luxuryBg: '#FAF9F6'
-          }
-        }
-      }
-    }
-  </script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Tajawal', sans-serif; background-color: #FAF9F6; }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Black &amp; White Alora | شنط وإكسسوارات فاخرة</title>
+<meta name="theme-color" content="#FAF9F6">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Cairo','sans-serif']},colors:{gold:'#D4AF37',goldd:'#8C6D0F',ink:'#111111'}}}}</script>
+<style>
+body{font-family:'Cairo',sans-serif;background:#FAF9F6;color:#111}
+.hs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.hs::-webkit-scrollbar{display:none}.hs>*{scroll-snap-align:center;flex:none}
+.skel{background:linear-gradient(90deg,#eeece6,#f8f6f1,#eeece6);background-size:200%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.drawer{transition:transform .3s}
+:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
-<body class="text-gray-800 antialiased selection:bg-luxuryGold selection:text-white pb-20">
+<body class="antialiased">
 
-  <!-- Announcement Bar -->
-  <div id="announcementBar" class="bg-luxuryBlack text-white text-xs py-2 text-center font-medium tracking-wide">
-    ✦ تشكيلة جديدة وصلت | شحن سريع لجميع المحافظات ✦
+<div id="ann" class="hidden bg-ink text-gold text-center text-sm font-semibold py-1.5 px-3"></div>
+
+<header class="sticky top-0 z-40 bg-[#FAF9F6]/95 backdrop-blur border-b border-black/10">
+ <div class="max-w-6xl mx-auto flex items-center justify-between h-16 px-4">
+  <a href="#" class="font-black tracking-wider text-lg" dir="ltr">BLACK&amp;WHITE <span class="border-b-2 border-gold">ALORA</span></a>
+  <div class="flex items-center gap-1">
+   <button id="langBtn" class="h-9 px-3 me-1 text-xs font-bold border border-black/20 rounded-full" aria-label="Language">EN</button><button id="wishBtn" class="relative w-11 h-11 text-lg" data-ia="wish"><i class="fa-regular fa-heart"></i><span id="wc" class="absolute top-0.5 start-0.5 bg-gold text-black text-[10px] font-extrabold min-w-[18px] h-[18px] rounded-full grid place-items-center hidden">0</span></button>
+   <button id="cartBtn" class="relative w-11 h-11 text-lg" data-ia="cartAria"><i class="fa-solid fa-bag-shopping"></i><span id="cc" class="absolute top-0.5 start-0.5 bg-gold text-black text-[10px] font-extrabold min-w-[18px] h-[18px] rounded-full grid place-items-center hidden">0</span></button>
   </div>
+ </div>
+</header>
 
-  <!-- Navbar -->
-  <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
-      <!-- Icons Right -->
-      <div class="flex items-center gap-3">
-        <button onclick="toggleCartDrawer()" class="relative p-2 text-gray-700 hover:text-black">
-          <i class="fa-solid fa-bag-shopping text-xl"></i>
-          <span id="cartBadge" class="absolute top-0 right-0 bg-luxuryGold text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-        </button>
-        <button onclick="toggleWishlistDrawer()" class="relative p-2 text-gray-700 hover:text-black">
-          <i class="fa-regular fa-heart text-xl"></i>
-          <span id="wishlistBadge" class="absolute top-0 right-0 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-        </button>
-      </div>
+<section class="bg-[#F1EEE7] border-b border-black/10">
+ <div class="max-w-3xl mx-auto px-5 py-12 md:py-20 text-center">
+  <h1 data-i="heroH" class="font-black text-3xl md:text-5xl leading-snug">ذوقك الفريد.. في قطعة تعبّر عنك ✦</h1>
+  <p data-i="heroP" class="mt-4 text-neutral-700 leading-8 md:text-lg">تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.</p>
+  <a href="#shop" data-i="shop" class="inline-block mt-7 bg-ink text-white px-9 py-3 rounded-full font-bold hover:bg-gold hover:text-black transition">تسوقي الآن</a>
+ </div>
+</section>
 
-      <!-- Search Bar Center -->
-      <div class="flex-1 max-w-md">
-        <div class="relative">
-          <input type="text" id="searchInput" oninput="handleSearch()" placeholder="ابحثي عن شنطة أو إكسسوار..." class="w-full bg-gray-100/80 border-0 rounded-full py-2 pr-10 pl-4 text-xs focus:ring-2 focus:ring-luxuryGold outline-none transition">
-          <i class="fa-solid fa-magnifying-glass absolute top-2.5 right-3.5 text-gray-400 text-sm"></i>
-        </div>
-      </div>
+<section class="pt-8 pb-2">
+ <div class="max-w-6xl mx-auto px-4 mb-3 flex items-end justify-between">
+  <h2 data-i="best" class="text-2xl font-black">الأكثر مبيعًا</h2><span class="text-ink text-sm"><i class="fa-solid fa-fire"></i> <span data-i="swipe">اسحبي للمزيد</span></span>
+ </div>
+ <div id="reels" class="hs gap-3 px-[11%] md:px-[30%]"><div class="skel rounded-3xl w-[78vw] max-w-[340px] aspect-[9/14]"></div></div>
+ <div id="dots" class="flex justify-center gap-2 mt-4"></div>
+</section>
 
-      <!-- Logo Left -->
-      <div class="flex items-center gap-2">
-        <img id="siteLogoImg" src="" alt="Logo" class="h-8 w-auto hidden object-contain">
-        <span class="font-extrabold text-base md:text-lg tracking-wider text-luxuryBlack uppercase">ALORA <span class="text-luxuryGold">BLACK & WHITE</span></span>
-      </div>
-    </div>
-  </nav>
+<section class="max-w-6xl mx-auto px-4 pt-6" id="shop">
+ <div id="cats" class="hs gap-2 pb-3 !snap-none"></div>
+ <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 pb-14"></div>
+</section>
 
-  <!-- Hero Section: Swipeable Reels / Best Sellers Carousel -->
-  <section id="heroContainer" class="bg-gradient-to-b from-gray-50 to-transparent"></section>
+<footer class="bg-white border-t border-black/10 pt-10 pb-24">
+ <div class="max-w-6xl mx-auto px-4 grid gap-8 md:grid-cols-3 text-sm text-neutral-700">
+  <div><div class="font-black text-ink text-lg mb-2" dir="ltr">BLACK&amp;WHITE <span class="border-b-2 border-gold">ALORA</span></div><p data-i="brandP">شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.</p></div>
+  <div><h4 data-i="contact" class="font-bold text-ink mb-2">تواصلي معنا</h4><div id="soc" class="flex flex-wrap gap-3 text-xl"></div></div>
+  <div><h4 data-i="info" class="font-bold text-ink mb-2">معلومات</h4><div class="flex flex-col items-start gap-1"><button data-pol="about" data-i="about" class="hover:text-gold">من نحن</button><button data-pol="shipping" data-i="shipPol" class="hover:text-gold">سياسة الشحن</button><button data-pol="returns" data-i="retPol" class="hover:text-gold">سياسة الاستبدال والاسترجاع</button></div><p id="shipNote" class="mt-3"></p></div>
+ </div>
+ <p class="text-center text-xs text-neutral-600 mt-8">© <span id="yr"></span> Black &amp; White Alora</p>
+</footer>
 
-  <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 mt-4">
-    <!-- Categories Tabs -->
-    <div class="flex items-center justify-center gap-2 overflow-x-auto pb-4 hide-scrollbar" id="categoriesContainer">
-      <button onclick="filterCategory('الكل')" class="cat-btn active bg-luxuryBlack text-white px-5 py-2 rounded-full text-xs font-bold transition shadow-sm">التشكيلة كاملة</button>
-    </div>
+<a id="waFab" target="_blank" rel="noopener" aria-label="WhatsApp" class="hidden fixed bottom-5 start-5 z-30 w-14 h-14 rounded-full bg-[#25D366] text-white text-3xl grid place-items-center shadow-xl"><i class="fa-brands fa-whatsapp"></i></a>
 
-    <!-- Products Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-6" id="productsGrid">
-      <!-- Loading Skeleton -->
-      <div class="col-span-full text-center py-16 text-gray-400 font-medium">جاري جلب تشكيلة Alora...</div>
-    </div>
-  </main>
+<div id="ov" class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity"></div>
 
-  <!-- Footer -->
-  <footer class="mt-20 border-t border-gray-200 bg-white py-10">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h3 class="font-bold text-luxuryBlack text-lg tracking-widest uppercase mb-2">BLACK & WHITE ALORA</h3>
-      <p id="footerAbout" class="text-xs text-gray-500 max-w-md mx-auto mb-6">تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.</p>
-      <div id="socialLinks" class="flex justify-center gap-4 text-gray-600 text-lg mb-6"></div>
-      <p class="text-[11px] text-gray-400">جميع الحقوق محفوظة © 2026 Black & White Alora</p>
-    </div>
-  </footer>
+<aside id="cart" class="drawer fixed top-0 bottom-0 start-0 w-[min(420px,92vw)] bg-white z-50 flex flex-col" data-ia="cartAria">
+ <div class="flex justify-between items-center p-4 border-b border-black/10 font-extrabold text-lg"><span data-i="cartTitle"></span><button data-close data-ia="close"><i class="fa-solid fa-xmark"></i></button></div>
+ <div id="cartBody" class="flex-1 overflow-y-auto p-4"></div>
+ <div id="cartFoot" class="p-4 border-t border-black/10"></div>
+</aside>
 
-  <!-- JavaScript Code -->
-  <script>
-    // الروابط مضبوطة بالتوزيع الصحيح تماماً حسب طلبك:
-    const SETTINGS_CSV_URL = "https://corsproxy.io/?" + encodeURIComponent("https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv");
-    const PRODUCTS_CSV_URL = "https://corsproxy.io/?" + encodeURIComponent("https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv");
+<div id="modal" class="fixed inset-0 z-50 hidden items-end md:items-center justify-center md:p-4">
+ <div class="bg-white w-full md:max-w-3xl max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl relative">
+  <button data-close class="absolute top-3 end-3 z-10 w-10 h-10 rounded-full bg-white shadow" data-ia="close"><i class="fa-solid fa-xmark"></i></button>
+  <div id="mIn"></div>
+ </div>
+</div>
 
-    let siteSettings = {};
-    let allProducts = [];
-    let cart = JSON.parse(localStorage.getItem('bw_cart')) || [];
-    let wishlist = JSON.parse(localStorage.getItem('bw_wishlist')) || [];
-    let activeCategory = 'الكل';
+<div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black text-gold border border-gold px-5 py-2 rounded-full z-[60] text-sm font-semibold opacity-0 pointer-events-none transition-opacity"></div>
 
-    function fixImageUrl(url) {
-      if (!url) return 'https://via.placeholder.com/400x500?text=Black+%26+White+Alora';
-      url = url.trim();
-      if (url.includes('drive.google.com')) {
-        let match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
-        if (match && match[1]) {
-          return `https://lh3.googleusercontent.com/d/${match[1]}`;
-        }
-      }
-      return url;
-    }
+<script>
+const CFG={
+ SETTINGS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv",
+ PRODUCTS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv",
+ PROXIES:[u=>u,u=>"https://corsproxy.io/?"+encodeURIComponent(u),u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),u=>"https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(u)],
+ CC:"20",STORE:"Black & White Alora",WA:"01110737388",EMAIL:"info@pwalora.com"
+};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
+const num=v=>{const n=parseFloat(String(v??"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,""));return isNaN(n)?0:n};
+const money=n=>Number(n).toLocaleString("en-US")+" "+T("cur");
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
 
-    function getProductImage(item) {
-      let rawUrl = item.Main_Image || item.Image_URL || item.image_url || item.image || '';
-      if (!rawUrl && item.Gallery_Images) {
-        rawUrl = item.Gallery_Images;
-      }
-      if (!rawUrl) return 'https://via.placeholder.com/400x500?text=Black+%26+White+Alora';
-      let firstUrl = rawUrl.split(',')[0].trim();
-      return fixImageUrl(firstUrl);
-    }
+/* ---------- i18n (AR / EN) ---------- */
+let LANG=ls.get("alora_lang","ar");
+const D={
+ar:{title:"Black & White Alora | شنط وإكسسوارات فاخرة",heroH:"ذوقك الفريد.. في قطعة تعبّر عنك ✦",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shop:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",
+ brandP:"شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.",contact:"تواصلي معنا",info:"معلومات",about:"من نحن",shipPol:"سياسة الشحن",retPol:"سياسة الاستبدال والاسترجاع",
+ cartTitle:"سلة التسوق",wish:"المفضلة",cartAria:"السلة",close:"إغلاق",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",
+ emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات في هذا القسم.",addWish:"♡ أضيفي للمفضلة",inWish:"♥ في المفضلة",orderWa:"اطلب عبر واتساب",
+ toastAdd:"تمت الإضافة إلى السلة ✓",stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة ♥",
+ emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"🎉 طلبك مؤهل للشحن المجاني",rm:"حذف",total:"المجموع",
+ phName:"الاسم",phPhone:"رقم الهاتف",phAddr:"المحافظة والعنوان",send:"إرسال الطلب عبر واتساب",
+ eName:"اكتبي الاسم بالكامل.",ePhone:"رقم الهاتف غير صحيح.",eAddr:"اكتبي المحافظة والعنوان.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
+ mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد عند التأكيد",mCode:"الكود",mPrice:"السعر",mOne:"أرغب في طلب هذا المنتج",
+ soon:"سيتم إضافة المحتوى قريبًا.",shipNote:x=>`شحن مجاني للطلبات فوق ${x}.`,loadFail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",cur:"ج.م"},
+en:{title:"Black & White Alora | Luxury Bags & Accessories",heroH:"Your unique taste.. in a piece that speaks for you ✦",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shop:"Shop now",best:"Best sellers",swipe:"Swipe for more",
+ brandP:"Luxury bags and accessories with a calm, elegant design.",contact:"Contact us",info:"Information",about:"About us",shipPol:"Shipping policy",retPol:"Exchange & return policy",
+ cartTitle:"Shopping cart",wish:"Wishlist",cartAria:"Cart",close:"Close",all:"All",add:"Add to cart",out:"Out of stock",
+ emptyWish:"Your wishlist is empty.",emptyCat:"No products in this category.",addWish:"♡ Add to wishlist",inWish:"♥ In wishlist",orderWa:"Order via WhatsApp",
+ toastAdd:"Added to cart ✓",stale:"Couldn't refresh, showing the last saved version",toastRm:"Removed from wishlist",toastWish:"Added to wishlist ♥",
+ emptyCart:"Your cart is empty.<br>Add a product to start your order.",shipLeft:x=>`Add <b>${x}</b> more to get free shipping`,shipOk:"🎉 Your order qualifies for free shipping",rm:"Remove",total:"Total",
+ phName:"Name",phPhone:"Phone number",phAddr:"Governorate & address",send:"Send order via WhatsApp",
+ eName:"Please enter your full name.",ePhone:"Invalid phone number.",eAddr:"Please enter your governorate and address.",eWa:"Store WhatsApp number is currently unavailable.",
+ mNew:"New order",mName:"Name",mPhone:"Phone",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"Confirmed on order",mCode:"Code",mPrice:"Price",mOne:"I'd like to order this product",
+ soon:"Content coming soon.",shipNote:x=>`Free shipping on orders over ${x}.`,loadFail:"Couldn't load products.",retry:"Try again",cur:"EGP"}};
+const T=(k,...a)=>{const v=(D[LANG]||D.ar)[k];return typeof v==="function"?v(...a):v};
+function hideCart(now){const c=$("#cart");if(now)c.style.transition="none";c.style.transform=`translateX(${LANG==="en"?"-105%":"105%"})`;if(now){void c.offsetWidth;c.style.transition=""}}
+function fab(){const n=waNum(),f=$("#waFab");if(n){f.href=`https://wa.me/${n}`;f.classList.remove("hidden");f.classList.add("grid")}}
+function applyLang(){document.documentElement.lang=LANG;document.documentElement.dir=LANG==="en"?"ltr":"rtl";document.title=T("title");
+ document.querySelectorAll("[data-i]").forEach(e=>e.textContent=T(e.dataset.i));document.querySelectorAll("[data-ia]").forEach(e=>e.setAttribute("aria-label",T(e.dataset.ia)));
+ $("#langBtn").textContent=LANG==="en"?"عربي":"EN";hideCart(true);fab()}
+function setLang(l){LANG=l;ls.set("alora_lang",l);closeAll();applyLang();renderAnn();if(P.length){renderReels();renderCats();renderGrid()}renderCart()}
+function orderOne(id){const p=byId(id),wa=waNum();if(!p||p.out||!wa)return;track("Lead",p);
+ const msg=`🛍 ${T("mOne")}\n*${p.name}*\n${T("mCode")}: ${p.id}\n${T("mPrice")}: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;
+ const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
 
-    function parseCSV(text) {
-      let lines = [];
-      let row = [''];
-      let insideQuote = false;
-      for (let i = 0; i < text.length; i++) {
-        let c = text[i];
-        let nextC = text[i+1];
-        if (c === '"') {
-          if (insideQuote && nextC === '"') { row[row.length - 1] += '"'; i++; }
-          else { insideQuote = !insideQuote; }
-        } else if (c === ',' && !insideQuote) {
-          row.push('');
-        } else if ((c === '\r' || c === '\n') && !insideQuote) {
-          if (c === '\r' && nextC === '\n') { i++; }
-          lines.push(row); row = [''];
-        } else {
-          row[row.length - 1] += c;
-        }
-      }
-      if (row.length > 1 || row[0] !== '') lines.push(row);
-      return lines;
-    }
+/* ---------- CSV ---------- */
+function parseCSV(t){t=t.replace(/^\uFEFF/,"");const rows=[];let r=[],c="",q=false;
+ for(let i=0;i<t.length;i++){const ch=t[i];
+  if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
+  else if(ch==='"')q=true;else if(ch===","){r.push(c);c=""}
+  else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);rows.push(r);r=[];c=""}else c+=ch}
+ if(c!==""||r.length){r.push(c);rows.push(r)}return rows.filter(x=>x.some(v=>v.trim()))}
+/* direct → corsproxy.io → allorigins → codetabs; each with timeout; last good CSV cached for offline/failed loads */
+const tmo=ms=>{const c=new AbortController();setTimeout(()=>c.abort(),ms);return c.signal};
+async function loadCSV(url){
+ const key="alora_csv:"+(url.match(/gid=(\d+)/)||[,"0"])[1];let last;
+ for(const [k,px] of CFG.PROXIES.entries()){
+  try{const res=await fetch(px(url),{cache:"no-store",signal:tmo(k?9000:6000)});
+   if(!res.ok)throw new Error("HTTP "+res.status);
+   const t=await res.text();if(t.length<5||/^\s*<(!doctype|html)/i.test(t))throw new Error("not csv");
+   const rows=parseCSV(t);if(!rows.length)throw new Error("empty");ls.set(key,t);return rows}catch(e){last=e;console.warn("fetch via #"+k+" failed:",e.message)}}
+ const c=ls.get(key,null);if(c){toast(T("stale"));return parseCSV(c)}
+ throw last}
 
-    function csvToObjects(csvText) {
-      let lines = parseCSV(csvText);
-      if (lines.length < 2) return [];
-      let headers = lines[0].map(h => h.trim());
-      let result = [];
-      for (let i = 1; i < lines.length; i++) {
-        let obj = {};
-        let currentLine = lines[i];
-        for (let j = 0; j < headers.length; j++) {
-          obj[headers[j]] = currentLine[j] !== undefined ? currentLine[j].trim() : '';
-        }
-        result.push(obj);
-      }
-      return result;
-    }
+/* ---------- Images (kssib CDN / Google Drive / spaces) ---------- */
+function fixImg(u){
+ u=String(u||"").trim().replace(/^["'\s]+|["'\s]+$/g,"");if(!u)return"";
+ if(u.startsWith("//"))u="https:"+u;else if(/^(cdn\.kssib\.com|[\w.-]+\.\w{2,}\/)/i.test(u)&&!/^https?:/i.test(u))u="https://"+u;
+ if(!/^https?:\/\//i.test(u))return"";
+ const d=u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([\w-]+)/i);
+ if(d)return`https://drive.google.com/thumbnail?id=${d[1]}&sz=w1000`;
+ try{return encodeURI(decodeURI(u))}catch{return u.replace(/\s/g,"%20")}}
+const splitImgs=s=>String(s||"").split(/[,\n|]+/).map(fixImg).filter(Boolean);
+const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800"><rect fill="#1A1A1A" width="100%" height="100%"/><text x="50%" y="50%" fill="#D4AF37" font-size="36" font-family="sans-serif" text-anchor="middle">ALORA</text></svg>');
 
-    async function initApp() {
-      try {
-        let setRes = await fetch(SETTINGS_CSV_URL);
-        if (setRes.ok) {
-          let setTxt = await setRes.text();
-          let setRows = csvToObjects(setTxt);
-          if (setRows.length > 0) { siteSettings = setRows[0]; applySettings(); }
-        }
+/* ---------- Parse sheets ---------- */
+function buildSettings(rows){const m={};if(!rows.length)return m;
+ const known=["metapixelid","gatrackingid","announcementtext","storephonewhatsapp","freeshippingthreshold","aboutustext","facebookurl"],hdr=rows[0].map(norm);
+ if(hdr.filter(x=>known.includes(x)).length>=2){const v=rows[1]||[];hdr.forEach((k,i)=>{if(k)m[k]=(v[i]||"").trim()});return m}
+ rows.forEach(r=>{if(r[0]&&r[1]!==undefined)m[norm(r[0])]=(r[1]||"").trim()});return m}
+function buildProducts(rows){const H=rows[0].map(norm);
+ const col=(r,...n)=>{for(const x of n){const i=H.indexOf(norm(x));if(i>-1&&r[i]&&r[i].trim())return r[i].trim()}return""};
+ return rows.slice(1).map((r,i)=>{
+  const fz=(...k)=>{const x=H.findIndex(y=>k.some(z=>y.includes(z)));return x>-1?(r[x]||""):""};
+  const price=num(col(r,"Price")),dp=num(col(r,"Discount_Price","Sale_Price")),main=splitImgs(col(r,"Main_Image","Image_URL","Image")||fz("mainimage","imageurl","image")),gal=splitImgs(col(r,"Gallery_Images","Gallery")||fz("gallery"));
+  return{id:col(r,"Code","ID","SKU")||"p"+(i+1),cid:col(r,"Meta_Content_ID")||col(r,"Code","ID","SKU")||"p"+(i+1),nameAr:col(r,"Title","Name","Title_AR","Product_Name"),nameEn:col(r,"Name_EN","Title_EN"),get name(){return LANG==="en"&&this.nameEn?this.nameEn:this.nameAr},cat:col(r,"Category","Category_AR","Cat")||"عام",descAr:col(r,"Description_AR","Description"),descEn:col(r,"Description_EN"),get desc(){return LANG==="en"&&this.descEn?this.descEn:this.descAr},
+   price:price||dp,sale:price&&dp&&dp<price?dp:0,imgs:[...new Set([...main,...gal])],
+   best:/^(1|true|yes|نعم|y)$/i.test(col(r,"Best_Seller","Featured","Is_Featured","Top")),
+   off:false,out:/(out|sold|نفد|نفذ|غير\s*متوفر|unavailable|^0$|^false$|^no$)/i.test(col(r,"Stock_Status","In_Stock"))}}).filter(p=>p.name&&p.price>0&&!p.off)}
 
-        let prodRes = await fetch(PRODUCTS_CSV_URL);
-        if (prodRes.ok) {
-          let prodTxt = await prodRes.text();
-          allProducts = csvToObjects(prodTxt).filter(p => p.Title || p.Name || p.title || p.name);
-        }
+/* ---------- State ---------- */
+let S={},P=[],cat="الكل",wishOnly=false,cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cur=null;
+const eff=p=>p.sale||p.price,byId=id=>P.find(p=>p.id===id),img0=p=>p.imgs[0]||PH;
+const set=(...k)=>{for(const x of k){const v=S[norm(x)];if(v)return v}return""};
+const like=(...s)=>{for(const k in S)if(s.some(x=>k.includes(x))&&S[k])return S[k];return""};
+const waNum=()=>{let n=(set("Store_Phone_WhatsApp","Store_Phone")||CFG.WA).replace(/\D/g,"");if(!n)return"";if(n.startsWith("00"))return n.slice(2);return n.startsWith("0")?CFG.CC+n.slice(1):n};
+const imgTag=(u,cls,extra="")=>`<img src="${esc(u)}" class="${cls}" ${extra} referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${PH}'">`;
 
-        renderHeroCarousel();
-        renderCategories();
-        renderProducts(allProducts);
-        updateCartBadge();
-        updateWishlistBadge();
-      } catch (err) {
-        console.error("خطأ أثناء جلب الشيت:", err);
-      }
-    }
+/* ---------- Render ---------- */
+function renderAnn(){
+ const a=set("Announcement_Text");if(a){const e=$("#ann");e.textContent=a;e.classList.remove("hidden")}
+ const n=waNum();if(n){const f=$("#waFab");f.href=`https://wa.me/${n}`;f.classList.remove("hidden");f.classList.add("grid")}
+ const th=num(set("Free_Shipping_Threshold"));if(th)$("#shipNote").textContent=T("shipNote",money(th));
+ /* the sheet stores only the link/value; icons come from FontAwesome here */
+ const L=[["Facebook_URL","fa-brands fa-facebook","Facebook"],["Instagram_URL","fa-brands fa-instagram","Instagram"],["TikTok_URL","fa-brands fa-tiktok","TikTok"],["Store_Email","fa-solid fa-envelope","Email"]];
+ let soc=L.map(([k,ic,lb])=>{let v=set(k)||(k==="Store_Email"?CFG.EMAIL:"");if(!v)return"";if(k==="Store_Email"){if(!/^mailto:/i.test(v))v="mailto:"+v}else if(!/^https?:\/\//i.test(v))v="https://"+v.replace(/^\/+/,"");
+  return`<a href="${esc(v)}" target="_blank" rel="noopener" aria-label="${lb}" class="hover:text-gold"><i class="${ic}"></i></a>`}).join("");
+ if(n)soc+=`<a href="https://wa.me/${n}" target="_blank" rel="noopener" aria-label="WhatsApp" class="hover:text-gold"><i class="fa-brands fa-whatsapp"></i></a>`;$("#soc").innerHTML=soc;
+ if(window._hd)return;window._hd=1;const meta=(k,c,at="name")=>{const m=document.createElement("meta");m.setAttribute(at,k);m.content=c;document.head.appendChild(m)};
+ const fav=set("Favicon_URL");if(fav){let l=document.querySelector('link[rel~="icon"]');if(!l){l=document.createElement("link");l.rel="icon";document.head.appendChild(l)}l.href=fixImg(fav)||fav}
+ const gsc=set("Google_Search_Console");if(gsc){const m=gsc.match(/content=["']([^"']+)/);meta("google-site-verification",m?m[1]:gsc.replace(/^google-site-verification\s*[=:]\s*/i,"").trim())}
+ const sh=fixImg(set("Share_Image_URL"));if(sh){meta("og:image",sh,"property");meta("twitter:image",sh)}}
 
-    function applySettings() {
-      if (siteSettings.Announcement_Text) {
-        document.getElementById('announcementBar').innerText = siteSettings.Announcement_Text;
-      }
-      let logoUrl = siteSettings.Logo_URL || siteSettings.Main_Image;
-      if (logoUrl) {
-        let logoImg = document.getElementById('siteLogoImg');
-        if (logoImg) {
-          logoImg.src = fixImageUrl(logoUrl);
-          logoImg.classList.remove('hidden');
-        }
-      }
-      if (siteSettings.About_Us_Text) {
-        document.getElementById('footerAbout').innerText = siteSettings.About_Us_Text;
-      }
+/* ---------- Tracking: Meta Pixel + GA4 + OneSignal ---------- */
+function initTracking(){
+ const pid=set("Meta_Pixel_ID").replace(/\D/g,""),gid=set("GA_Tracking_ID").trim(),os=set("OneSignal_App_ID").trim();
+ if(pid&&!window.fbq){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",pid)}
+ if(gid&&/^[\w-]+$/.test(gid)&&!window.gtag){const s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+gid;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",gid)}
+ if(os){const s=document.createElement("script");s.src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js";s.defer=true;document.head.appendChild(s);window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async O=>{try{await O.init({appId:os})}catch(e){console.warn(e)}})}
+ track("PageView")}
+function track(ev,d={}){try{const v=d.sale||d.price||d.value||0,id=[d.cid||d.id],C="EGP";
+ if(window.fbq){
+  if(ev==="PageView")fbq("track","PageView");
+  else if(ev==="ViewContent"||ev==="AddToCart")fbq("track",ev,{content_ids:id,content_name:d.name,content_type:"product",value:v,currency:C});
+  else if(ev==="Lead")fbq("track","Lead",{content_ids:id,content_name:d.name,value:v,currency:C});
+  else if(ev==="Checkout")fbq("track","InitiateCheckout",{value:d.value,num_items:d.n,currency:C});
+  else if(ev==="Purchase"){fbq("track","Lead",{value:d.value,currency:C});fbq("track","Purchase",{value:d.value,currency:C,content_ids:d.ids,content_type:"product"})}}
+ if(window.gtag){const it=d.name?[{item_id:id[0],item_name:d.name,price:v}]:undefined;
+  if(ev==="PageView")gtag("event","page_view");
+  else if(ev==="ViewContent")gtag("event","view_item",{currency:C,value:v,items:it});
+  else if(ev==="AddToCart")gtag("event","add_to_cart",{currency:C,value:v,items:it});
+  else if(ev==="Lead")gtag("event","generate_lead",{currency:C,value:v});
+  else if(ev==="Checkout")gtag("event","begin_checkout",{currency:C,value:d.value});
+  else if(ev==="Purchase"){gtag("event","generate_lead",{currency:C,value:d.value});gtag("event","purchase",{transaction_id:"WA-"+Date.now(),currency:C,value:d.value})}}
+}catch(e){console.warn("track",e)}}
 
-      let socialHtml = '';
-      if (siteSettings.Instagram_URL) socialHtml += `<a href="${siteSettings.Instagram_URL}" target="_blank" class="hover:text-luxuryGold"><i class="fa-brands fa-instagram"></i></a>`;
-      if (siteSettings.Facebook_URL) socialHtml += `<a href="${siteSettings.Facebook_URL}" target="_blank" class="hover:text-luxuryGold"><i class="fa-brands fa-facebook"></i></a>`;
-      if (siteSettings.TikTok_URL) socialHtml += `<a href="${siteSettings.TikTok_URL}" target="_blank" class="hover:text-luxuryGold"><i class="fa-brands fa-tiktok"></i></a>`;
-      document.getElementById('socialLinks').innerHTML = socialHtml;
-    }
+/* ---------- Policies ---------- */
+const POL={about:["about","About_Us_Text"],shipping:["shipPol","Shipping_Policy_Text"],returns:["retPol","Return_Policy_Text"]};
+function openPol(k){const[tk,key]=POL[k];$("#mIn").innerHTML=`<div class="p-6 pt-14 md:p-10"><h2 class="text-2xl font-extrabold mb-4">${esc(T(tk))}</h2><p class="whitespace-pre-line leading-9 text-neutral-700">${esc(set(key)||T("soon"))}</p></div>`;$("#modal").classList.remove("hidden");$("#modal").classList.add("flex");lock(true)}
 
-    function renderHeroCarousel() {
-      const heroContainer = document.getElementById('heroContainer');
-      if (!heroContainer) return;
+function renderReels(){
+ let list=P.filter(p=>p.best);if(list.length<3)list=[...list,...P.filter(p=>!p.best)].slice(0,6);
+ $("#reels").innerHTML=list.map(p=>{const off=p.sale?Math.round((1-p.sale/p.price)*100):0,w=wish.includes(p.id);
+  return`<article class="w-[76vw] max-w-[320px] bg-white rounded-3xl overflow-hidden border border-black/10 shadow-sm flex flex-col">
+  <div class="relative aspect-[4/5] cursor-pointer bg-neutral-100" data-view="${esc(p.id)}">
+   ${imgTag(img0(p),"absolute inset-0 w-full h-full object-cover",'loading="lazy"')}
+   ${off?`<span class="absolute top-3 start-3 bg-gold text-black text-xs font-extrabold px-3 py-1 rounded-full">-${off}%</span>`:""}
+   <button data-heart="${esc(p.id)}" class="absolute top-3 end-3 w-10 h-10 grid place-items-center rounded-full bg-white/90 shadow text-lg ${w?"text-gold":"text-ink"}" aria-label="${T("wish")}"><i class="${w?"fa-solid":"fa-regular"} fa-heart"></i></button></div>
+  <div class="p-4 flex flex-col gap-1"><h3 class="font-extrabold leading-snug line-clamp-2 min-h-[3rem]">${esc(p.name)}</h3>
+   <div class="flex items-baseline gap-2 mb-2"><b class="text-ink text-xl">${money(eff(p))}</b>${p.sale?`<s class="text-neutral-600 text-sm">${money(p.price)}</s>`:""}</div>
+   ${p.out?`<button disabled class="w-full bg-neutral-200 text-neutral-600 font-bold py-2.5 rounded-full cursor-not-allowed">${T("out")}</button>`:`<button data-add="${esc(p.id)}" class="w-full bg-ink text-white font-bold py-2.5 rounded-full active:scale-95 hover:bg-gold hover:text-black transition"><i class="fa-solid fa-bag-shopping"></i> ${T("add")}</button>`}</div></article>`}).join("");
+ $("#dots").innerHTML=list.map((_,i)=>`<button data-dot="${i}" class="h-2 rounded-full transition-all ${i?"w-2 bg-black/20":"w-6 bg-gold"}" aria-label="${i+1}"></button>`).join("")}
+function syncDots(){const r=$("#reels"),c=r.children[0];if(!c)return;const i=Math.round(Math.abs(r.scrollLeft)/(c.offsetWidth+12));
+ [...$("#dots").children].forEach((d,k)=>d.className=`h-2 rounded-full transition-all ${k===i?"w-6 bg-gold":"w-2 bg-black/20"}`)}
 
-      let featured = allProducts.slice(0, 6);
-      if (featured.length === 0) return;
+function renderCats(){$("#cats").innerHTML=["الكل",...new Set(P.map(p=>p.cat))].map(c=>`<button data-cat="${esc(c)}" class="whitespace-nowrap px-5 py-2 rounded-full border text-sm font-semibold ${c===cat&&!wishOnly?"bg-gold text-black border-gold":"border-black/20 text-neutral-700"}">${c==="الكل"?T("all"):esc(c)}</button>`).join("")}
+function renderGrid(){
+ const L=P.filter(p=>wishOnly?wish.includes(p.id):(cat==="الكل"||p.cat===cat));
+ $("#grid").innerHTML=L.length?L.map(p=>{const off=p.sale?Math.round((1-p.sale/p.price)*100):0,w=wish.includes(p.id);
+  return`<article class="bg-white rounded-2xl overflow-hidden flex flex-col group border border-black/10 shadow-sm">
+  <div class="relative aspect-[4/5] overflow-hidden cursor-pointer bg-neutral-100" data-view="${esc(p.id)}">
+   ${imgTag(img0(p),"w-full h-full object-cover group-hover:scale-105 transition duration-500",'loading="lazy"')}
+   ${off?`<span class="absolute top-2 start-2 bg-gold text-black text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">-${off}%</span>`:""}
+   <button data-heart="${esc(p.id)}" class="absolute top-2 end-2 w-9 h-9 grid place-items-center rounded-full bg-white/90 shadow ${w?"text-gold":"text-ink"}" aria-label="${T("wish")}"><i class="${w?"fa-solid":"fa-regular"} fa-heart"></i></button></div>
+  <div class="p-3 flex flex-col gap-1 flex-1"><h3 class="font-semibold text-sm line-clamp-2 cursor-pointer" data-view="${esc(p.id)}">${esc(p.name)}</h3>
+   <div class="flex items-baseline gap-2"><b class="text-ink">${money(eff(p))}</b>${p.sale?`<s class="text-neutral-600 text-xs">${money(p.price)}</s>`:""}</div>
+   ${p.out?`<button disabled class="w-full bg-neutral-200 text-neutral-600 font-bold py-2.5 rounded-full cursor-not-allowed">${T("out")}</button>`:`<button data-add="${esc(p.id)}" class="mt-auto pt-0 w-full border border-ink text-ink hover:bg-ink hover:text-white font-bold text-sm py-2 rounded-full transition"><i class="fa-solid fa-plus"></i> ${T("add")}</button>`}</div></article>`}).join(""):
+  `<p class="col-span-full text-center text-neutral-600 py-16">${wishOnly?T("emptyWish"):T("emptyCat")}</p>`;
+ $("#wc").textContent=wish.length;$("#wc").classList.toggle("hidden",!wish.length)}
 
-      let cardsHTML = featured.map(item => {
-        let imgSrc = getProductImage(item);
-        let title = item.Title || item.Name;
-        return `
-        <div class="min-w-[80%] md:min-w-[40%] lg:min-w-[28%] bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex-shrink-0 snap-center transition-all hover:shadow-md">
-          <div class="relative h-60 rounded-xl overflow-hidden mb-3 bg-gray-50">
-            <img src="${imgSrc}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500?text=Alora';" />
-            <span class="absolute top-2 right-2 bg-black/70 text-white text-[10px] px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">✦ الأكثر طلباً</span>
-          </div>
-          <h4 class="font-bold text-gray-900 text-sm mb-1 truncate">${title}</h4>
-          <p class="text-luxuryGold font-extrabold text-sm mb-3">${item.Price} ج.م</p>
-          <button onclick="addToCart('${title}', '${item.Price}', '${imgSrc}')" class="w-full py-2 bg-luxuryBlack text-white text-xs rounded-xl hover:bg-black transition font-medium">أضف للسلة 🛒</button>
-        </div>
-      `}).join('');
+/* ---------- Product modal ---------- */
+function openProduct(id,quiet){const p=byId(id);if(!p)return;cur=p;if(!quiet)track("ViewContent",p);const im=p.imgs.length?p.imgs:[PH],w=wish.includes(id);
+ $("#mIn").innerHTML=`<div class="md:grid md:grid-cols-2"><div><div id="gal" class="hs">${im.map(u=>imgTag(u,"w-full aspect-[4/5] object-cover bg-neutral-100",'style="min-width:100%"')).join("")}</div>
+  ${im.length>1?`<div id="gd" class="flex justify-center gap-1.5 py-2">${im.map((_,i)=>`<span class="h-1.5 rounded-full ${i?"w-1.5 bg-black/20":"w-5 bg-gold"}"></span>`).join("")}</div>`:""}</div>
+  <div class="p-5 flex flex-col gap-3"><span class="text-xs text-neutral-600">${esc(p.cat)}</span><h2 class="text-2xl font-extrabold">${esc(p.name)}</h2>
+  <div class="flex items-baseline gap-3"><b class="text-ink text-2xl">${money(eff(p))}</b>${p.sale?`<s class="text-neutral-600">${money(p.price)}</s>`:""}</div>
+  <p class="text-neutral-700 whitespace-pre-line leading-8 text-sm">${esc(p.desc)}</p>
+  ${p.out?`<button disabled class="w-full bg-neutral-200 text-neutral-600 font-bold py-2.5 rounded-full cursor-not-allowed">${T("out")}</button>`:`<button data-add="${esc(id)}" class="bg-ink text-white font-extrabold py-3 rounded-full">${T("add")}</button>`}
+  ${p.out?"":`<button data-wa="${esc(id)}" class="bg-[#25D366] text-black font-extrabold py-3 rounded-full"><i class="fa-brands fa-whatsapp"></i> ${T("orderWa")}</button>`}<button data-heart="${esc(id)}" class="border border-black/20 py-3 rounded-full font-semibold">${w?T("inWish"):T("addWish")}</button></div></div>`;
+ const g=$("#gal");g.onscroll=()=>{const i=Math.round(Math.abs(g.scrollLeft)/g.clientWidth);[...($("#gd")?.children||[])].forEach((d,k)=>d.className=`h-1.5 rounded-full ${k===i?"w-5 bg-gold":"w-1.5 bg-black/20"}`)};
+ $("#modal").classList.remove("hidden");$("#modal").classList.add("flex");lock(true)}
 
-      heroContainer.innerHTML = `
-        <div class="max-w-7xl mx-auto px-4 py-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">🔥 الأكثر مبيعاً <span class="text-xs font-normal text-gray-400">(اسحبي لرؤية المزيد)</span></h3>
-          </div>
-          <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory hide-scrollbar scroll-smooth">
-            ${cardsHTML}
-          </div>
-        </div>
-      `;
-    }
+/* ---------- Cart ---------- */
+const save=()=>ls.set("alora_cart",cart),total=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
+function add(id){const p=byId(id);if(!p||p.out)return;track("AddToCart",p);const it=cart.find(i=>i.id===id);it?it.q++:cart.push({id,q:1});save();renderCart();toast(T("toastAdd"))}
+function renderCart(){cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0);$("#cc").textContent=n;$("#cc").classList.toggle("hidden",!n);
+ if(!cart.length){$("#cartBody").innerHTML=`<p class="text-center text-neutral-600 py-16">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}
+ const th=num(set("Free_Shipping_Threshold")),t=total();
+ const bar=th?`<div class="bg-black/5 rounded-xl p-3 mb-3 text-sm">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="h-1.5 bg-black/10 rounded mt-2"><div class="h-full bg-gold rounded transition-all" style="width:${Math.min(100,t/th*100)}%"></div></div></div>`:"";
+ $("#cartBody").innerHTML=bar+cart.map(i=>{const p=byId(i.id);return`<div class="flex gap-3 py-3 border-b border-black/10">${imgTag(img0(p),"w-16 h-20 object-cover rounded-lg bg-neutral-100")}
+  <div class="flex-1 text-sm"><b>${esc(p.name)}</b><div class="text-ink">${money(eff(p))}</div>
+  <div class="inline-flex items-center border border-black/20 rounded-full mt-1"><button data-q="${esc(i.id)}:-1" class="w-8 h-8" aria-label="-">−</button><span class="w-6 text-center">${i.q}</span><button data-q="${esc(i.id)}:1" class="w-8 h-8" aria-label="+">+</button></div>
+  <button data-rm="${esc(i.id)}" class="text-xs text-neutral-600 underline ms-3">${T("rm")}</button></div></div>`}).join("");
+ const s=ls.get("alora_cust",{});
+ $("#cartFoot").innerHTML=`<div class="flex justify-between font-extrabold mb-3"><span>${T("total")}</span><span class="text-ink">${money(t)}</span></div>
+  <div class="grid gap-2 mb-3 text-black"><input id="cn" placeholder="${T("phName")}" autocomplete="name" value="${esc(s.n)}" class="rounded-lg px-3 py-2.5 w-full border border-black/20 bg-white"><input id="cp" placeholder="${T("phPhone")}" type="tel" inputmode="tel" autocomplete="tel" value="${esc(s.p)}" class="rounded-lg px-3 py-2.5 w-full border border-black/20 bg-white"><input id="ca" placeholder="${T("phAddr")}" autocomplete="street-address" value="${esc(s.a)}" class="rounded-lg px-3 py-2.5 w-full border border-black/20 bg-white"></div>
+  <p id="err" class="text-red-400 text-xs mb-2" role="alert"></p><button id="send" class="w-full bg-[#25D366] text-black font-extrabold py-3 rounded-full"><i class="fa-brands fa-whatsapp"></i> ${T("send")}</button>`}
+function send(){const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err");
+ if(n.length<3)return e.textContent=T("eName");if(p.replace(/\D/g,"").length<8)return e.textContent=T("ePhone");if(a.length<5)return e.textContent=T("eAddr");
+ const wa=waNum();if(!wa)return e.textContent=T("eWa");
+ const th=num(set("Free_Shipping_Threshold")),t=total();ls.set("alora_cust",{n,p,a});track("Purchase",{value:t,ids:cart.map(i=>byId(i.id).cid)});
+ const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${p}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+cart.map((i,k)=>{const x=byId(i.id);return`${k+1}) ${x.name} (${x.id})\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+`\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${th&&t>=th?T("mFree"):T("mTbd")}`;
+ const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;cart=[];save();renderCart();closeAll();if(!window.open(url,"_blank"))location.href=url}
 
-    function renderCategories() {
-      const container = document.getElementById('categoriesContainer');
-      let categories = ['الكل', ...new Set(allProducts.map(p => p.Category).filter(Boolean))];
-      container.innerHTML = categories.map(cat => `
-        <button onclick="filterCategory('${cat}')" class="cat-btn ${cat === activeCategory ? 'bg-luxuryBlack text-white' : 'bg-white text-gray-600 border border-gray-200'} px-5 py-2 rounded-full text-xs font-bold transition shadow-sm whitespace-nowrap">${cat}</button>
-      `).join('');
-    }
+/* ---------- UI helpers ---------- */
+function lock(on){$("#ov").classList.toggle("opacity-0",!on);$("#ov").classList.toggle("pointer-events-none",!on);document.body.style.overflow=on?"hidden":""}
+function closeAll(){hideCart();$("#modal").classList.add("hidden");$("#modal").classList.remove("flex");lock(false)}
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("opacity-0");clearTimeout(tt);tt=setTimeout(()=>t.classList.add("opacity-0"),2000)}
+function heart(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id):[...wish,id];ls.set("alora_wish",wish);renderReels();renderGrid();if(cur&&!$("#modal").classList.contains("hidden"))openProduct(id,true);toast(on?T("toastRm"):T("toastWish"))}
 
-    function filterCategory(cat) {
-      activeCategory = cat;
-      renderCategories();
-      let filtered = cat === 'الكل' ? allProducts : allProducts.filter(p => p.Category === cat);
-      renderProducts(filtered);
-    }
+document.addEventListener("click",e=>{const t=e.target.closest("[data-add],[data-heart],[data-view],[data-cat],[data-dot],[data-q],[data-rm],[data-close],[data-pol],[data-wa],#send");if(!t)return;const d=t.dataset;
+ if(d.add!==undefined){e.stopPropagation();add(d.add)}
+ else if(d.heart!==undefined){e.stopPropagation();heart(d.heart)}
+ else if(d.view!==undefined)openProduct(d.view);
+ else if(d.cat!==undefined){cat=d.cat;wishOnly=false;renderCats();renderGrid()}
+ else if(d.dot!==undefined)$("#reels").children[+d.dot]?.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
+ else if(d.q!==undefined){const[id,dl]=d.q.split(":"),it=cart.find(i=>i.id===id);if(it){it.q+=+dl;if(it.q<1)cart=cart.filter(i=>i!==it);save();renderCart()}}
+ else if(d.rm!==undefined){cart=cart.filter(i=>i.id!==d.rm);save();renderCart()}
+ else if(d.pol!==undefined)openPol(d.pol);
+ else if(d.wa!==undefined)orderOne(d.wa);
+ else if(d.close!==undefined)closeAll();
+ else if(t.id==="send")send()});
+$("#cartBtn").onclick=()=>{$("#cart").style.transform="none";lock(true);if(cart.length)track("Checkout",{value:total(),n:cart.length})};
+$("#langBtn").onclick=()=>setLang(LANG==="en"?"ar":"en");
+$("#wishBtn").onclick=()=>{wishOnly=!wishOnly;renderCats();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})};
+$("#ov").onclick=closeAll;$("#modal").onclick=e=>{if(e.target.id==="modal")closeAll()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+$("#reels").addEventListener("scroll",syncDots,{passive:true});
 
-    function renderProducts(products) {
-      const grid = document.getElementById('productsGrid');
-      if (!grid) return;
-
-      if (products.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">لا توجد منتجات مطابقة حالياً.</div>`;
-        return;
-      }
-
-      grid.innerHTML = products.map(item => {
-        let title = item.Title || item.Name;
-        let isWish = wishlist.some(w => w.Title === title);
-        let imgSrc = getProductImage(item);
-        return `
-          <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition group">
-            <div class="relative h-72 bg-gray-50 overflow-hidden">
-              <img src="${imgSrc}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500?text=Alora';" />
-              <button onclick="toggleWishlist('${title}', '${item.Price}', '${imgSrc}')" class="absolute top-3 left-3 w-9 h-9 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-gray-600 hover:text-red-500 transition">
-                <i class="${isWish ? 'fa-solid text-red-500' : 'fa-regular'} fa-heart"></i>
-              </button>
-            </div>
-            <div class="p-4">
-              <span class="text-[11px] text-gray-400 font-medium">${item.Category || 'عام'}</span>
-              <h4 class="font-bold text-gray-800 text-sm mb-1 truncate">${title}</h4>
-              <div class="flex items-center justify-between mt-3">
-                <span class="text-luxuryBlack font-extrabold text-base">${item.Price} <span class="text-xs font-normal">ج.م</span></span>
-                <button onclick="addToCart('${title}', '${item.Price}', '${imgSrc}')" class="w-9 h-9 rounded-xl bg-luxuryGold text-white flex items-center justify-center hover:opacity-90 transition">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function addToCart(title, price, image) {
-      let existing = cart.find(c => c.Title === title);
-      if (existing) { existing.qty++; }
-      else { cart.push({ Title: title, Price: price, Image: image, qty: 1 }); }
-      localStorage.setItem('bw_cart', JSON.stringify(cart));
-      updateCartBadge();
-      alert('تمت إضافة ' + title + ' إلى السلة ✨');
-    }
-
-    function toggleWishlist(title, price, image) {
-      let idx = wishlist.findIndex(w => w.Title === title);
-      if (idx > -1) { wishlist.splice(idx, 1); }
-      else { wishlist.push({ Title: title, Price: price, Image: image }); }
-      localStorage.setItem('bw_wishlist', JSON.stringify(wishlist));
-      updateWishlistBadge();
-      renderProducts(activeCategory === 'الكل' ? allProducts : allProducts.filter(p => p.Category === activeCategory));
-    }
-
-    function updateCartBadge() {
-      let total = cart.reduce((sum, item) => sum + item.qty, 0);
-      document.getElementById('cartBadge').innerText = total;
-    }
-
-    function updateWishlistBadge() {
-      document.getElementById('wishlistBadge').innerText = wishlist.length;
-    }
-
-    function handleSearch() {
-      let q = document.getElementById('searchInput').value.toLowerCase();
-      let filtered = allProducts.filter(p => (p.Title || p.Name || '').toLowerCase().includes(q));
-      renderProducts(filtered);
-    }
-
-    window.onload = initApp;
-  </script>
+/* ---------- Init ---------- */
+(async()=>{$("#yr").textContent=new Date().getFullYear();applyLang();
+ $("#grid").innerHTML=Array(8).fill('<div class="skel rounded-2xl aspect-[4/6]"></div>').join("");renderCart();
+ try{
+  /* two fully separate sheets: Products (gid=2078282954) and Site_Settings (gid=0) */
+  const [pr,st]=await Promise.allSettled([loadCSV(CFG.PRODUCTS_URL),loadCSV(CFG.SETTINGS_URL)]);
+  if(pr.status!=="fulfilled")throw pr.reason;
+  if(st.status==="fulfilled")S=buildSettings(st.value);else console.warn("Settings sheet failed:",st.reason);
+  P=buildProducts(pr.value);
+  if(!P.length)console.warn("Products sheet loaded but no valid rows. Headers found:",pr.value[0]);
+ }catch(err){console.error(err);$("#grid").innerHTML=`<p class="col-span-full text-center py-16 text-neutral-600">${T("loadFail")} <button class="underline text-gold" onclick="location.reload()">${T("retry")}</button></p>`;$("#reels").innerHTML="";renderAnn();return}
+ renderAnn();initTracking();renderReels();renderCats();renderGrid();renderCart();
+})();
+</script>
 </body>
 </html>
