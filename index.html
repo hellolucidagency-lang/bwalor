@@ -242,7 +242,7 @@ function syncDots(){const r=$("#reels"),c=r.children[0];if(!c)return;const i=Mat
  [...$("#dots").children].forEach((d,k)=>d.className=`h-2 rounded-full transition-all ${k===i?"w-6 bg-gold":"w-2 bg-black/20"}`)}
 
 function renderCats(){$("#cats").innerHTML=["الكل",...new Set(P.map(p=>p.cat))].map(c=>`<button data-cat="${esc(c)}" class="whitespace-nowrap px-5 py-2 rounded-full border text-sm font-semibold ${c===cat&&!wishOnly?"bg-gold text-black border-gold":"border-black/20 text-neutral-700"}">${c==="الكل"?T("all"):esc(c)}</button>`).join("")}
-function renderGrid(){
+function renderGrid(){if(!P.length)return;
  const L=P.filter(p=>wishOnly?wish.includes(p.id):(cat==="الكل"||p.cat===cat));
  $("#grid").innerHTML=L.length?L.map(p=>{const off=p.sale?Math.round((1-p.sale/p.price)*100):0,w=wish.includes(p.id);
   return`<article class="bg-white rounded-2xl overflow-hidden flex flex-col group border border-black/10 shadow-sm">
@@ -319,12 +319,15 @@ $("#reels").addEventListener("scroll",syncDots,{passive:true});
 (async()=>{$("#yr").textContent=new Date().getFullYear();applyLang();
  $("#grid").innerHTML=Array(8).fill('<div class="skel rounded-2xl aspect-[4/6]"></div>').join("");renderCart();
  try{
-  /* two fully separate sheets: Products (gid=2078282954) and Site_Settings (gid=0) */
-  const [pr,st]=await Promise.allSettled([loadCSV(CFG.PRODUCTS_URL),loadCSV(CFG.SETTINGS_URL)]);
-  if(pr.status!=="fulfilled")throw pr.reason;
-  if(st.status==="fulfilled")S=buildSettings(st.value);else console.warn("Settings sheet failed:",st.reason);
-  P=buildProducts(pr.value);
-  if(!P.length)console.warn("Products sheet loaded but no valid rows. Headers found:",pr.value[0]);
+  /* load both tabs, then decide by column names which one is Products and which is Settings (works whatever the gid order) */
+  const res=await Promise.allSettled([loadCSV(CFG.PRODUCTS_URL),loadCSV(CFG.SETTINGS_URL)]),ok=res.filter(x=>x.status==="fulfilled").map(x=>x.value);
+  if(!ok.length)throw res[0].reason;
+  const hd=r=>(r[0]||[]).map(norm),isProd=r=>hd(r).includes("price")&&(hd(r).includes("name")||hd(r).includes("title")),isSet=r=>hd(r).some(k=>["announcementtext","metapixelid","storephonewhatsapp","freeshippingthreshold"].includes(k));
+  const pr=ok.find(isProd),st=ok.find(r=>r!==pr&&isSet(r))||ok.find(r=>r!==pr);
+  if(st)S=buildSettings(st);
+  P=pr?buildProducts(pr):[];
+  if(!P.length){console.warn("No products. Sheets headers:",ok.map(r=>r[0]));
+   $("#grid").innerHTML=`<p class="col-span-full text-center text-neutral-700 py-16 leading-8">لا توجد منتجات صالحة في الشيت.<br><span class="text-xs">تأكدي أن صف العناوين يحتوي Name و Price، وأن Price رقم أكبر من صفر.<br>الأعمدة التي وجدتها: ${esc(ok.map(r=>(r[0]||[]).join(" | ")).join("  ||  "))}</span></p>`;$("#reels").innerHTML=""}
  }catch(err){console.error(err);$("#grid").innerHTML=`<p class="col-span-full text-center py-16 text-neutral-600">${T("loadFail")} <button class="underline text-gold" onclick="location.reload()">${T("retry")}</button></p>`;$("#reels").innerHTML="";renderAnn();return}
  renderAnn();initTracking();renderReels();renderCats();renderGrid();renderCart();
 })();
