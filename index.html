@@ -96,8 +96,9 @@
 
   <!-- JavaScript Code -->
   <script>
-    const SETTINGS_CSV_URL = "https://corsproxy.io/?" + encodeURIComponent("https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv");
-    const PRODUCTS_CSV_URL = "https://corsproxy.io/?" + encodeURIComponent("https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv");
+    // تم وضع روابطك الصحيحة بالتوزيع السليم هنا:
+    const SETTINGS_CSV_URL = "https://corsproxy.io/?" + encodeURIComponent("https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv");
+    const PRODUCTS_CSV_URL = "https://corsproxy.io/?" + encodeURIComponent("https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv");
 
     let siteSettings = {};
     let allProducts = [];
@@ -105,7 +106,6 @@
     let wishlist = JSON.parse(localStorage.getItem('bw_wishlist')) || [];
     let activeCategory = 'الكل';
 
-    // معالجة رابط الصورة المباشرة وروابط Google Drive
     function fixImageUrl(url) {
       if (!url) return 'https://via.placeholder.com/400x500?text=Black+%26+White+Alora';
       url = url.trim();
@@ -118,7 +118,6 @@
       return url;
     }
 
-    // جلب الصورة الرئيسية من عمود Main_Image
     function getProductImage(item) {
       let rawUrl = item.Main_Image || item.Image_URL || item.image_url || item.image || '';
       if (!rawUrl && item.Gallery_Images) {
@@ -129,7 +128,6 @@
       return fixImageUrl(firstUrl);
     }
 
-    // تحليل CSV المعقد
     function parseCSV(text) {
       let lines = [];
       let row = [''];
@@ -217,7 +215,6 @@
       document.getElementById('socialLinks').innerHTML = socialHtml;
     }
 
-    // عرض سلايدر Reels الأفقية لعرض Best Sellers
     function renderHeroCarousel() {
       const heroContainer = document.getElementById('heroContainer');
       if (!heroContainer) return;
