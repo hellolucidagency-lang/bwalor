@@ -371,25 +371,42 @@
       return result;
     }
 
-    async function initApp() {
+   async function initApp() {
       try {
         let setRes = await fetch(SETTINGS_CSV_URL);
-        let setTxt = await setRes.text();
-        let setRows = csvToObjects(setTxt);
-        if (setRows.length > 0) { siteSettings = setRows[0]; applySettings(); }
+        if (setRes.ok) {
+          let setTxt = await setRes.text();
+          let setRows = csvToObjects(setTxt);
+          if (setRows.length > 0) { siteSettings = setRows[0]; applySettings(); }
+        }
 
         let prodRes = await fetch(PRODUCTS_CSV_URL);
-        let prodTxt = await prodRes.text();
-        allProducts = csvToObjects(prodTxt).filter(p => p.Title || p.Name);
+        if (prodRes.ok) {
+          let prodTxt = await prodRes.text();
+          allProducts = csvToObjects(prodTxt).filter(p => p.Title || p.Name || p.title || p.name);
+        }
+        
+        if (!allProducts || allProducts.length === 0) {
+          throw new Error("لم يتم العثور على منتجات في الشيت");
+        }
         
         renderCategories();
         renderProducts(allProducts);
         updateCartBadge();
         updateWishlistBadge();
       } catch (err) {
-        console.error("CSV loading error:", err);
+        console.error("خطأ في جلب بيانات الشيت، جاري تشغيل البيانات التلقائية:", err);
+        // منتجات تجريبية تتأكدي بيها من الشكل والتصميم فوراً
+        allProducts = [
+          { Title: "حقيبة جلدية عصرية", Price: "1250", Category: "شنط", Image_URL: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500", Description: "حقيبة أنيقة بتصميم عصري يناسب كافة أوقاتك." },
+          { Title: "سوار ذهبي رقيق", Price: "450", Discount_Price: "380", Category: "إكسسوارات", Image_URL: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500", Description: "سوار أنيق يضفي لمسة تميز على إطلالتك." }
+        ];
+        renderCategories();
+        renderProducts(allProducts);
+        updateCartBadge();
+        updateWishlistBadge();
       }
-    }
+    } 
 
     function applySettings() {
       if (siteSettings.Announcement_Text) document.getElementById('announcement-bar').innerText = siteSettings.Announcement_Text;
