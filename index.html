@@ -102,8 +102,11 @@ footer h4{font-size:13.5px;font-weight:700;margin-bottom:9px}
 .soc a{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--ink)}
 .soc svg{width:16px;height:16px}
 .copy{margin-top:24px;border-top:1px solid var(--line);padding-top:12px;font-size:11.5px;color:var(--mut);text-align:center}
-.wa{position:fixed;bottom:18px;inset-inline-start:16px;z-index:30;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:1px solid var(--line);display:grid;place-items:center;color:#2f6b4a;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-.wa svg{width:23px;height:23px}
+.wa{position:fixed;bottom:18px;inset-inline-start:16px;z-index:30;width:54px;height:54px;border-radius:50%;background:#5E8C6E;color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(60,90,70,.25);animation:float 3.2s ease-in-out infinite}
+.wa::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid rgba(94,140,110,.45);animation:ring 2.6s ease-out infinite;pointer-events:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes ring{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+.wa svg{width:24px;height:24px;color:#fff}
 .ov{position:fixed;inset:0;background:rgba(20,20,18,.4);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
 .ov.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(400px,92vw);background:var(--bg);z-index:60;display:flex;flex-direction:column;transition:transform .3s ease;box-shadow:0 0 30px rgba(0,0,0,.08)}
@@ -404,10 +407,16 @@ function renderNav(){
  const pols=policyKeys();
  $("#nav").innerHTML=`<a href="#best">${T("navBest")}</a><a href="#cols">${T("navCols")}</a><a href="#shop">${T("navShop")}</a>`+
   pols.map(k=>`<button data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("")}
+/* social link: found by key (EN/AR names) or, failing that, by the domain of the link itself */
+const SOC={facebook:{keys:["Facebook_URL","Facebook","فيس بوك","فيسبوك"],re:/facebook\.com|fb\.com|fb\.me/i},
+ instagram:{keys:["Instagram_URL","Instagram","انستجرام","انستغرام","انستقرام"],re:/instagram\.com|instagr\.am/i},
+ tiktok:{keys:["TikTok_URL","TikTok","تيك توك","تيكتوك"],re:/tiktok\.com/i}};
+function findSocial(k){const v=sv(...SOC[k].keys);if(v)return v;
+ for(const key in S.m){const x=S.m[key];if(x&&SOC[k].re.test(x))return x}return""}
 function renderFooter(){
  const pols=policyKeys();
  $("#fpol").innerHTML=pols.map(k=>`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
- const soc=[[sv("Facebook_URL"),I.fb,"Facebook"],[sv("Instagram_URL"),I.ig,"Instagram"],[sv("TikTok_URL"),I.tt,"TikTok"],[sv("Store_Email")||CFG.EMAIL,I.mail,"Email"]];
+ const soc=[[findSocial("facebook"),I.fb,"Facebook"],[findSocial("instagram"),I.ig,"Instagram"],[findSocial("tiktok"),I.tt,"TikTok"],[sv("Store_Email","Email","الإيميل","البريد")||CFG.EMAIL,I.mail,"Email"]];
  $("#soc").innerHTML=soc.map(([v,ic,lb])=>{if(!v)return"";const h=lb==="Email"?(/^mailto:/i.test(v)?v:"mailto:"+v):(/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,""));
   return`<a href="${esc(h)}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`}).join("")+`<a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
  $("#yr").textContent=new Date().getFullYear();
