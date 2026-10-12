@@ -25,15 +25,15 @@
 :root{--bg:#FAF9F6;--card:#F2F0EC;--ink:#1A1A1A;--mut:#77736a;--line:#E6E3DC;--gold:#C9A84C}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-html,body{overflow-x:clip}
 body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 a{color:inherit}
-img{display:block;max-width:100%}
+img{display:block;max-width:100%;-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
 svg{display:block}
 [hidden]{display:none!important}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-.brand{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:.16em;font-size:19px;direction:ltr;text-transform:uppercase;white-space:nowrap}
+.brand{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:.1em;font-size:15px;direction:ltr;text-transform:uppercase;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+@media(min-width:760px){.brand{letter-spacing:.16em;font-size:19px}}
 .brand span{font-weight:500}
 header{position:sticky;top:0;z-index:40;background:rgba(250,249,246,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:56px}
@@ -76,7 +76,7 @@ section{padding-top:24px}
 .dots i.on{background:var(--ink);width:14px}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(min-width:760px){.cols{gap:16px}}
-.col{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--card);cursor:pointer}
+.col{position:relative;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:var(--card);cursor:pointer}
 .col img{width:100%;height:100%;object-fit:cover}
 .col span{position:absolute;bottom:8px;inset-inline-start:8px;inset-inline-end:8px;background:rgba(255,255,255,.95);text-align:center;font-weight:700;font-size:12.5px;padding:5px 4px;border-radius:8px}
 .tools{display:flex;gap:10px;align-items:center;margin-bottom:10px}
@@ -102,9 +102,8 @@ footer h4{font-size:13.5px;font-weight:700;margin-bottom:9px}
 .soc a{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--ink)}
 .soc svg{width:16px;height:16px}
 .copy{margin-top:24px;border-top:1px solid var(--line);padding-top:12px;font-size:11.5px;color:var(--mut);text-align:center}
-.wa{position:fixed;bottom:18px;inset-inline-start:16px;z-index:30;width:54px;height:54px;border-radius:50%;background:#5E8C6E;color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(60,90,70,.25);animation:float 3.2s ease-in-out infinite}
+.wa{position:fixed;bottom:18px;inset-inline-start:16px;z-index:30;width:54px;height:54px;border-radius:50%;background:#5E8C6E;color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(60,90,70,.25);transform:translateZ(0);-webkit-backface-visibility:hidden}
 .wa::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid rgba(94,140,110,.45);animation:ring 2.6s ease-out infinite;pointer-events:none}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes ring{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.35);opacity:0}}
 .wa svg{width:24px;height:24px;color:#fff}
 .ov{position:fixed;inset:0;background:rgba(20,20,18,.4);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
@@ -139,6 +138,7 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 .modal{position:fixed;inset:0;z-index:70;display:none;align-items:flex-end;justify-content:center}
 .modal.on{display:flex}
 @media(min-width:760px){.modal{align-items:center;padding:20px}}
+@media(max-width:759px){.modal{align-items:stretch}.mbox{width:100%;max-width:none;height:100vh;max-height:100vh;border-radius:0}.mx{width:44px;height:44px;top:12px;inset-inline-end:12px;background:var(--ink);color:#fff}.mx svg{width:20px;height:20px}}
 .mbox{background:var(--bg);width:100%;max-width:860px;max-height:92vh;overflow-y:auto;border-radius:18px 18px 0 0;position:relative}
 @media(min-width:760px){.mbox{border-radius:18px}}
 .mx{position:absolute;top:10px;inset-inline-end:10px;z-index:3;width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:grid;place-items:center}
@@ -149,6 +149,7 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 .gal::-webkit-scrollbar{display:none}
 .gal img{flex:0 0 100%;scroll-snap-align:start;aspect-ratio:4/5;object-fit:cover;width:100%;cursor:zoom-in}
 .pi{padding:18px;display:flex;flex-direction:column;gap:11px}
+.pi .big.dark{padding:15px;font-size:15px}
 .pi h2{font-size:19px;font-weight:800}
 .pi p{color:#55524b;white-space:pre-line;font-size:13.5px;line-height:1.85}
 .pol{padding:30px 22px}
@@ -244,7 +245,7 @@ const CFG={
  PRODUCTS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv",
  SETTINGS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv",
  PROXIES:[u=>u,u=>"https://corsproxy.io/?"+encodeURIComponent(u),u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)],
- WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora",WEBHOOK:""
+ WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora",WEBHOOK:"",SHIP_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=396393175&single=true&output=csv"
 };
 const ALL="الكل";
 /* Signature collections: image from Site_Settings, code fallback when empty */
@@ -273,30 +274,31 @@ const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
 const num=v=>{const n=parseFloat(String(v??"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,""));return isNaN(n)?0:n};
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
 let LANG=ls.get("alora_lang","ar");
-let S={m:{},names:{}},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null;
+let SHIP=[],S={m:{},names:{}},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null;
 
 const D={
  ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي عن منتج...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
-   shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",shipNote:x=>`شحن مجاني للطلبات فوق ${x}`,total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"المحافظة والعنوان",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم بالكامل.",ePhone:"رقم الهاتف غير صحيح.",eAddr:"اكتبي المحافظة والعنوان.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
+   shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",shipNote:x=>`شحن مجاني للطلبات فوق ${x}`,total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم بالكامل.",ePhone:"رقم الهاتف غير صحيح.",eAddr:"اكتبي المحافظة والعنوان.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
    mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد عند التأكيد",mOne:"أرغب في طلب هذا المنتج",mCode:"الكود",mPrice:"السعر",
    stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",fail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",soon:"سيتم إضافة المحتوى قريبًا.",brandP:"شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.",navBest:"الأكثر مبيعًا",navCols:"التصنيفات",navShop:"المنتجات",cur:"ج.م",
-   sum:"ملخص الطلب",shipWord:"الشحن",pdfClose:"إغلاق",itemsOne:"منتج"},
+   sum:"ملخص الطلب",govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام عمل`,grand:"الإجمالي شامل الشحن",eGov:"اختاري المحافظة.",mGov:"المحافظة",mDelivery:"مدة التوصيل",mGrand:"الإجمالي شامل الشحن",shipWord:"الشحن",pdfClose:"إغلاق",itemsOne:"منتج"},
  en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Information",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search products...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
-   shipLeft:x=>`Add <b>${x}</b> more for free shipping`,shipOk:"Your order qualifies for free shipping",shipNote:x=>`Free shipping on orders over ${x}`,total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Governorate & address",send:"Send order via WhatsApp",eName:"Please enter your full name.",ePhone:"Invalid phone number.",eAddr:"Please enter your governorate and address.",eWa:"Store WhatsApp is currently unavailable.",
+   shipLeft:x=>`Add <b>${x}</b> more for free shipping`,shipOk:"Your order qualifies for free shipping",shipNote:x=>`Free shipping on orders over ${x}`,total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Full address",send:"Send order via WhatsApp",eName:"Please enter your full name.",ePhone:"Invalid phone number.",eAddr:"Please enter your governorate and address.",eWa:"Store WhatsApp is currently unavailable.",
    mNew:"New order",mName:"Name",mPhone:"Phone",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"Confirmed on order",mOne:"I'd like to order this product",mCode:"Code",mPrice:"Price",
    stale:"Couldn't refresh, showing the last saved version",fail:"Couldn't load products.",retry:"Try again",soon:"Content coming soon.",brandP:"Luxury bags and accessories with a calm, elegant design.",navBest:"Best sellers",navCols:"Collections",navShop:"Shop",cur:"EGP",
-   sum:"Order summary",shipWord:"Shipping",pdfClose:"Close",itemsOne:"item"}
+   sum:"Order summary",govPick:"Choose governorate",govAsk:"Choose a governorate to calculate shipping",shipCost:x=>`Shipping: ${x}`,shipFree:"Free shipping",delivery:x=>`Delivery in ${x} business days`,grand:"Total incl. shipping",eGov:"Please choose a governorate.",mGov:"Governorate",mDelivery:"Delivery",mGrand:"Total incl. shipping",shipWord:"Shipping",pdfClose:"Close",itemsOne:"item"}
 };
 const T=(k,...a)=>{const v=(D[LANG]||D.ar)[k];return typeof v==="function"?v(...a):(v??"")};
 const money=n=>Number(n).toLocaleString("en-US")+" "+T("cur");
 const sv=(...keys)=>{for(const k of keys){const v=S.m[norm(k)];if(v)return v}return""};
 const eff=p=>p.sale||p.price;
 const byId=id=>P.find(p=>p.id===id);
+let WM="";
 const optImg=(u,w)=>{if(!u)return u;
- if(/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(u)&&!/\/upload\/[^/]*(f_|w_|c_)/.test(u))return u.replace(/\/image\/upload\//,`/image/upload/f_auto,q_auto,w_${w}/`);
+ if(/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(u)&&!/\/upload\/[^/]*(f_|w_|c_)/.test(u))return u.replace(/\/image\/upload\//,`/image/upload/f_auto,q_auto,w_${w}${WM?`,l_${WM},g_south_east,x_12,y_12,w_0.2,o_45`:""}/`);
  if(/drive\.google\.com\/thumbnail/.test(u))return u.replace(/sz=w\d+/,`sz=w${w}`);
  return u};
-const img=(src,w,attrs="")=>`<img src="${esc(optImg(src||PH,w))}" loading="lazy" decoding="async" referrerpolicy="no-referrer" ${attrs} onerror="this.onerror=null;this.src='${PH}'">`;
+const img=(src,w,attrs="")=>`<img src="${esc(optImg(src||PH,w))}" loading="lazy" decoding="async" draggable="false" referrerpolicy="no-referrer" ${attrs} onerror="this.onerror=null;this.src='${PH}'">`;
 
 /* ======================= CSV ======================= */
 function parseCSV(t){t=t.replace(/^\uFEFF/,"");const rows=[];let r=[],c="",q=false;
@@ -326,8 +328,13 @@ function fixImg(u){
 const splitImgs=s=>String(s||"").split(/\s*(?:\n|\||;)\s*|,\s*(?=https?:\/\/|\/\/)/).map(fixImg).filter(Boolean);
 
 /* ======================= PARSE SHEETS ======================= */
+function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];const H=rows[0].map(norm);
+ const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]&&r[i].trim())return r[i].trim()}return""};
+ return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),cost:num(col(r,"Shipping_Cost")),days:col(r,"Delivery_Days"),free:num(col(r,"Free_Above"))})).filter(x=>x.gov)}
+const govRow=v=>SHIP.find(x=>x.gov===v)||null;
+const shipFor=(row,t)=>{if(!row)return null;return(row.free&&t>=row.free)?0:row.cost};
 function buildSettings(rows){const m={},names={};if(!rows.length)return{m,names};
- const known=["metapixelid","gatrackingid","announcementtext","storephonewhatsapp","freeshippingthreshold","aboutustext","facebookurl","herotitle","herosubtitle","metakeywords","faviconurl","shareimageurl","categorybagsimage","categoryringsimage","categoryearringsimage","categorysetsimage"];
+ const known=["metapixelid","gatrackingid","announcementtext","storephonewhatsapp","freeshippingthreshold","aboutustext","facebookurl","herotitle","herosubtitle","metakeywords","faviconurl","shareimageurl","categorybagsimage","categoryringsimage","categoryearringsimage","categorysetsimage","watermarkid"];
  const hdr=rows[0].map(norm);
  if(hdr.filter(k=>known.includes(k)).length>=2||(rows[0].length>=3&&rows.length<=2)){
   rows[0].forEach((h,i)=>{const k=norm(h);if(k){m[k]=((rows[1]&&rows[1][i])||"").trim();names[k]=h.trim()}});return{m,names}}
@@ -340,9 +347,12 @@ function buildProducts(rows){const H=rows[0].map(norm);
   const price=num(col(r,"Price")),dp=num(col(r,"Discount_Price","Sale_Price")),id=col(r,"Code","ID","SKU")||"p"+(i+1);
   const imgs=[...new Set([...splitImgs(col(r,"Main_Image","Image_URL","Image")),...splitImgs(col(r,"Gallery_Images","Gallery"))])];
   const stock=col(r,"Stock_Status","In_Stock");
-  return{id,cid:col(r,"Meta_Content_ID")||id,nameAr:col(r,"Title","Name","Title_AR","Product_Name"),nameEn:col(r,"Name_EN","Title_EN"),
+  const catRaw=col(r,"Category","Category_AR");const isBest=BEST_RE.test(catRaw);
+  const catClean=catRaw.replace(BEST_RE,"").replace(/^[\s|,;\-–_]+|[\s|,;\-–_]+$/g,"").trim();
+  const ts=Date.parse(col(r,"Date","Created_At","Created","Timestamp","Updated_At"))||0;
+  return{id,cid:col(r,"Meta_Content_ID")||id,alt:col(r,"Main_Image_Alt","Image_Alt_Text","Image_Alt","Alt_Text","Alt Text","Alt","الت تيست","التيست"),nameAr:col(r,"Title","Name","Title_AR","Product_Name"),nameEn:col(r,"Name_EN","Title_EN"),
    get name(){return LANG==="en"&&this.nameEn?this.nameEn:this.nameAr},
-   cat:col(r,"Category","Category_AR")||"عام",descAr:col(r,"Description","Description_AR"),descEn:col(r,"Description_EN"),
+   cat:catClean||(isBest?"عام":catRaw)||"عام",best:isBest,ts,ord:i,descAr:col(r,"Description","Description_AR"),descEn:col(r,"Description_EN"),
    get desc(){return LANG==="en"&&this.descEn?this.descEn:this.descAr},
    price:price||dp,sale:price&&dp&&dp<price?dp:0,imgs,
    featured:/^(1|true|yes|y|نعم|x)$/i.test(col(r,"Featured")),
@@ -350,13 +360,27 @@ function buildProducts(rows){const H=rows[0].map(norm);
  }).filter(p=>p.nameAr&&p.price>0)}
 
 /* ======================= POLICIES (any *_Text cell with content) ======================= */
+const BEST_RE=/best[\s_\-]*sellers?/i;
 const EXCL=["announcementtext","herotitle","herosubtitle","herotitleen","herosubtitleen","metakeywords","metadescription"];
 const POLT={aboutustext:{ar:"من نحن",en:"About us"},shippingpolicytext:{ar:"سياسة الشحن",en:"Shipping"},returnpolicytext:{ar:"الاستبدال والاسترجاع",en:"Returns & exchange"},privacypolicytext:{ar:"سياسة الخصوصية",en:"Privacy policy"},termstext:{ar:"الشروط والأحكام",en:"Terms & conditions"},termsandconditionstext:{ar:"الشروط والأحكام",en:"Terms & conditions"}};
 const policyKeys=()=>Object.keys(S.m).filter(k=>/text$/.test(k)&&S.m[k]&&!EXCL.includes(k));
 const ptitle=k=>{const t=POLT[k];if(t)return LANG==="en"?t.en:t.ar;return(S.names[k]||k).replace(/_/g," ").replace(/\s*text$/i,"").trim()};
 
 /* ======================= HEAD (favicon / share / keywords) ======================= */
-function applyHead(){
+function applySEO(){
+ const desc=sv("Meta_Description")||T("brandP");
+ let m=document.querySelector('meta[name="description"]');if(!m){m=document.createElement("meta");m.name="description";document.head.appendChild(m)}m.content=desc;
+ document.title=(LANG==="en"?"Black & White Alora | Luxury Bags & Accessories":"Black & White Alora | شنط وإكسسوارات فاخرة");
+ const site={"@context":"https://schema.org","@type":"Store","name":CFG.STORE,"email":sv("Store_Email")||CFG.EMAIL,
+  "telephone":"+"+waNum(),"sameAs":[sv("Facebook_URL"),sv("Instagram_URL"),sv("TikTok_URL")].filter(Boolean)};
+ const list={"@context":"https://schema.org","@type":"ItemList","name":CFG.STORE,"itemListElement":P.slice(0,50).map((p,i)=>({"@type":"ListItem","position":i+1,
+  "item":{"@type":"Product","name":p.nameAr,"sku":p.id,"description":(p.descAr||p.nameAr).slice(0,300),"image":p.imgs[0]||undefined,"category":p.cat,
+   "offers":{"@type":"Offer","price":eff(p),"priceCurrency":"EGP","availability":p.out?"https://schema.org/OutOfStock":"https://schema.org/InStock"}}}))};
+ let s=document.getElementById("ld");if(!s){s=document.createElement("script");s.type="application/ld+json";s.id="ld";document.head.appendChild(s)}
+ s.textContent=JSON.stringify([site,list]);
+}
+function applyHead(){applySEO();
+ WM="";
  const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
  const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const at=k.startsWith("og")?"property":"name";let m=document.querySelector(`meta[${at}="${k}"]`);if(!m){m=document.createElement("meta");m.setAttribute(at,k);document.head.appendChild(m)}m.content=sh});
  const kw=sv("Meta_Keywords");if(kw){let m=document.querySelector('meta[name="keywords"]');if(!m){m=document.createElement("meta");m.name="keywords";document.head.appendChild(m)}m.content=kw}
@@ -414,21 +438,26 @@ const SOC={facebook:{keys:["Facebook_URL","Facebook","فيس بوك","فيسبو
 function findSocial(k){const v=sv(...SOC[k].keys);if(v)return v;
  for(const key in S.m){const x=S.m[key];if(x&&SOC[k].re.test(x))return x}return""}
 function renderFooter(){
- const pols=policyKeys();
- $("#fpol").innerHTML=pols.map(k=>`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
- const soc=[[findSocial("facebook"),I.fb,"Facebook"],[findSocial("instagram"),I.ig,"Instagram"],[findSocial("tiktok"),I.tt,"TikTok"],[sv("Store_Email","Email","الإيميل","البريد")||CFG.EMAIL,I.mail,"Email"]];
- $("#soc").innerHTML=soc.map(([v,ic,lb])=>{if(!v)return"";const h=lb==="Email"?(/^mailto:/i.test(v)?v:"mailto:"+v):(/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,""));
-  return`<a href="${esc(h)}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`}).join("")+`<a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
+ $("#fpol").innerHTML=policyKeys().map(k=>`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
+ const href=v=>!v?"#":/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,"");
+ const soc=[[href(findSocial("facebook")),I.fb,"Facebook"],[href(findSocial("instagram")),I.ig,"Instagram"],[href(findSocial("tiktok")),I.tt,"TikTok"]];
+ const em=(sv("Store_Email","Email")||CFG.EMAIL).replace(/^mailto:/i,"");
+ $("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(u)}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+
+  `<a href="mailto:${esc(em)}" aria-label="Email">${I.mail}</a><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
  $("#yr").textContent=new Date().getFullYear();
  const fab=$("#waFab");fab.href="https://wa.me/"+waNum();fab.hidden=false}
+const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
 function priceHTML(p){return`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`}
 function cardHTML(p,cls){const w=wish.includes(p.id),off=p.sale?Math.round((1-p.sale/p.price)*100):0;
- return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(p.name)}"`)}${off?`<span class="badge">-${off}%</span>`:""}
+ return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
  <button class="fav ${w?"on":""}" data-heart="${esc(p.id)}" aria-label="${T("wish")}">${w?I.heartF:I.heart}</button></div>
  <div class="bd"><h3 data-view="${esc(p.id)}">${esc(p.name)}</h3>${priceHTML(p)}
  <button class="add" data-add="${esc(p.id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button></div></article>`}
 function renderReels(){
- let L=P.filter(p=>p.featured);if(L.length<3)L=P.slice(0,6);L=L.slice(0,10);
+ let L=P.filter(p=>p.best).sort((a,b)=>(b.ts-a.ts)||(b.ord-a.ord));
+ if(!L.length)L=P.filter(p=>p.featured);
+ if(!L.length)L=P.slice(0,6);
+ L=L.slice(0,10);
  $("#reels").innerHTML=L.length?L.map(p=>cardHTML(p,"reel")).join(""):"";
  $("#dots").innerHTML=L.length>1?L.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join(""):"";
  const r=$("#reels");r.onscroll=()=>{const w=(r.children[0]?.offsetWidth||1)+10,i=Math.round(Math.abs(r.scrollLeft)/w);[...$("#dots").children].forEach((d,k)=>d.classList.toggle("on",k===i))}}
@@ -457,25 +486,34 @@ function renderCart(){
  $("#cartBody").innerHTML=bar+cart.map(i=>{const p=byId(i.id);return`<div class="ci">${img(p.imgs[0],160,`alt=""`)}<div class="t"><b>${esc(p.name)}</b><div>${money(eff(p))}</div>
   <div class="qty"><button data-q="${esc(i.id)}:-1" aria-label="-">−</button><span>${i.q}</span><button data-q="${esc(i.id)}:1" aria-label="+">+</button></div>
   <button class="rm" data-rm="${esc(i.id)}">${T("rm")}</button></div></div>`}).join("");
- const s=ls.get("alora_cust",{});
+ const s=ls.get("alora_cust",{}),gov=ls.get("alora_gov","");
+ const row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;
+ const govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>`<option value="${esc(x.gov)}" ${x.gov===gov?"selected":""}>${esc(x.gov)}</option>`).join("")}</select>`:"";
+ const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(row.days))}`:T("govAsk")}</div>`:"";
  $("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>
+  ${govSel}${shipLine}
+  <div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div>
   <input class="in" id="cn" placeholder="${T("name")}" autocomplete="name" value="${esc(s.n)}">
   <input class="in" id="cp" placeholder="${T("phone")}" type="tel" inputmode="tel" autocomplete="tel" value="${esc(s.p)}">
   <input class="in" id="ca" placeholder="${T("addr")}" autocomplete="street-address" value="${esc(s.a)}">
   <p class="err" id="err" role="alert"></p>
   <button class="big dark" id="send">${I.wa}${T("send")}</button>`;
- track("Checkout",{value:t,n})}
+ track("Checkout",{value:grand,n})}
 function sendOrder(){
  const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err");
+ const gov=ls.get("alora_gov","");
  if(n.length<3)return e.textContent=T("eName");
  if(p.replace(/\D/g,"").length<8)return e.textContent=T("ePhone");
  if(a.length<5)return e.textContent=T("eAddr");
+ if(SHIP.length&&!gov)return e.textContent=T("eGov");
  const wa=waNum();if(!wa)return e.textContent=T("eWa");
- const t=cartTotal(),th=num(sv("Free_Shipping_Threshold"));ls.set("alora_cust",{n,p,a});
- const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${p}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+
+ const t=cartTotal(),row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;
+ ls.set("alora_cust",{n,p,a});
+ const shipTxt=sc===null?T("mTbd"):sc===0?T("mFree"):`${sc} ${T("cur")}`;
+ const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${p}\n*${T("mGov")}:* ${gov||"-"}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+
   cart.map((i,k)=>{const x=byId(i.id);return`${k+1}) ${x.name} (${x.id})\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+
-  `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${th&&t>=th?T("mFree"):T("mTbd")}`;
- track("Purchase",{value:t,ids:cart.map(i=>byId(i.id).cid)});
+  `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mDelivery")}:* ${row?row.days:"-"}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;
+ track("Purchase",{value:grand,ids:cart.map(i=>byId(i.id).cid)});
  const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
  cart=[];saveCart();renderCart();closeAll();
  if(!window.open(url,"_blank"))location.href=url}
@@ -490,7 +528,7 @@ function openCart(){closeAll();$("#cart").classList.add("on");lock(true)}
 function openModal(html){$("#mIn").innerHTML=html;$("#modal").classList.add("on");lock(true)}
 function openProduct(id,quiet){const p=byId(id);if(!p)return;curId=id;if(!quiet)track("ViewContent",p);
  const ims=p.imgs.length?p.imgs:[PH];lbList=ims;const w=wish.includes(id);
- openModal(`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(p.name)}" data-lb="${i}"`)).join("")}</div></div>
+ openModal(`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,800,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div></div>
   <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}
   <p>${esc(p.desc)}</p>
   <button class="big dark" data-add="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
@@ -507,6 +545,8 @@ function hook(ev,d){const u=CFG.WEBHOOK||sv("Webhook_URL");if(!u)return;
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
 
 /* ======================= EVENTS ======================= */
+document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
+document.addEventListener("dragstart",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
 document.addEventListener("click",e=>{
  const t=e.target.closest("[data-add],[data-heart],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-pol],[data-wa],[data-lb],[data-dot],#send,#lbN,#lbP,#lbX,#lb");
  if(!t)return;const d=t.dataset;
@@ -534,25 +574,32 @@ $("#cartBtn").onclick=openCart;
 $("#wishBtn").onclick=()=>{wishOnly=!wishOnly;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})};
 $("#langBtn").onclick=()=>{LANG=LANG==="en"?"ar":"en";ls.set("alora_lang",LANG);closeAll();renderAll()};
 $("#q").addEventListener("input",e=>{term=e.target.value;renderGrid()});
+document.addEventListener("change",e=>{if(e.target.id!=="gov")return;
+ const n=$("#cn"),p=$("#cp"),a=$("#ca");
+ ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});
+ ls.set("alora_gov",e.target.value);renderCart()});
 
 /* ======================= BOOT (show cache instantly, then refresh) ======================= */
-function applySheets(pText,sText){
+function applySheets(pText,sText,shText){
  if(sText){const rows=parseCSV(sText);if(rows.length)S=buildSettings(rows)}
  if(pText){P=buildProducts(parseCSV(pText))}
+ if(shText)SHIP=parseShip(shText);
  applyHead();renderAll();initAnalytics()}
 (async function boot(){
- const cp=ls.get("alora_csv_p",null),cs=ls.get("alora_csv_s",null);
+ const cp=ls.get("alora_csv_p",null),cs=ls.get("alora_csv_s",null),csh=ls.get("alora_csv_ship",null);
  renderAll();
- if(cp||cs){applySheets(cp,cs)}
- const [rp,rs]=await Promise.allSettled([fetchText(CFG.PRODUCTS_URL),fetchText(CFG.SETTINGS_URL)]);
+ if(cp||cs||csh){applySheets(cp,cs,csh)}
+ const [rp,rs,rsh]=await Promise.allSettled([fetchText(CFG.PRODUCTS_URL),fetchText(CFG.SETTINGS_URL),fetchText(CFG.SHIP_URL)]);
+ let shText=rsh.status==="fulfilled"?rsh.value:null;
  /* decide which tab is products by its headers, whatever the gid order */
  let pText=rp.status==="fulfilled"?rp.value:null,sText=rs.status==="fulfilled"?rs.value:null;
  const isProd=t=>{const h=(parseCSV(t)[0]||[]).map(norm);return h.includes("price")&&(h.includes("name")||h.includes("title"))};
  if(pText&&!isProd(pText)&&sText&&isProd(sText)){[pText,sText]=[sText,pText]}
  if(pText&&isProd(pText)){ls.set("alora_csv_p",pText)}else pText=null;
  if(sText)ls.set("alora_csv_s",sText);
+ if(shText)ls.set("alora_csv_ship",shText);
  if(!pText&&!cp){$("#grid").innerHTML=`<div class="empty">${T("fail")} <button style="text-decoration:underline" onclick="location.reload()">${T("retry")}</button></div>`;return}
- if(pText||sText)applySheets(pText||cp,sText||cs);
+ if(pText||sText||shText)applySheets(pText||cp,sText||cs,shText||csh);
  if(!pText&&cp)toast(T("stale"))
 })();
 </script>
