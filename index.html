@@ -425,7 +425,9 @@ function applyLang(){
 }
 function applyHero(){const ar=LANG!=="en";
  $("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");
- $("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP")}
+ $("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP");
+ /* footer line: from Site_Settings > Footer_Text; empty or missing = the code default */
+ $("#brandP").textContent=(ar?sv("Footer_Text"):"")||T("brandP")}
 function renderAnn(){const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textContent=a;e.hidden=false}else e.hidden=true}
 function renderNav(){
  const pols=policyKeys();
