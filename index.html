@@ -76,9 +76,10 @@ section{padding-top:24px}
 .dots i.on{background:var(--ink);width:14px}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(min-width:760px){.cols{gap:16px}}
-.col{position:relative;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:var(--card);cursor:pointer}
+.col{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--card);cursor:pointer}
+@media(min-width:760px){.col{aspect-ratio:3/2}}
 .col img{width:100%;height:100%;object-fit:cover}
-.col span{position:absolute;bottom:8px;inset-inline-start:8px;inset-inline-end:8px;background:rgba(255,255,255,.95);text-align:center;font-weight:700;font-size:12.5px;padding:5px 4px;border-radius:8px}
+.col span{position:absolute;bottom:8px;inset-inline-start:8px;inset-inline-end:8px;background:rgba(255,255,255,.95);text-align:center;font-weight:700;font-size:14px;padding:5px 4px;border-radius:8px}
 .tools{display:flex;gap:10px;align-items:center;margin-bottom:10px}
 .search{flex:1;height:38px;border:1px solid var(--line);border-radius:19px;padding:0 15px;background:#fff;font:inherit;font-size:13.5px;color:var(--ink);outline:none;min-width:0}
 .search:focus{border-color:var(--ink)}
@@ -162,6 +163,28 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 .toast{position:fixed;bottom:84px;left:50%;transform:translate(-50%,14px);background:var(--ink);color:#fff;padding:9px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:95;white-space:nowrap}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* v5 override: small category tiles, label under the image (not over it) */
+/* v7: category tiles capped in size, centered */
+.cols{grid-template-columns:repeat(2,minmax(0,170px));justify-content:center;gap:12px}
+@media(min-width:760px){.cols{grid-template-columns:repeat(4,minmax(0,170px));gap:16px}}
+.col{position:relative;aspect-ratio:auto;background:none;border-radius:0;overflow:visible;display:flex;flex-direction:column;align-items:center;padding:0}
+.col img{width:100%;aspect-ratio:1/1;height:auto;object-fit:cover;border-radius:12px}
+.col span{position:static;background:none;padding:6px 0 0;font-size:12px;font-weight:700;text-align:center;line-height:1.3}
+
+/* v6: best sellers as tall story-style cards, text small and on the image */
+.reel{width:44vw;max-width:200px;aspect-ratio:9/16;border-radius:16px;position:relative;overflow:hidden;background:#111}
+.reel .im{position:absolute;inset:0;aspect-ratio:auto}
+.reel .im img{height:100%}
+.reel .bd{position:absolute;left:0;right:0;bottom:0;padding:36px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff}
+.reel .bd h3{font-size:12px;min-height:0;color:#fff;-webkit-line-clamp:2}
+.reel .price{color:#fff;margin:2px 0 6px}
+.reel .price b{font-size:12px;color:#fff}
+.reel .price s{color:#ddd;font-size:10px}
+.reel .add{background:#fff;color:var(--ink);padding:6px;font-size:11px}
+.reel .badge{top:8px;inset-inline-start:8px;font-size:9.5px;padding:2px 6px}
+.reel .fav{top:8px;inset-inline-end:8px;width:28px;height:28px}
+.reel .fav svg{width:14px;height:14px}
 </style>
 </head>
 <body>
@@ -242,10 +265,10 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 <script>
 /* ======================= CONFIG ======================= */
 const CFG={
- PRODUCTS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv",
- SETTINGS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv",
+ PRODUCTS_URL:"https://script.google.com/macros/s/AKfycbzfosQSJOnxz3TrJTcYZU2UzV0UONZHInZvY6ElWYd1ShIl3Gcqeh8A4XH97sIWWXhKMQ/exec?sheet=Products",
+ SETTINGS_URL:"https://script.google.com/macros/s/AKfycbzfosQSJOnxz3TrJTcYZU2UzV0UONZHInZvY6ElWYd1ShIl3Gcqeh8A4XH97sIWWXhKMQ/exec?sheet=Site_Settings",
  PROXIES:[u=>u,u=>"https://corsproxy.io/?"+encodeURIComponent(u),u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)],
- WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora",WEBHOOK:"",SHIP_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=396393175&single=true&output=csv"
+ WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora",WEBHOOK:"",SHIP_URL:"https://script.google.com/macros/s/AKfycbzfosQSJOnxz3TrJTcYZU2UzV0UONZHInZvY6ElWYd1ShIl3Gcqeh8A4XH97sIWWXhKMQ/exec?sheet=Shipping"
 };
 const ALL="الكل";
 /* Signature collections: image from Site_Settings, code fallback when empty */
@@ -277,12 +300,12 @@ let LANG=ls.get("alora_lang","ar");
 let SHIP=[],S={m:{},names:{}},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null;
 
 const D={
- ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي عن منتج...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
-   shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",shipNote:x=>`شحن مجاني للطلبات فوق ${x}`,total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم بالكامل.",ePhone:"رقم الهاتف غير صحيح.",eAddr:"اكتبي المحافظة والعنوان.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
+ ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
+   shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",shipNote:x=>`شحن مجاني للطلبات فوق ${x}`,total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم الكامل (اسمين على الأقل).",ePhone:"اكتبي رقم موبايل مصري صحيح (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015).",eAddr:"اكتبي العنوان بالتفصيل: الشارع والمنطقة ورقم المبنى.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
    mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد عند التأكيد",mOne:"أرغب في طلب هذا المنتج",mCode:"الكود",mPrice:"السعر",
    stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",fail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",soon:"سيتم إضافة المحتوى قريبًا.",brandP:"شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.",navBest:"الأكثر مبيعًا",navCols:"التصنيفات",navShop:"المنتجات",cur:"ج.م",
    sum:"ملخص الطلب",govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام عمل`,grand:"الإجمالي شامل الشحن",eGov:"اختاري المحافظة.",mGov:"المحافظة",mDelivery:"مدة التوصيل",mGrand:"الإجمالي شامل الشحن",shipWord:"الشحن",pdfClose:"إغلاق",itemsOne:"منتج"},
- en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Information",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search products...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
+ en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Information",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search by product name or code...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
    shipLeft:x=>`Add <b>${x}</b> more for free shipping`,shipOk:"Your order qualifies for free shipping",shipNote:x=>`Free shipping on orders over ${x}`,total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Full address",send:"Send order via WhatsApp",eName:"Please enter your full name.",ePhone:"Invalid phone number.",eAddr:"Please enter your governorate and address.",eWa:"Store WhatsApp is currently unavailable.",
    mNew:"New order",mName:"Name",mPhone:"Phone",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"Confirmed on order",mOne:"I'd like to order this product",mCode:"Code",mPrice:"Price",
    stale:"Couldn't refresh, showing the last saved version",fail:"Couldn't load products.",retry:"Try again",soon:"Content coming soon.",brandP:"Luxury bags and accessories with a calm, elegant design.",navBest:"Best sellers",navCols:"Collections",navShop:"Shop",cur:"EGP",
@@ -347,12 +370,12 @@ function buildProducts(rows){const H=rows[0].map(norm);
   const price=num(col(r,"Price")),dp=num(col(r,"Discount_Price","Sale_Price")),id=col(r,"Code","ID","SKU")||"p"+(i+1);
   const imgs=[...new Set([...splitImgs(col(r,"Main_Image","Image_URL","Image")),...splitImgs(col(r,"Gallery_Images","Gallery"))])];
   const stock=col(r,"Stock_Status","In_Stock");
-  const catRaw=col(r,"Category","Category_AR");const isBest=BEST_RE.test(catRaw);
+  const catRaw=col(r,"Category","Category_AR");const isBest=BEST_RE.test(catRaw)||/^(yes|نعم|true|1|x|y)$/i.test(col(r,"Best_Seller"));
   const catClean=catRaw.replace(BEST_RE,"").replace(/^[\s|,;\-–_]+|[\s|,;\-–_]+$/g,"").trim();
   const ts=Date.parse(col(r,"Date","Created_At","Created","Timestamp","Updated_At"))||0;
   return{id,cid:col(r,"Meta_Content_ID")||id,alt:col(r,"Main_Image_Alt","Image_Alt_Text","Image_Alt","Alt_Text","Alt Text","Alt","الت تيست","التيست"),nameAr:col(r,"Title","Name","Title_AR","Product_Name"),nameEn:col(r,"Name_EN","Title_EN"),
    get name(){return LANG==="en"&&this.nameEn?this.nameEn:this.nameAr},
-   cat:catClean||(isBest?"عام":catRaw)||"عام",best:isBest,ts,ord:i,descAr:col(r,"Description","Description_AR"),descEn:col(r,"Description_EN"),
+   cat:catClean||(isBest?"أخرى":catRaw)||"أخرى",best:isBest,ts,ord:i,descAr:col(r,"Description","Description_AR"),descEn:col(r,"Description_EN"),
    get desc(){return LANG==="en"&&this.descEn?this.descEn:this.descAr},
    price:price||dp,sale:price&&dp&&dp<price?dp:0,imgs,
    featured:/^(1|true|yes|y|نعم|x)$/i.test(col(r,"Featured")),
@@ -471,7 +494,7 @@ function renderChips(){
 function renderGrid(){
  const L=P.filter(p=>{if(wishOnly)return wish.includes(p.id);
   if(cat!==ALL&&p.cat!==cat)return false;if(collRe&&!collRe.test(p.cat))return false;
-  if(term&&!norm(p.name+p.cat+p.desc).includes(norm(term)))return false;return true});
+  if(term&&!norm(p.name+p.cat+p.desc+p.id).includes(norm(term)))return false;return true});
  $("#grid").innerHTML=L.length?L.map(p=>cardHTML(p,"card")).join(""):`<div class="empty">${wishOnly?T("emptyWish"):T("emptyCat")}</div>`;
  const wc=$("#wc");wc.textContent=wish.length;wc.hidden=!wish.length}
 function renderAll(){applyLang();applyHero();renderAnn();renderNav();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
@@ -504,9 +527,9 @@ function renderCart(){
 function sendOrder(){
  const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err");
  const gov=ls.get("alora_gov","");
- if(n.length<3)return e.textContent=T("eName");
- if(p.replace(/\D/g,"").length<8)return e.textContent=T("ePhone");
- if(a.length<5)return e.textContent=T("eAddr");
+ if(n.split(/\s+/).filter(Boolean).length<2||n.length<5)return e.textContent=T("eName");
+ const pd=p.replace(/\D/g,"").replace(/^20/,"0");if(!/^01[0125]\d{8}$/.test(pd))return e.textContent=T("ePhone");
+ if(a.length<15||a.split(/\s+/).filter(Boolean).length<4)return e.textContent=T("eAddr");
  if(SHIP.length&&!gov)return e.textContent=T("eGov");
  const wa=waNum();if(!wa)return e.textContent=T("eWa");
  const t=cartTotal(),row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;
