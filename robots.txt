@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hellolucidagency-lang.github.io/bwalor/sitemap.xml
