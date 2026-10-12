@@ -361,7 +361,7 @@ function buildProducts(rows){const H=rows[0].map(norm);
 
 /* ======================= POLICIES (any *_Text cell with content) ======================= */
 const BEST_RE=/best[\s_\-]*sellers?/i;
-const EXCL=["announcementtext","herotitle","herosubtitle","herotitleen","herosubtitleen","metakeywords","metadescription"];
+const EXCL=["announcementtext","footertext","herotitle","herosubtitle","herotitleen","herosubtitleen","metakeywords","metadescription"];
 const POLT={aboutustext:{ar:"من نحن",en:"About us"},shippingpolicytext:{ar:"سياسة الشحن",en:"Shipping"},returnpolicytext:{ar:"الاستبدال والاسترجاع",en:"Returns & exchange"},privacypolicytext:{ar:"سياسة الخصوصية",en:"Privacy policy"},termstext:{ar:"الشروط والأحكام",en:"Terms & conditions"},termsandconditionstext:{ar:"الشروط والأحكام",en:"Terms & conditions"}};
 const policyKeys=()=>Object.keys(S.m).filter(k=>/text$/.test(k)&&S.m[k]&&!EXCL.includes(k));
 const ptitle=k=>{const t=POLT[k];if(t)return LANG==="en"?t.en:t.ar;return(S.names[k]||k).replace(/_/g," ").replace(/\s*text$/i,"").trim()};
