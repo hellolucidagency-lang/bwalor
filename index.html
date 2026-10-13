@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KT54SJNK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'GT-KT54SJNK');
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Black &amp; White Alora | شنط وإكسسوارات فاخرة</title>
@@ -246,7 +256,7 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
  <div class="wrap">
   <div class="fcols">
    <div><div class="brand" style="font-size:17px">Black &amp; White <span>Alora</span></div><p id="brandP" style="font-size:13px;color:#55524b;margin-top:8px"></p></div>
-   <div><button class="flink" id="aboutLink" data-pol="aboutustext" hidden></button><h4 id="tInfo" class="acc open" role="button" tabindex="0"></h4><div id="fpol" class="accb"></div></div>
+   <div><a class="flink" id="aboutLink" href="about.html" hidden></a><h4 id="tInfo" class="acc open" role="button" tabindex="0"></h4><div id="fpol" class="accb"></div></div>
    <div><h4 id="tContact"></h4><div class="soc" id="soc"></div></div>
   </div>
   <div class="copy"><div class="legal-ar">بلاك آند وايت التجارية</div><div id="copyLine"></div></div>
@@ -512,7 +522,8 @@ const SOC={facebook:{keys:["Facebook_URL","Facebook","فيس بوك","فيسبو
 function findSocial(k){const v=sv(...SOC[k].keys);if(v)return v;
  for(const key in S.m){const x=S.m[key];if(x&&SOC[k].re.test(x))return x}return""}
 function renderFooter(){
- $("#fpol").innerHTML=policyKeys().filter(k=>k!=="aboutustext").map(k=>`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
+ const POLPAGE={privacypolicytext:"privacy.html",shippingpolicytext:"shipping.html",returnpolicytext:"returns.html"};
+ $("#fpol").innerHTML=policyKeys().filter(k=>k!=="aboutustext").map(k=>POLPAGE[k]?`<a class="flink" href="${POLPAGE[k]}">${esc(ptitle(k))}</a>`:`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
  $("#aboutLink").hidden=!sv("About_Us_Text");
  const href=v=>!v?"#":/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,"");
  const soc=[[href(findSocial("facebook")),I.fb,"Facebook"],[href(findSocial("instagram")),I.ig,"Instagram"],[href(findSocial("tiktok")),I.tt,"TikTok"]];
