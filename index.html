@@ -390,6 +390,7 @@ function parseShip(t){
  const rows=parseCSV(t);
  if(rows.length<2)return[];
  const H=rows[0].map(norm);
+ const hasActive=H.includes("active");
  const col=(r,...names)=>{
   for(const n of names){
    const i=H.indexOf(norm(n));
@@ -399,10 +400,11 @@ function parseShip(t){
  };
  return rows.slice(1).map(r=>({
   gov:col(r,"Governorate","المحافظة"),
+  active:col(r,"Active"),
   cost:num(col(r,"Shipping_Cost")),
   days:col(r,"Delivery_Days"),
   free:num(col(r,"Free_Above"))
- })).filter(x=>x.gov);
+ })).filter(x=>x.gov && (!hasActive || /^yes$/i.test(x.active)));
 }
 const govRow=v=>SHIP.find(x=>x.gov===v)||null;
 const shipFor=(row,t)=>{if(!row)return null;return(row.free&&t>=row.free)?0:row.cost};
@@ -567,6 +569,7 @@ const saveCart=()=>ls.set("alora_cart",cart);
 const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
 function addToCart(id,size=""){const p=byId(id);if(!p||p.out)return;if(p.sizes&&p.sizes.length&&!size){openProduct(id);toast(T("pickSize"));return}const it=cart.find(i=>i.id===id&&(i.size||"")===size);it?it.q++:cart.push({id,q:1,size});saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"))}
 function renderCart(){
+ if(!P.length)return;
  cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;
  if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}
  const row0=govRow(ls.get("alora_gov","")),th=row0&&row0.free?row0.free:0,t=cartTotal();
