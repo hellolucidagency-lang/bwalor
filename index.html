@@ -694,5 +694,25 @@ function applySheets(pText,sText,shText){
  if(!pText&&cp)toast(T("stale"))
 })();
 </script>
+<script>
+/* page-view tracking -> n8n webhook (no personal data: page path, referrer, Cairo time) */
+window.addEventListener('DOMContentLoaded', () => {
+  const webhookUrl = "https://n8n.hellolucidagency.com/webhook/5f7315eb-edd3-480b-bf0c-f2c498ad7f61";
+  try {
+    fetch(webhookUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true,
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        event: 'PageView',
+        page: window.location.pathname || '/',
+        source: document.referrer || 'Direct',
+        timestamp: new Date().toLocaleString('en-US', { timeZone: 'Africa/Cairo' })
+      })
+    }).catch(() => {});
+  } catch (e) {}
+});
+</script>
 </body>
 </html>
