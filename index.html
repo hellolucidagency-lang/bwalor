@@ -166,7 +166,8 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 
 /* v5 override: small category tiles, label under the image (not over it) */
 /* v7: category tiles capped in size, centered */
-.cols{grid-template-columns:repeat(2,minmax(0,170px));justify-content:center;gap:12px}
+.cols{grid-template-columns:repeat(4,minmax(0,84px));justify-content:center;gap:10px}
+@media(max-width:759px){.col span{font-size:11px;padding-top:4px}}
 @media(min-width:760px){.cols{grid-template-columns:repeat(4,minmax(0,170px));gap:16px}}
 .col{position:relative;aspect-ratio:auto;background:none;border-radius:0;overflow:visible;display:flex;flex-direction:column;align-items:center;padding:0}
 .col img{width:100%;aspect-ratio:1/1;height:auto;object-fit:cover;border-radius:12px}
@@ -273,10 +274,10 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 <script>
 /* ======================= CONFIG ======================= */
 const CFG={
- PRODUCTS_URL:"https://script.google.com/macros/s/AKfycbzz-ASYqYvTdrkOMSK78UrnRJdtk2_uCOYiRLjruhFMJJt2qgqBtvuTjluOnGxzOq_6qQ/exec?sheet=Products",
- SETTINGS_URL:"https://script.google.com/macros/s/AKfycbzz-ASYqYvTdrkOMSK78UrnRJdtk2_uCOYiRLjruhFMJJt2qgqBtvuTjluOnGxzOq_6qQ/exec?sheet=Site_Settings",
+ PRODUCTS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=2078282954&single=true&output=csv",
+ SETTINGS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv",
  PROXIES:[u=>u,u=>"https://corsproxy.io/?"+encodeURIComponent(u),u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)],
- WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora",WEBHOOK:"",SHIP_URL:"https://script.google.com/macros/s/AKfycbzz-ASYqYvTdrkOMSK78UrnRJdtk2_uCOYiRLjruhFMJJt2qgqBtvuTjluOnGxzOq_6qQ/exec?sheet=Shipping"
+ WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora",WEBHOOK:"",SHIP_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=396393175&single=true&output=csv"
 };
 const ALL="الكل";
 /* Signature collections: image from Site_Settings, code fallback when empty */
