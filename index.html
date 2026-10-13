@@ -190,6 +190,9 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 .acc.open::after{transform:rotate(180deg)}
 .accb{margin-top:6px}
 .legal-ar{font-size:11px;color:var(--mut);margin-bottom:6px}
+/* v8: plus/minus on the policies group heading */
+.acc::after{content:"+";font-size:18px;font-weight:400;line-height:1;transition:none}
+.acc.open::after{content:"\2212"}
 </style>
 </head>
 <body>
@@ -305,16 +308,16 @@ let LANG=ls.get("alora_lang","ar");
 let SHIP=[],S={m:{},names:{}},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null;
 
 const D={
- ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"سياسات المتجر",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
+ ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات مهمة",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
    shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",shipNote:x=>`شحن مجاني للطلبات فوق ${x}`,total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم الكامل (اسمين على الأقل).",ePhone:"اكتبي رقم موبايل مصري صحيح (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015).",eAddr:"اكتبي العنوان بالتفصيل: الشارع والمنطقة ورقم المبنى.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
    mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد عند التأكيد",mOne:"أرغب في طلب هذا المنتج",mCode:"الكود",mPrice:"السعر",
    stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",fail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",soon:"سيتم إضافة المحتوى قريبًا.",brandP:"شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.",navBest:"الأكثر مبيعًا",navCols:"التصنيفات",navShop:"المنتجات",cur:"ج.م",
-   sum:"ملخص الطلب",govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام عمل`,grand:"الإجمالي شامل الشحن",eGov:"اختاري المحافظة.",mGov:"المحافظة",mDelivery:"مدة التوصيل",mGrand:"الإجمالي شامل الشحن",shipWord:"الشحن",pdfClose:"إغلاق",itemsOne:"منتج"},
- en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Store policies",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search by product name or code...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
+   sum:"ملخص الطلب",govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام عمل`,grand:"الإجمالي شامل الشحن",eGov:"اختاري المحافظة.",mGov:"المحافظة",mDelivery:"مدة التوصيل",mGrand:"الإجمالي شامل الشحن",shipWord:"الشحن",freeNote:x=>`الشحن مجاني للطلبات بقيمة ${x} جنيه أو أكثر`,pdfClose:"إغلاق",itemsOne:"منتج"},
+ en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Important information",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search by product name or code...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
    shipLeft:x=>`Add <b>${x}</b> more for free shipping`,shipOk:"Your order qualifies for free shipping",shipNote:x=>`Free shipping on orders over ${x}`,total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Full address",send:"Send order via WhatsApp",eName:"Please enter your full name.",ePhone:"Invalid phone number.",eAddr:"Please enter your governorate and address.",eWa:"Store WhatsApp is currently unavailable.",
    mNew:"New order",mName:"Name",mPhone:"Phone",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"Confirmed on order",mOne:"I'd like to order this product",mCode:"Code",mPrice:"Price",
    stale:"Couldn't refresh, showing the last saved version",fail:"Couldn't load products.",retry:"Try again",soon:"Content coming soon.",brandP:"Luxury bags and accessories with a calm, elegant design.",navBest:"Best sellers",navCols:"Collections",navShop:"Shop",cur:"EGP",
-   sum:"Order summary",govPick:"Choose governorate",govAsk:"Choose a governorate to calculate shipping",shipCost:x=>`Shipping: ${x}`,shipFree:"Free shipping",delivery:x=>`Delivery in ${x} business days`,grand:"Total incl. shipping",eGov:"Please choose a governorate.",mGov:"Governorate",mDelivery:"Delivery",mGrand:"Total incl. shipping",shipWord:"Shipping",pdfClose:"Close",itemsOne:"item"}
+   sum:"Order summary",govPick:"Choose governorate",govAsk:"Choose a governorate to calculate shipping",shipCost:x=>`Shipping: ${x}`,shipFree:"Free shipping",delivery:x=>`Delivery in ${x} business days`,grand:"Total incl. shipping",eGov:"Please choose a governorate.",mGov:"Governorate",mDelivery:"Delivery",mGrand:"Total incl. shipping",shipWord:"Shipping",freeNote:x=>`Free shipping on orders of ${x} EGP or more`,pdfClose:"Close",itemsOne:"item"}
 };
 const T=(k,...a)=>{const v=(D[LANG]||D.ar)[k];return typeof v==="function"?v(...a):(v??"")};
 const money=n=>Number(n).toLocaleString("en-US")+" "+T("cur");
@@ -478,6 +481,7 @@ function renderFooter(){
  $("#copyLine").textContent=`© ${new Date().getFullYear()} — ${LANG==="en"?"All rights reserved":"جميع الحقوق محفوظة"}`;
  const fab=$("#waFab");fab.href="https://wa.me/"+waNum();fab.hidden=false}
 const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
+function freeNoteHTML(){const row=govRow(ls.get("alora_gov",""));return row&&row.free?`<div class="ship">${T("freeNote",row.free)}</div>`:""}
 function priceHTML(p){return`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`}
 function cardHTML(p,cls){const w=wish.includes(p.id),off=p.sale?Math.round((1-p.sale/p.price)*100):0;
  return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
@@ -512,7 +516,7 @@ function addToCart(id){const p=byId(id);if(!p||p.out)return;const it=cart.find(i
 function renderCart(){
  cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;
  if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}
- const th=num(sv("Free_Shipping_Threshold")),t=cartTotal();
+ const row0=govRow(ls.get("alora_gov","")),th=row0&&row0.free?row0.free:0,t=cartTotal();
  const bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";
  $("#cartBody").innerHTML=bar+cart.map(i=>{const p=byId(i.id);return`<div class="ci">${img(p.imgs[0],160,`alt=""`)}<div class="t"><b>${esc(p.name)}</b><div>${money(eff(p))}</div>
   <div class="qty"><button data-q="${esc(i.id)}:-1" aria-label="-">−</button><span>${i.q}</span><button data-q="${esc(i.id)}:1" aria-label="+">+</button></div>
@@ -520,7 +524,7 @@ function renderCart(){
  const s=ls.get("alora_cust",{}),gov=ls.get("alora_gov","");
  const row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;
  const govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>`<option value="${esc(x.gov)}" ${x.gov===gov?"selected":""}>${esc(x.gov)}</option>`).join("")}</select>`:"";
- const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(row.days))}`:T("govAsk")}</div>`:"";
+ const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(row.days))}`:T("govAsk")}</div>${row&&row.free?`<div class="ship">${T("freeNote",row.free)}</div>`:""}`:"";
  $("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>
   ${govSel}${shipLine}
   <div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div>
@@ -560,7 +564,7 @@ function openModal(html){$("#mIn").innerHTML=html;$("#modal").classList.add("on"
 function openProduct(id,quiet){const p=byId(id);if(!p)return;curId=id;if(!quiet)track("ViewContent",p);
  const ims=p.imgs.length?p.imgs:[PH];lbList=ims;const w=wish.includes(id);
  openModal(`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,800,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div></div>
-  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}
+  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}${freeNoteHTML()}
   <p>${esc(p.desc)}</p>
   <button class="big dark" data-add="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
   ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
