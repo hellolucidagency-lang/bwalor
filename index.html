@@ -372,19 +372,48 @@ function fixImg(u){
 const splitImgs=s=>String(s||"").split(/\s*(?:\n|\||;)\s*|,\s*(?=https?:\/\/|\/\/)/).map(fixImg).filter(Boolean);
 
 /* ======================= PARSE SHEETS ======================= */
-function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];const H=rows[0].map(norm);
- const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]&&r[i].trim())return r[i].trim()}return""};
- return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),cost:num(col(r,"Shipping_Cost")),days:col(r,"Delivery_Days"),free:num(col(r,"Free_Above"))})).filter(x=>x.gov)}
+function parseShip(t){
+ const rows=parseCSV(t);
+ if(rows.length<2)return[];
+ const H=rows[0].map(norm);
+ const col=(r,...names)=>{
+  for(const n of names){
+   const i=H.indexOf(norm(n));
+   if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim();
+  }
+  return "";
+ };
+ return rows.slice(1).map(r=>({
+  gov:col(r,"Governorate","المحافظة"),
+  cost:num(col(r,"Shipping_Cost")),
+  days:col(r,"Delivery_Days"),
+  free:num(col(r,"Free_Above"))
+ })).filter(x=>x.gov);
+}
 const govRow=v=>SHIP.find(x=>x.gov===v)||null;
 const shipFor=(row,t)=>{if(!row)return null;return(row.free&&t>=row.free)?0:row.cost};
-function buildSettings(rows){const m={},names={};if(!rows.length)return{m,names};
- const known=["metapixelid","gatrackingid","announcementtext","storephonewhatsapp","freeshippingthreshold","aboutustext","facebookurl","herotitle","herosubtitle","metakeywords","faviconurl","shareimageurl","categorybagsimage","categoryringsimage","categoryearringsimage","categorysetsimage","watermarkid"];
- const hdr=rows[0].map(norm);
- if(hdr.filter(k=>known.includes(k)).length>=2||(rows[0].length>=3&&rows.length<=2)){
-  rows[0].forEach((h,i)=>{const k=norm(h);if(k){m[k]=((rows[1]&&rows[1][i])||"").trim();names[k]=h.trim()}});return{m,names}}
- rows.forEach(r0=>{const r=(r0.length===1&&r0[0].includes(";"))?r0[0].split(";"):r0;
-  if(r[0]&&r[1]!==undefined){const k=norm(r[0]);m[k]=(r[1]||"").trim();names[k]=r[0].trim()}});
- return{m,names}}
+function buildSettings(rows){
+ const m={},names={};if(!rows.length)return{m,names};
+ if(rows.length>=2 && rows[0].length>1){
+  rows[0].forEach((h,i)=>{
+   const k=norm(h);
+   if(k){
+    m[k]=((rows[1]&&rows[1][i])||"").trim();
+    names[k]=h.trim();
+   }
+  });
+  return{m,names};
+ }
+ rows.forEach(r0=>{
+  const r=(r0.length===1&&r0[0].includes(";"))?r0[0].split(";"):r0;
+  if(r[0]&&r[1]!==undefined){
+   const k=norm(r[0]);
+   m[k]=(r[1]||"").trim();
+   names[k]=r[0].trim();
+  }
+ });
+ return{m,names};
+}
 function buildProducts(rows){const H=rows[0].map(norm);
  const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]&&r[i].trim())return r[i].trim()}return""};
  return rows.slice(1).map((r,i)=>{
