@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KT54SJNK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'GT-KT54SJNK');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>سياسة الشحن | Black &amp; White Alora</title>
+<meta name="description" content="سياسة الشحن - Black &amp; White Alora">
+<link rel="canonical" href="https://bwalora.com/shipping.html">
+<style>
+body{font-family:'Cairo',system-ui,sans-serif;background:#FAF9F6;color:#1A1A1A;margin:0;line-height:1.9;font-size:15px}
+.w{max-width:760px;margin:0 auto;padding:24px 18px 60px}
+a.back{color:#1A1A1A;font-weight:700;text-decoration:none;font-size:14px}
+h1{font-size:24px;margin:18px 0 14px}
+#c{white-space:pre-line;color:#3d3b36}
+.muted{color:#77736a}
+</style>
+</head>
+<body>
+<div class="w">
+<a class="back" href="/">Black &amp; White Alora ←</a>
+<h1 id="t">سياسة الشحن</h1>
+<div id="c" class="muted">...</div>
+</div>
+<script>
+const KEY="shippingpolicytext";
+const TITLES={ar:"سياسة الشحن",en:"Shipping policy"};
+const SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub?gid=0&single=true&output=csv";
+const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
+function parseCSV(t){t=t.replace(/^\uFEFF/,"");const rows=[];let r=[],c="",q=false;
+ for(let i=0;i<t.length;i++){const ch=t[i];
+  if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
+  else if(ch==='"')q=true;else if(ch===","){r.push(c);c=""}
+  else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);rows.push(r);r=[];c=""}else c+=ch}
+ if(c!==""||r.length){r.push(c);rows.push(r)}
+ return rows.filter(x=>x.some(v=>v.trim()))}
+function bi(t,lang){t=String(t||"");if(!/\[(AR|EN)\]/i.test(t))return t.trim();
+ const m=t.split(/\[(AR|EN)\]/i),out={};
+ for(let i=1;i<m.length;i+=2){const k=m[i].toUpperCase();out[k]=(out[k]||"")+m[i+1]}
+ return (out[lang==="en"?"EN":"AR"]||out.AR||out.EN||"").trim()}
+function findValue(rows,key){
+ const k=norm(key);
+ const h=rows[0]||[];const hi=h.findIndex(x=>norm(x)===k);
+ if(hi>-1&&rows[1])return rows[1][hi]||"";
+ const row=rows.find(r=>norm(r[0])===k);
+ return row?(row[1]||""):"";
+}
+const lang=(localStorage.getItem("alora_lang")==="en")?"en":"ar";
+if(lang==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.title=TITLES.en+" | Black & White Alora";document.getElementById("t").textContent=TITLES.en}
+fetch(SHEET,{cache:"no-cache"}).then(r=>r.text()).then(t=>{
+ const txt=bi(findValue(parseCSV(t),KEY),lang);
+ const c=document.getElementById("c");
+ c.textContent=txt||(lang==="en"?"Content coming soon.":"سيتم إضافة المحتوى قريبًا.");
+ c.className="";
+}).catch(()=>{document.getElementById("c").textContent=lang==="en"?"Couldn't load the content, please try again later.":"تعذّر تحميل المحتوى، جرّبي لاحقًا."});
+</script>
+</body>
+</html>
