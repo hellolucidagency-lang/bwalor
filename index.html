@@ -14,13 +14,13 @@
 <link rel="apple-touch-icon" href="https://res.cloudinary.com/qb1cuzha/image/upload/v1791671513/c6db326a-03bd-4345-9aa7-41f11f9f205a.jpg">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Black &amp; White Alora">
-<meta property="og:title" content="Black &amp; White Alora | شنط وإكسسوارات فاخرة">
-<meta property="og:description" content="شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.">
-<meta property="og:image" content="https://res.cloudinary.com/qb1cuzha/image/upload/f_auto,q_auto,w_1200,h_630,c_pad/0cf914b8-07e4-440f-88b8-42a75cdbfbc5">
+<meta property="og:title" content="Black &amp; White Alora | More Than Accessories">
+<meta property="og:description" content="مش مجرد شنطة أو إكسسوار؛ دي تفاصيل بتختاريها على مزاجك.">
+<meta property="og:image" content="https://res.cloudinary.com/qb1cuzha/image/upload/f_auto,q_auto,w_1200,h_630,c_fill,g_auto/0cf914b8-07e4-440f-88b8-42a75cdbfbc5">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://res.cloudinary.com/qb1cuzha/image/upload/f_auto,q_auto,w_1200,h_630,c_pad/0cf914b8-07e4-440f-88b8-42a75cdbfbc5">
+<meta name="twitter:image" content="https://res.cloudinary.com/qb1cuzha/image/upload/f_auto,q_auto,w_1200,h_630,c_fill,g_auto/0cf914b8-07e4-440f-88b8-42a75cdbfbc5">
 <style>
 :root{--bg:#FAF9F6;--card:#F2F0EC;--ink:#1A1A1A;--mut:#77736a;--line:#E6E3DC;--gold:#C9A84C}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -185,6 +185,11 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
 .reel .badge{top:8px;inset-inline-start:8px;font-size:9.5px;padding:2px 6px}
 .reel .fav{top:8px;inset-inline-end:8px;width:28px;height:28px}
 .reel .fav svg{width:14px;height:14px}
+.acc{cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.acc::after{content:"▾";font-size:12px;transition:transform .2s}
+.acc.open::after{transform:rotate(180deg)}
+.accb{margin-top:6px}
+.legal-ar{font-size:11px;color:var(--mut);margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -234,10 +239,10 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
  <div class="wrap">
   <div class="fcols">
    <div><div class="brand" style="font-size:17px">Black &amp; White <span>Alora</span></div><p id="brandP" style="font-size:13px;color:#55524b;margin-top:8px"></p></div>
-   <div><h4 id="tInfo"></h4><div id="fpol"></div></div>
+   <div><button class="flink" id="aboutLink" data-pol="aboutustext" hidden></button><h4 id="tInfo" class="acc" role="button" tabindex="0"></h4><div id="fpol" class="accb" hidden></div></div>
    <div><h4 id="tContact"></h4><div class="soc" id="soc"></div></div>
   </div>
-  <div class="copy">© <span id="yr"></span> Black &amp; White Alora</div>
+  <div class="copy"><div class="legal-ar">بلاك آند وايت التجارية</div><div id="copyLine"></div></div>
  </div>
 </footer>
 
@@ -300,12 +305,12 @@ let LANG=ls.get("alora_lang","ar");
 let SHIP=[],S={m:{},names:{}},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null;
 
 const D={
- ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
+ ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"سياسات المتجر",contact:"تواصلي معنا",cart:"سلة التسوق",wish:"المفضلة",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"اطلب عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
    shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",shipNote:x=>`شحن مجاني للطلبات فوق ${x}`,total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم الكامل (اسمين على الأقل).",ePhone:"اكتبي رقم موبايل مصري صحيح (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015).",eAddr:"اكتبي العنوان بالتفصيل: الشارع والمنطقة ورقم المبنى.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
    mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد عند التأكيد",mOne:"أرغب في طلب هذا المنتج",mCode:"الكود",mPrice:"السعر",
    stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",fail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",soon:"سيتم إضافة المحتوى قريبًا.",brandP:"شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.",navBest:"الأكثر مبيعًا",navCols:"التصنيفات",navShop:"المنتجات",cur:"ج.م",
    sum:"ملخص الطلب",govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام عمل`,grand:"الإجمالي شامل الشحن",eGov:"اختاري المحافظة.",mGov:"المحافظة",mDelivery:"مدة التوصيل",mGrand:"الإجمالي شامل الشحن",shipWord:"الشحن",pdfClose:"إغلاق",itemsOne:"منتج"},
- en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Information",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search by product name or code...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
+ en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Store policies",contact:"Contact us",cart:"Shopping cart",wish:"Wishlist",search:"Search by product name or code...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Order via WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
    shipLeft:x=>`Add <b>${x}</b> more for free shipping`,shipOk:"Your order qualifies for free shipping",shipNote:x=>`Free shipping on orders over ${x}`,total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Full address",send:"Send order via WhatsApp",eName:"Please enter your full name.",ePhone:"Invalid phone number.",eAddr:"Please enter your governorate and address.",eWa:"Store WhatsApp is currently unavailable.",
    mNew:"New order",mName:"Name",mPhone:"Phone",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"Confirmed on order",mOne:"I'd like to order this product",mCode:"Code",mPrice:"Price",
    stale:"Couldn't refresh, showing the last saved version",fail:"Couldn't load products.",retry:"Try again",soon:"Content coming soon.",brandP:"Luxury bags and accessories with a calm, elegant design.",navBest:"Best sellers",navCols:"Collections",navShop:"Shop",cur:"EGP",
@@ -385,7 +390,7 @@ function buildProducts(rows){const H=rows[0].map(norm);
 /* ======================= POLICIES (any *_Text cell with content) ======================= */
 const BEST_RE=/best[\s_\-]*sellers?/i;
 const EXCL=["announcementtext","footertext","herotitle","herosubtitle","herotitleen","herosubtitleen","metakeywords","metadescription"];
-const POLT={aboutustext:{ar:"من نحن",en:"About us"},shippingpolicytext:{ar:"سياسة الشحن",en:"Shipping"},returnpolicytext:{ar:"الاستبدال والاسترجاع",en:"Returns & exchange"},privacypolicytext:{ar:"سياسة الخصوصية",en:"Privacy policy"},termstext:{ar:"الشروط والأحكام",en:"Terms & conditions"},termsandconditionstext:{ar:"الشروط والأحكام",en:"Terms & conditions"}};
+const POLT={aboutustext:{ar:"خلّينا نتعرّف",en:"Get to Know Us"},shippingpolicytext:{ar:"سياسة الشحن",en:"Shipping"},returnpolicytext:{ar:"الاستبدال والاسترجاع",en:"Returns & exchange"},privacypolicytext:{ar:"سياسة الخصوصية",en:"Privacy policy"},termstext:{ar:"الشروط والأحكام",en:"Terms & conditions"},termsandconditionstext:{ar:"الشروط والأحكام",en:"Terms & conditions"}};
 const policyKeys=()=>Object.keys(S.m).filter(k=>/text$/.test(k)&&S.m[k]&&!EXCL.includes(k));
 const ptitle=k=>{const t=POLT[k];if(t)return LANG==="en"?t.en:t.ar;return(S.names[k]||k).replace(/_/g," ").replace(/\s*text$/i,"").trim()};
 
@@ -442,7 +447,7 @@ function applyLang(){
  $("#langBtn").textContent=LANG==="en"?"عربي":"EN";
  $("#heroBtn").textContent=T("shopNow");$("#tBest").textContent=T("best");$("#tSwipe").textContent=T("swipe");
  $("#tCols").textContent=T("cols");$("#tInfo").textContent=T("info");$("#tContact").textContent=T("contact");
- $("#tCart").textContent=T("cart");$("#q").placeholder=T("search");$("#brandP").textContent=T("brandP");
+ $("#tCart").textContent=T("cart");$("#aboutLink").textContent=ptitle("aboutustext");$("#q").placeholder=T("search");$("#brandP").textContent=T("brandP");
  $("#cartBtn").setAttribute("aria-label",T("cart"));$("#wishBtn").setAttribute("aria-label",T("wish"));
  const cr=$("#cartBtn");cr.title=T("cart");$("#wishBtn").title=T("wish");
 }
@@ -455,7 +460,7 @@ function renderAnn(){const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textCon
 function renderNav(){
  const pols=policyKeys();
  $("#nav").innerHTML=`<a href="#best">${T("navBest")}</a><a href="#cols">${T("navCols")}</a><a href="#shop">${T("navShop")}</a>`+
-  pols.map(k=>`<button data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("")}
+  ""}
 /* social link: found by key (EN/AR names) or, failing that, by the domain of the link itself */
 const SOC={facebook:{keys:["Facebook_URL","Facebook","فيس بوك","فيسبوك"],re:/facebook\.com|fb\.com|fb\.me/i},
  instagram:{keys:["Instagram_URL","Instagram","انستجرام","انستغرام","انستقرام"],re:/instagram\.com|instagr\.am/i},
@@ -463,13 +468,14 @@ const SOC={facebook:{keys:["Facebook_URL","Facebook","فيس بوك","فيسبو
 function findSocial(k){const v=sv(...SOC[k].keys);if(v)return v;
  for(const key in S.m){const x=S.m[key];if(x&&SOC[k].re.test(x))return x}return""}
 function renderFooter(){
- $("#fpol").innerHTML=policyKeys().map(k=>`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
+ $("#fpol").innerHTML=policyKeys().filter(k=>k!=="aboutustext").map(k=>`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
+ $("#aboutLink").hidden=!sv("About_Us_Text");
  const href=v=>!v?"#":/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,"");
  const soc=[[href(findSocial("facebook")),I.fb,"Facebook"],[href(findSocial("instagram")),I.ig,"Instagram"],[href(findSocial("tiktok")),I.tt,"TikTok"]];
  const em=(sv("Store_Email","Email")||CFG.EMAIL).replace(/^mailto:/i,"");
  $("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(u)}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+
   `<a href="mailto:${esc(em)}" aria-label="Email">${I.mail}</a><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
- $("#yr").textContent=new Date().getFullYear();
+ $("#copyLine").textContent=`© ${new Date().getFullYear()} — ${LANG==="en"?"All rights reserved":"جميع الحقوق محفوظة"}`;
  const fab=$("#waFab");fab.href="https://wa.me/"+waNum();fab.hidden=false}
 const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
 function priceHTML(p){return`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`}
@@ -560,7 +566,11 @@ function openProduct(id,quiet){const p=byId(id);if(!p)return;curId=id;if(!quiet)
   ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
   <button class="big" style="border:1px solid var(--ink)" data-heart="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button>
  </div></div>`)}
-function openPol(k){openModal(`<div class="pol"><h2>${esc(ptitle(k))}</h2><p>${esc(sv(k)||T("soon"))}</p></div>`)}
+function bi(t){t=String(t||"");if(!/\[(AR|EN)\]/i.test(t))return t.trim();
+ const m=t.split(/\[(AR|EN)\]/i),out={};
+ for(let i=1;i<m.length;i+=2){const k=m[i].toUpperCase();out[k]=(out[k]||"")+m[i+1]}
+ return (out[LANG==="en"?"EN":"AR"]||out.AR||out.EN||"").trim()}
+function openPol(k){openModal(`<div class="pol"><h2>${esc(ptitle(k))}</h2><p>${esc(bi(sv(k))||T("soon"))}</p></div>`)}
 function openLB(i){lbIdx=i;$("#lbI").src=optImg(lbList[i],1200);$("#lb").classList.add("on")}
 function toggleWish(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id):[...wish,id];ls.set("alora_wish",wish);
  const p=byId(id);hook("WishlistToggle",{id,name:p?.name,added:!on});toast(on?T("toastRm"):T("toastWish"));
@@ -594,6 +604,9 @@ document.addEventListener("click",e=>{
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("#lb").classList.contains("on")?$("#lb").classList.remove("on"):closeAll()}
  if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")$("#lbN").click();if(e.key==="ArrowRight")$("#lbP").click()}});
 $("#ov").onclick=closeAll;
+function togglePol(){const b=$("#fpol"),t=$("#tInfo");b.hidden=!b.hidden;t.classList.toggle("open",!b.hidden)}
+document.addEventListener("click",e=>{if(e.target.closest("#tInfo"))togglePol()});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="tInfo")togglePol()});
 $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeAll()});
 $("#cartBtn").onclick=openCart;
 $("#wishBtn").onclick=()=>{wishOnly=!wishOnly;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})};
