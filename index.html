@@ -246,7 +246,7 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
  <div class="wrap">
   <div class="fcols">
    <div><div class="brand" style="font-size:17px">Black &amp; White <span>Alora</span></div><p id="brandP" style="font-size:13px;color:#55524b;margin-top:8px"></p></div>
-   <div><button class="flink" id="aboutLink" data-pol="aboutustext" hidden></button><h4 id="tInfo" class="acc" role="button" tabindex="0"></h4><div id="fpol" class="accb" hidden></div></div>
+   <div><button class="flink" id="aboutLink" data-pol="aboutustext" hidden></button><h4 id="tInfo" class="acc open" role="button" tabindex="0"></h4><div id="fpol" class="accb"></div></div>
    <div><h4 id="tContact"></h4><div class="soc" id="soc"></div></div>
   </div>
   <div class="copy"><div class="legal-ar">بلاك آند وايت التجارية</div><div id="copyLine"></div></div>
@@ -331,7 +331,7 @@ const byId=id=>P.find(p=>p.id===id);
 let WM="";
 let curSize="";
 const optImg=(u,w)=>{if(!u)return u;
- if(/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(u)&&!/\/upload\/[^/]*(f_|w_|c_)/.test(u))return u.replace(/\/image\/upload\//,`/image/upload/f_auto,q_auto,w_${w}${WM?`,l_${WM},g_south_east,x_12,y_12,w_0.2,o_45`:""}/`);
+ if(/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(u)&&!/\/upload\/[^/]*(f_|w_|c_)/.test(u))return u.replace(/\/image\/upload\//,`/image/upload/f_auto,q_auto,c_limit,w_${w}${WM?`,l_${WM},g_south_east,x_12,y_12,w_0.2,o_45`:""}/`);
  if(/drive\.google\.com\/thumbnail/.test(u))return u.replace(/sz=w\d+/,`sz=w${w}`);
  return u};
 const img=(src,w,attrs="")=>`<img src="${esc(optImg(src||PH,w))}" loading="lazy" decoding="async" draggable="false" referrerpolicy="no-referrer" ${attrs} onerror="this.onerror=null;this.src='${PH}'">`;
@@ -599,7 +599,13 @@ function orderOne(id){const p=byId(id),wa=waNum();if(!p||p.out||!wa)return;track
  const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
 
 /* ======================= MODALS ======================= */
-function lock(on){$("#ov").classList.toggle("on",on);document.body.style.overflow=on?"hidden":""}
+let SCROLLY=0;
+function lock(on){
+ $("#ov").classList.toggle("on",on);
+ const b=document.body;
+ if(on&&b.style.position!=="fixed"){SCROLLY=window.scrollY;b.style.cssText+=`;position:fixed;top:-${SCROLLY}px;left:0;right:0;width:100%`}
+ else if(!on&&b.style.position==="fixed"){b.style.position="";b.style.top="";b.style.left="";b.style.right="";b.style.width="";window.scrollTo(0,SCROLLY)}
+}
 function closeAll(){$("#cart").classList.remove("on");$("#modal").classList.remove("on");$("#lb").classList.remove("on");lock(false)}
 function openCart(){closeAll();$("#cart").classList.add("on");lock(true)}
 function openModal(html){$("#mIn").innerHTML=html;$("#modal").classList.add("on");lock(true)}
