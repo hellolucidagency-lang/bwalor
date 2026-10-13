@@ -12,6 +12,14 @@
 </script>
 
 <meta charset="utf-8">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '788558267315755');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=788558267315755&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Black &amp; White Alora | شنط وإكسسوارات فاخرة</title>
 <meta name="description" content="Black & White Alora - شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.">
@@ -256,7 +264,7 @@ html[dir=rtl] .drawer.on,html[dir=ltr] .drawer.on{transform:none}
  <div class="wrap">
   <div class="fcols">
    <div><div class="brand" style="font-size:17px">Black &amp; White <span>Alora</span></div><p id="brandP" style="font-size:13px;color:#55524b;margin-top:8px"></p></div>
-   <div><a class="flink" id="aboutLink" href="about.html" hidden></a><h4 id="tInfo" class="acc open" role="button" tabindex="0"></h4><div id="fpol" class="accb"></div></div>
+   <div><a class="flink" id="aboutLink" href="about.html">🤍 خلّينا نتعرّف</a><h4 id="tInfo" class="acc open" role="button" tabindex="0">معلومات مهمة</h4><div id="fpol" class="accb"><a class="flink" href="shipping.html">سياسة الشحن</a><a class="flink" href="privacy.html">سياسة الخصوصية</a><a class="flink" href="returns.html">سياسة الاسترجاع</a></div></div>
    <div><h4 id="tContact"></h4><div class="soc" id="soc"></div></div>
   </div>
   <div class="copy"><div class="legal-ar">بلاك آند وايت التجارية</div><div id="copyLine"></div></div>
@@ -474,13 +482,13 @@ function applyHead(){applySEO();
 let anReady=false;
 function initAnalytics(){if(anReady)return;anReady=true;
  const pid=sv("Meta_Pixel_ID").replace(/\D/g,""),gid=sv("GA_Tracking_ID").trim(),os=sv("OneSignal_App_ID").trim();
- if(pid){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",pid)}
+ if(pid&&!window.fbq){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",pid)}
  if(gid&&/^[\w-]+$/.test(gid)){const s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+gid;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",gid)}
  if(os){const s=document.createElement("script");s.src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js";s.defer=true;document.head.appendChild(s);window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async O=>{try{await O.init({appId:os})}catch(e){console.warn(e)}})}
  track("PageView")}
 function track(ev,d={}){try{const v=d.value??eff(d)??0,ids=[d.cid||d.id],C="EGP";
  if(window.fbq){
-  if(ev==="PageView")fbq("track","PageView");
+  if(ev==="PageView"){/* already sent from <head> */}
   else if(ev==="ViewContent"||ev==="AddToCart"||ev==="Lead")fbq("track",ev==="Lead"?"Lead":ev,{content_ids:ids,content_name:d.name,content_type:"product",value:v,currency:C});
   else if(ev==="Checkout")fbq("track","InitiateCheckout",{value:v,num_items:d.n,currency:C});
   else if(ev==="Purchase"){fbq("track","Lead",{value:v,currency:C});fbq("track","Purchase",{value:v,currency:C,content_ids:d.ids,content_type:"product"})}}
@@ -524,10 +532,7 @@ const SOC={facebook:{keys:["Facebook_URL","Facebook","فيس بوك","فيسبو
 function findSocial(k){const v=sv(...SOC[k].keys);if(v)return v;
  for(const key in S.m){const x=S.m[key];if(x&&SOC[k].re.test(x))return x}return""}
 function renderFooter(){
- const POLPAGE={privacypolicytext:"privacy.html",shippingpolicytext:"shipping.html",returnpolicytext:"returns.html"};
- $("#fpol").innerHTML=policyKeys().filter(k=>k!=="aboutustext").map(k=>POLPAGE[k]?`<a class="flink" href="${POLPAGE[k]}">${esc(ptitle(k))}</a>`:`<button class="flink" data-pol="${esc(k)}">${esc(ptitle(k))}</button>`).join("");
- $("#aboutLink").hidden=!sv("About_Us_Text");
- const href=v=>!v?"#":/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,"");
+  const href=v=>!v?"#":/^https?:\/\//i.test(v)?v:"https://"+v.replace(/^\/+/,"");
  const soc=[[href(findSocial("facebook")),I.fb,"Facebook"],[href(findSocial("instagram")),I.ig,"Instagram"],[href(findSocial("tiktok")),I.tt,"TikTok"]];
  const em=(sv("Store_Email","Email")||CFG.EMAIL).replace(/^mailto:/i,"");
  $("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(u)}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+
