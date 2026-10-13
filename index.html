@@ -648,7 +648,7 @@ function applySheets(pText,sText,shText){
  let shText=rsh.status==="fulfilled"?rsh.value:null;
  /* decide which tab is products by its headers, whatever the gid order */
  let pText=rp.status==="fulfilled"?rp.value:null,sText=rs.status==="fulfilled"?rs.value:null;
- const isProd=t=>{const h=(parseCSV(t)[0]||[]).map(norm);return h.includes("price")&&(h.includes("name")||h.includes("title"))};
+ const isProd=t=>{const h=(parseCSV(t)[0]||[]).map(norm);return h.some(x=>x.includes("price"))&&(h.some(x=>x.includes("name")||x.includes("title")||x.includes("code")))};
  if(pText&&!isProd(pText)&&sText&&isProd(sText)){[pText,sText]=[sText,pText]}
  if(pText&&isProd(pText)){ls.set("alora_csv_p",pText)}else pText=null;
  if(sText)ls.set("alora_csv_s",sText);
