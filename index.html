@@ -15,7 +15,7 @@ fbq('init','788558267315755');fbq('track','PageView');
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Black &amp; White Alora | شنط وإكسسوارات ترندي</title>
-<meta name="description" content="Black & White Alora - شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.">
+<meta name="description" content="Black & White Alora - شنط وإكسسوارات ترندي بتصميم هادئ وأنيق.">
 <meta name="theme-color" content="#FAF9F6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,7 +148,7 @@ html .drawer.on{transform:none}
 .th button.on{border-color:var(--ink);opacity:1}
 .th img{width:100%;height:100%;object-fit:cover}
 .pi{padding:18px;display:flex;flex-direction:column;gap:11px}
-.pi h2{font-size:19px;font-weight:800;padding-inline-end:36px}
+.pi h2{font-size:19px;font-weight:800}
 .pi p{color:#55524b;white-space:pre-line;font-size:13.5px;line-height:1.85}
 .sizes{display:flex;gap:6px;flex-wrap:wrap}
 .szt{font-size:13px;font-weight:700}
@@ -222,7 +222,7 @@ html .drawer.on{transform:none}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===== CONFIG: one published Google Sheet, read live. Sheets: Products, Site_Settings, Shipping (Orders is never read or written) ===== */
+/* ===== CONFIG: Direct live Google Sheet sync ===== */
 const BASE="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub";
 const tab=gid=>`${BASE}?gid=${gid}&single=true&output=csv`;
 const CFG={PRODUCTS:tab("2078282954"),SETTINGS:tab("0"),SHIP:tab("396393175"),WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora"};
@@ -258,7 +258,6 @@ const D={
   pickSize:"Choose a size",needSize:"Please choose a size first",size:"Size",about:"🤍 Get to know us",pShip:"Shipping policy",pPriv:"Privacy policy",pRet:"Returns policy",rights:"All rights reserved",navShop:"Shop"}
 };
 
-/* ===== HELPERS ===== */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
@@ -270,14 +269,12 @@ const money=n=>Number(n).toLocaleString("en-US")+" "+T("cur");
 const sv=(...keys)=>{for(const k of keys){const v=S[norm(k)];if(v)return v}return""};
 const eff=p=>p.sale||p.price,byId=id=>P.find(p=>p.id===id);
 const https=u=>String(u||"").trim().replace(/^http:\/\//i,"https://");
-/* Cloudinary: automatic format + quality + width cap */
 const optImg=(u,w)=>{if(!u)return u;
  if(/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(u)&&!/\/upload\/[^/]*(f_|q_|w_|c_)/.test(u))return u.replace("/image/upload/",`/image/upload/f_auto,q_auto,c_limit,w_${w}/`);
  if(/drive\.google\.com\/thumbnail/.test(u))return u.replace(/sz=w\d+/,`sz=w${w}`);
  return u};
 const img=(src,w,attrs="")=>`<img src="${esc(optImg(src||PH,w))}" loading="lazy" decoding="async" draggable="false" referrerpolicy="no-referrer" ${attrs} onerror="this.onerror=null;this.src='${PH}'">`;
 
-/* ===== CSV ===== */
 function parseCSV(t){t=t.replace(/^\uFEFF/,"");const rows=[];let r=[],c="",q=false;
  for(let i=0;i<t.length;i++){const ch=t[i];
   if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
@@ -291,7 +288,6 @@ async function fetchText(url){
   const t=await r.text();if(!t.trim()||/^\s*<(!doctype|html)/i.test(t))throw new Error("not csv");return t}
  finally{clearTimeout(id)}}
 
-/* ===== IMAGES ===== */
 function fixImg(u){
  u=String(u||"").trim().replace(/^["'\s]+|["'\s]+$/g,"");if(!u)return"";
  if(u.startsWith("//"))u="https:"+u;
@@ -300,10 +296,8 @@ function fixImg(u){
  const d=u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([\w-]+)/i);
  if(d)return`https://drive.google.com/thumbnail?id=${d[1]}&sz=w1000`;
  try{return encodeURI(decodeURI(u))}catch{return u.replace(/\s/g,"%20")}}
-/* split on new line, | or ;  and on commas only when a URL follows (Cloudinary transforms contain commas) */
 const splitImgs=s=>String(s||"").split(/\s*(?:\n|\||;)\s*|,\s*(?=https?:\/\/|\/\/)/).map(fixImg).filter(Boolean);
 
-/* ===== SHEETS -> DATA ===== */
 function buildSettings(rows){const m={};if(!rows.length)return m;
  const known=["announcementtext","faviconurl","shareimageurl","storephonewhatsapp","facebookurl","instagramurl","tiktokurl","storeemail","herotitle","herosubtitle","footertext"];
  if(rows[0].filter(x=>known.includes(norm(x))).length>=2||(rows.length===2&&rows[0].length>2)){
@@ -311,34 +305,42 @@ function buildSettings(rows){const m={};if(!rows.length)return m;
  rows.forEach(r0=>{const r=(r0.length===1&&r0[0].includes(";"))?r0[0].split(";"):r0;
   if(r[0]&&r[1]!==undefined){const k=norm(r[0]);if(k)m[k]=(r[1]||"").trim()}});
  return m}
+
 function buildProducts(rows){const H=rows[0].map(norm);
  const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]&&r[i].trim())return r[i].trim()}return""};
  return rows.slice(1).map((r,i)=>{
-  const price=num(col(r,"Price")),dp=num(col(r,"Discount_Price","Sale_Price")),id=col(r,"Code","ID","SKU")||"p"+(i+1);
-  const imgs=[...new Set([...splitImgs(col(r,"Main_Image","Image_URL","Image")),...splitImgs(col(r,"Gallery_Images","Gallery"))])];
+  const price=num(col(r,"Price","السعر")),dp=num(col(r,"Discount_Price","Sale_Price","سعر_الخصم","سعرالعرض")),id=col(r,"Code","ID","SKU","كود")||"p"+(i+1);
+  const imgs=[...new Set([...splitImgs(col(r,"Main_Image","Image_URL","Image","الصورة")),...splitImgs(col(r,"Gallery_Images","Gallery","صور"))])];
   const sizes=[...new Set(col(r,"Size","Sizes","المقاس","المقاسات").split(/\s*[,|;\/\n]\s*/).map(s=>s.trim()).filter(Boolean))];
-  const catRaw=col(r,"Category","Category_AR"),isBest=BEST_RE.test(catRaw)||/^(yes|نعم|true|1|x|y)$/i.test(col(r,"Best_Seller"));
+  const catRaw=col(r,"Category","Category_AR","القسم","التصنيف"),isBest=BEST_RE.test(catRaw)||/^(yes|نعم|true|1|x|y)$/i.test(col(r,"Best_Seller"));
   const catClean=catRaw.replace(BEST_RE,"").replace(/^[\s|,;\-–_]+|[\s|,;\-–_]+$/g,"").trim();
-  const stock=col(r,"Stock_Status","In_Stock");
+  const stock=col(r,"Stock_Status","In_Stock","المخزون");
   return{id,alt:col(r,"Main_Image_Alt","Image_Alt_Text","Image_Alt","Alt_Text","Alt"),
-   nameAr:col(r,"Title","Name","Title_AR","Product_Name"),nameEn:col(r,"Name_EN","Title_EN"),
+   nameAr:col(r,"Title","Name","Title_AR","Product_Name","اسم_المنتج","اسم"),nameEn:col(r,"Name_EN","Title_EN"),
    get name(){return LANG==="en"&&this.nameEn?this.nameEn:this.nameAr},
    cat:catClean||"أخرى",best:isBest,ts:Date.parse(col(r,"Date","Created_At","Created","Timestamp","Updated_At"))||0,ord:i,
-   descAr:col(r,"Description","Description_AR"),descEn:col(r,"Description_EN"),
+   descAr:col(r,"Description","Description_AR","الوصف"),descEn:col(r,"Description_EN"),
    get desc(){return LANG==="en"&&this.descEn?this.descEn:this.descAr},
    price:price||dp,sale:price&&dp&&dp<price?dp:0,imgs,sizes,
    featured:/^(1|true|yes|y|نعم|x)$/i.test(col(r,"Featured")),
-   out:/(out|sold|نفد|نفذ|غير\s*متوفر|unavailable|^0$|^false$|^no$)/i.test(stock)}
+   out:/(out|sold|نفد|نفذ|غير\s*متوفر|unavailable|^0$|^false$\vert{}^no$)/i.test(stock)}
  }).filter(p=>p.nameAr&&p.price>0)}
-function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];
- const H=rows[0].map(norm),hasActive=H.includes("active");
- const col=(r,...n)=>{for(const x of n){const i=H.indexOf(norm(x));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
- return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),active:col(r,"Active"),cost:num(col(r,"Shipping_Cost")),days:col(r,"Delivery_Days"),free:num(col(r,"Free_Above"))}))
-  .filter(x=>x.gov&&(!hasActive||/^yes$/i.test(x.active)))}
+
+function parseShip(t){
+ const rows=parseCSV(t);if(rows.length<2)return[];
+ const H=rows[0].map(norm);
+ const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
+ return rows.slice(1).map(r=>({
+  gov:col(r,"Governorate","المحافظة","محافظة","المدينة"),
+  active:col(r,"Active","الحالة","مفعل"),
+  cost:num(col(r,"Shipping_Cost","Cost","سعر_الشحن","الشحن","السعر")),
+  days:col(r,"Delivery_Days","Days","أيام_التوصيل","مدة_التوصيل","التوصيل"),
+  free:num(col(r,"Free_Above","مجاني_فوق","الشحن_المجاني"))
+ })).filter(x=>x.gov&&(!x.active||!/^(no|لا|false|0)$/i.test(x.active)))}
+
 const govRow=v=>SHIP.find(x=>x.gov===v)||null;
 const shipFor=(row,t)=>!row?null:(row.free&&t>=row.free)?0:row.cost;
 
-/* ===== TRACKING (Pixel + gtag are loaded once in <head>) ===== */
 function track(ev,d={}){try{
  const v=d.value??(d.price?eff(d):0),ids=d.ids||[d.id],C="EGP";
  const FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"}[ev];
@@ -348,15 +350,14 @@ function track(ev,d={}){try{
   if(ev==="Purchase"){gtag("event","generate_lead",{currency:C,value:v});gtag("event","purchase",{transaction_id:"WA-"+Date.now(),currency:C,value:v})}}
 }catch(e){}}
 
-/* ===== RENDER ===== */
 function waNum(){let n=(sv("Store_Phone_WhatsApp")||CFG.WA).replace(/\D/g,"");if(n.startsWith("00"))return n.slice(2);return n.startsWith("0")?CFG.CC+n.slice(1):n}
 const href=v=>!v?"#":/^https?:\/\//i.test(v)?https(v):"https://"+v.replace(/^\/+/,"");
 function applyHead(){
- const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
- const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
+ const fav=fixImg(sv("Favicon_URL","Favicon"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
+ const sh=fixImg(sv("Share_Image_URL","Share_Image"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
 function applyLang(){const ar=LANG!=="en";
  document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";
- document.title=ar?"Black & White Alora | شنط وإكسسوارات فاخرة":"Black & White Alora | Luxury Bags & Accessories";
+ document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";
  $("#langBtn").textContent=ar?"EN":"عربي";
  $("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");
  $("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP");
@@ -397,7 +398,6 @@ function renderGrid(){
  const wc=$("#wc");wc.textContent=wish.length;wc.hidden=!wish.length}
 function renderAll(){applyLang();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
 
-/* ===== CART ===== */
 const saveCart=()=>ls.set("alora_cart",cart);
 const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
 function addToCart(id,size){const p=byId(id);if(!p||p.out)return false;
@@ -443,7 +443,6 @@ function askOne(id){const p=byId(id),wa=waNum();if(!p||!wa)return;track("Lead",p
  const msg=`🛍 ${T("mAsk")}\n*${p.name}*\n${T("mCode")}: ${p.id}${curSize?`\n${T("mSize")}: ${curSize}`:""}\n${T("mPrice")}: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;
  const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
 
-/* ===== MODAL / PRODUCT ===== */
 let SCROLLY=0;
 function lock(on){$("#ov").classList.toggle("on",on);const b=document.body;
  if(on&&b.style.position!=="fixed"){SCROLLY=window.scrollY;b.style.cssText+=`;position:fixed;top:-${SCROLLY}px;left:0;right:0;width:100%`}
@@ -455,7 +454,7 @@ function openProduct(id){const p=byId(id);if(!p)return;curId=id;curSize="";track
  const sizes=p.sizes.length?`<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>`:"";
  $("#mIn").innerHTML=`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
   ${ims.length>1?`<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>`:""}</div>
-  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
+  <div class="pi"><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
   <button class="big dark" data-addm="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
   ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
   <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
@@ -470,7 +469,6 @@ function toggleWish(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id
  renderReels();renderGrid();const b=document.querySelector(`[data-heartm="${CSS.escape(id)}"]`);if(b)b.innerHTML=(on?I.heart:I.heartF)+(on?T("addWish"):T("inWish"))}
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
 
-/* ===== EVENTS ===== */
 document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
 document.addEventListener("click",e=>{
  const t=e.target.closest("[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
@@ -504,7 +502,6 @@ document.addEventListener("change",e=>{if(e.target.id!=="gov")return;
  const n=$("#cn"),p=$("#cp"),a=$("#ca");
  ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});ls.set("alora_gov",e.target.value);renderCart()});
 
-/* ===== BOOT: show last saved copy instantly, then refresh live from the sheet ===== */
 function apply(pT,sT,shT){
  if(sT){const r=parseCSV(sT);if(r.length)S=buildSettings(r)}
  if(pT)P=buildProducts(parseCSV(pT));
