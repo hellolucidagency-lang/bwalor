@@ -14,8 +14,8 @@ gtag('js',new Date());gtag('config','GT-KT54SJNK');
 fbq('init','788558267315755');fbq('track','PageView');
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Black &amp; White Alora | شنط وإكسسوارات ترندي</title>
-<meta name="description" content="Black & White Alora - شنط وإكسسوارات ترندي بتصميم هادئ وأنيق.">
+<title>Black &amp; White Alora | شنط وإكسسوارات فاخرة</title>
+<meta name="description" content="Black & White Alora - شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.">
 <meta name="theme-color" content="#FAF9F6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,14 +41,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .brand{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:.1em;font-size:15px;direction:ltr;text-transform:uppercase;white-space:nowrap}
 @media(min-width:760px){.brand{letter-spacing:.16em;font-size:19px}}
 .brand span{font-weight:500}
-header{position:sticky;top:0;z-index:40;background:rgba(250,249,246,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+
+/* Header & Sticky Scroll Styles */
+header{position:sticky;top:0;z-index:40;background:rgba(250,249,246,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transition:all .3s ease}
+header.scrolled{box-shadow:0 2px 10px rgba(0,0,0,.06)}
+header.scrolled .ann{display:none!important}
 .bar{display:flex;align-items:center;justify-content:space-between;height:56px}
 .tools-h{display:flex;align-items:center;gap:2px}
 .ib{position:relative;width:40px;height:40px;display:grid;place-items:center;border-radius:50%}
 .ib svg{width:21px;height:21px}
 .cnt{position:absolute;top:1px;inset-inline-end:0;min-width:16px;height:16px;border-radius:8px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;padding:0 4px}
 .lang{height:28px;padding:0 10px;border:1px solid var(--line);border-radius:14px;font-size:12px;font-weight:700;margin-inline-start:4px}
-.ann{background:var(--ink);color:#EDE6D3;text-align:center;font-size:12px;padding:6px 12px}
+.ann{background:var(--ink);color:#EDE6D3;text-align:center;font-size:12px;padding:6px 12px;transition:all .3s ease}
 .nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px 10px;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 .nav a{white-space:nowrap;padding:5px 13px;border:1px solid var(--line);border-radius:16px;font-size:12.5px;background:#fff;text-decoration:none}
@@ -72,6 +76,8 @@ section{padding-top:24px}
 .badge{position:absolute;top:7px;inset-inline-start:7px;background:var(--gold);color:#fff;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:10px}
 .fav{position:absolute;top:6px;inset-inline-end:6px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.88);display:grid;place-items:center}
 .fav svg{width:17px;height:17px}.fav.on{color:var(--gold)}
+
+/* Button Uniformity */
 .add{width:100%;margin-top:auto;background:var(--ink);color:#fff;padding:8px;border-radius:20px;font-size:12.5px;font-weight:700}
 .add:disabled{background:#d8d4cb;color:#6b675e;cursor:not-allowed}
 .card{background:var(--card);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
@@ -148,7 +154,7 @@ html .drawer.on{transform:none}
 .th button.on{border-color:var(--ink);opacity:1}
 .th img{width:100%;height:100%;object-fit:cover}
 .pi{padding:18px;display:flex;flex-direction:column;gap:11px}
-.pi h2{font-size:19px;font-weight:800}
+.pi h2{font-size:19px;font-weight:800;padding-inline-end:36px}
 .pi p{color:#55524b;white-space:pre-line;font-size:13.5px;line-height:1.85}
 .sizes{display:flex;gap:6px;flex-wrap:wrap}
 .szt{font-size:13px;font-weight:700}
@@ -165,7 +171,7 @@ html .drawer.on{transform:none}
 <body>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=788558267315755&ev=PageView&noscript=1" alt=""></noscript>
 
-<header>
+<header id="mainHeader">
  <div class="wrap bar">
   <div class="brand">Black &amp; White <span>Alora</span></div>
   <div class="tools-h">
@@ -222,7 +228,7 @@ html .drawer.on{transform:none}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===== CONFIG: Direct live Google Sheet sync ===== */
+/* ===== CONFIG ===== */
 const BASE="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsdI0z9kWcDZlyguHag37HCtz8buw96LEi7HJn5jcBNtdhesi4kVNfS7LubEIBhn8-v5Ai5uBzAHfU/pub";
 const tab=gid=>`${BASE}?gid=${gid}&single=true&output=csv`;
 const CFG={PRODUCTS:tab("2078282954"),SETTINGS:tab("0"),SHIP:tab("396393175"),WA:"01110737388",EMAIL:"info@pwalora.com",CC:"20",STORE:"Black & White Alora"};
@@ -258,6 +264,7 @@ const D={
   pickSize:"Choose a size",needSize:"Please choose a size first",size:"Size",about:"🤍 Get to know us",pShip:"Shipping policy",pPriv:"Privacy policy",pRet:"Returns policy",rights:"All rights reserved",navShop:"Shop"}
 };
 
+/* ===== HELPERS ===== */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
@@ -275,6 +282,7 @@ const optImg=(u,w)=>{if(!u)return u;
  return u};
 const img=(src,w,attrs="")=>`<img src="${esc(optImg(src||PH,w))}" loading="lazy" decoding="async" draggable="false" referrerpolicy="no-referrer" ${attrs} onerror="this.onerror=null;this.src='${PH}'">`;
 
+/* ===== CSV PARSER ===== */
 function parseCSV(t){t=t.replace(/^\uFEFF/,"");const rows=[];let r=[],c="",q=false;
  for(let i=0;i<t.length;i++){const ch=t[i];
   if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
@@ -288,6 +296,7 @@ async function fetchText(url){
   const t=await r.text();if(!t.trim()||/^\s*<(!doctype|html)/i.test(t))throw new Error("not csv");return t}
  finally{clearTimeout(id)}}
 
+/* ===== IMAGES ===== */
 function fixImg(u){
  u=String(u||"").trim().replace(/^["'\s]+|["'\s]+$/g,"");if(!u)return"";
  if(u.startsWith("//"))u="https:"+u;
@@ -298,6 +307,7 @@ function fixImg(u){
  try{return encodeURI(decodeURI(u))}catch{return u.replace(/\s/g,"%20")}}
 const splitImgs=s=>String(s||"").split(/\s*(?:\n|\||;)\s*|,\s*(?=https?:\/\/|\/\/)/).map(fixImg).filter(Boolean);
 
+/* ===== SHEETS -> DATA ===== */
 function buildSettings(rows){const m={};if(!rows.length)return m;
  const known=["announcementtext","faviconurl","shareimageurl","storephonewhatsapp","facebookurl","instagramurl","tiktokurl","storeemail","herotitle","herosubtitle","footertext"];
  if(rows[0].filter(x=>known.includes(norm(x))).length>=2||(rows.length===2&&rows[0].length>2)){
@@ -305,42 +315,34 @@ function buildSettings(rows){const m={};if(!rows.length)return m;
  rows.forEach(r0=>{const r=(r0.length===1&&r0[0].includes(";"))?r0[0].split(";"):r0;
   if(r[0]&&r[1]!==undefined){const k=norm(r[0]);if(k)m[k]=(r[1]||"").trim()}});
  return m}
-
 function buildProducts(rows){const H=rows[0].map(norm);
  const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]&&r[i].trim())return r[i].trim()}return""};
  return rows.slice(1).map((r,i)=>{
-  const price=num(col(r,"Price","السعر")),dp=num(col(r,"Discount_Price","Sale_Price","سعر_الخصم","سعرالعرض")),id=col(r,"Code","ID","SKU","كود")||"p"+(i+1);
-  const imgs=[...new Set([...splitImgs(col(r,"Main_Image","Image_URL","Image","الصورة")),...splitImgs(col(r,"Gallery_Images","Gallery","صور"))])];
+  const price=num(col(r,"Price")),dp=num(col(r,"Discount_Price","Sale_Price")),id=col(r,"Code","ID","SKU")||"p"+(i+1);
+  const imgs=[...new Set([...splitImgs(col(r,"Main_Image","Image_URL","Image")),...splitImgs(col(r,"Gallery_Images","Gallery"))])];
   const sizes=[...new Set(col(r,"Size","Sizes","المقاس","المقاسات").split(/\s*[,|;\/\n]\s*/).map(s=>s.trim()).filter(Boolean))];
-  const catRaw=col(r,"Category","Category_AR","القسم","التصنيف"),isBest=BEST_RE.test(catRaw)||/^(yes|نعم|true|1|x|y)$/i.test(col(r,"Best_Seller"));
+  const catRaw=col(r,"Category","Category_AR"),isBest=BEST_RE.test(catRaw)||/^(yes|نعم|true|1|x|y)$/i.test(col(r,"Best_Seller"));
   const catClean=catRaw.replace(BEST_RE,"").replace(/^[\s|,;\-–_]+|[\s|,;\-–_]+$/g,"").trim();
-  const stock=col(r,"Stock_Status","In_Stock","المخزون");
+  const stock=col(r,"Stock_Status","In_Stock");
   return{id,alt:col(r,"Main_Image_Alt","Image_Alt_Text","Image_Alt","Alt_Text","Alt"),
-   nameAr:col(r,"Title","Name","Title_AR","Product_Name","اسم_المنتج","اسم"),nameEn:col(r,"Name_EN","Title_EN"),
+   nameAr:col(r,"Title","Name","Title_AR","Product_Name"),nameEn:col(r,"Name_EN","Title_EN"),
    get name(){return LANG==="en"&&this.nameEn?this.nameEn:this.nameAr},
    cat:catClean||"أخرى",best:isBest,ts:Date.parse(col(r,"Date","Created_At","Created","Timestamp","Updated_At"))||0,ord:i,
-   descAr:col(r,"Description","Description_AR","الوصف"),descEn:col(r,"Description_EN"),
+   descAr:col(r,"Description","Description_AR"),descEn:col(r,"Description_EN"),
    get desc(){return LANG==="en"&&this.descEn?this.descEn:this.descAr},
    price:price||dp,sale:price&&dp&&dp<price?dp:0,imgs,sizes,
    featured:/^(1|true|yes|y|نعم|x)$/i.test(col(r,"Featured")),
    out:/(out|sold|نفد|نفذ|غير\s*متوفر|unavailable|^0$|^false$\vert{}^no$)/i.test(stock)}
  }).filter(p=>p.nameAr&&p.price>0)}
-
-function parseShip(t){
- const rows=parseCSV(t);if(rows.length<2)return[];
- const H=rows[0].map(norm);
- const col=(r,...names)=>{for(const n of names){const i=H.indexOf(norm(n));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
- return rows.slice(1).map(r=>({
-  gov:col(r,"Governorate","المحافظة","محافظة","المدينة"),
-  active:col(r,"Active","الحالة","مفعل"),
-  cost:num(col(r,"Shipping_Cost","Cost","سعر_الشحن","الشحن","السعر")),
-  days:col(r,"Delivery_Days","Days","أيام_التوصيل","مدة_التوصيل","التوصيل"),
-  free:num(col(r,"Free_Above","مجاني_فوق","الشحن_المجاني"))
- })).filter(x=>x.gov&&(!x.active||!/^(no|لا|false|0)$/i.test(x.active)))}
-
+function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];
+ const H=rows[0].map(norm),hasActive=H.includes("active");
+ const col=(r,...n)=>{for(const x of n){const i=H.indexOf(norm(x));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
+ return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),active:col(r,"Active"),cost:num(col(r,"Shipping_Cost")),days:col(r,"Delivery_Days"),free:num(col(r,"Free_Above"))}))
+  .filter(x=>x.gov&&(!hasActive||/^yes$/i.test(x.active)))}
 const govRow=v=>SHIP.find(x=>x.gov===v)||null;
 const shipFor=(row,t)=>!row?null:(row.free&&t>=row.free)?0:row.cost;
 
+/* ===== TRACKING ===== */
 function track(ev,d={}){try{
  const v=d.value??(d.price?eff(d):0),ids=d.ids||[d.id],C="EGP";
  const FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"}[ev];
@@ -350,14 +352,15 @@ function track(ev,d={}){try{
   if(ev==="Purchase"){gtag("event","generate_lead",{currency:C,value:v});gtag("event","purchase",{transaction_id:"WA-"+Date.now(),currency:C,value:v})}}
 }catch(e){}}
 
+/* ===== RENDER ===== */
 function waNum(){let n=(sv("Store_Phone_WhatsApp")||CFG.WA).replace(/\D/g,"");if(n.startsWith("00"))return n.slice(2);return n.startsWith("0")?CFG.CC+n.slice(1):n}
 const href=v=>!v?"#":/^https?:\/\//i.test(v)?https(v):"https://"+v.replace(/^\/+/,"");
 function applyHead(){
- const fav=fixImg(sv("Favicon_URL","Favicon"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
- const sh=fixImg(sv("Share_Image_URL","Share_Image"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
+ const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
+ const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
 function applyLang(){const ar=LANG!=="en";
  document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";
- document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";
+ document.title=ar?"Black & White Alora | شنط وإكسسوارات فاخرة":"Black & White Alora | Luxury Bags & Accessories";
  $("#langBtn").textContent=ar?"EN":"عربي";
  $("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");
  $("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP");
@@ -377,11 +380,14 @@ function renderFooter(){
  const f=$("#waFab");f.href="https://wa.me/"+waNum();f.hidden=false}
 const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
 const priceHTML=p=>`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`;
+
+/* Card HTML - Uniform "أضيفي للسلة" Button */
 function cardHTML(p,cls){const w=wish.includes(p.id),off=p.sale?Math.round((1-p.sale/p.price)*100):0;
  return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
  <button class="fav ${w?"on":""}" data-heart="${esc(p.id)}" aria-label="wish">${w?I.heartF:I.heart}</button></div>
  <div class="bd"><h3 data-view="${esc(p.id)}">${esc(p.name)}</h3>${priceHTML(p)}
- <button class="add" data-view="${esc(p.id)}" ${p.out?"disabled":""}>${p.out?T("out"):(p.sizes.length?T("pickSize"):T("add"))}</button></div></article>`}
+ <button class="add" data-add-direct="${esc(p.id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button></div></article>`}
+
 function renderReels(){
  let L=P.filter(p=>p.best).sort((a,b)=>(b.ts-a.ts)||(b.ord-a.ord));
  if(!L.length)L=P.filter(p=>p.featured);if(!L.length)L=P.slice(0,6);L=L.slice(0,10);
@@ -398,12 +404,26 @@ function renderGrid(){
  const wc=$("#wc");wc.textContent=wish.length;wc.hidden=!wish.length}
 function renderAll(){applyLang();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
 
+/* ===== CART & SMART ADD ===== */
 const saveCart=()=>ls.set("alora_cart",cart);
 const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
+
+function handleAddToCartDirect(id){
+ const p=byId(id);if(!p||p.out)return;
+ if(p.sizes && p.sizes.length>0){
+  openProduct(id);
+ } else {
+  addToCart(id,"");
+ }
+}
+
 function addToCart(id,size){const p=byId(id);if(!p||p.out)return false;
  if(p.sizes.length&&!size)return false;
- const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));it?it.q++:cart.push({id,q:1,size:size||""});
+ const fullSKU = size ? `${id}-${size}` : id;
+ const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));
+ it?it.q++:cart.push({id,q:1,size:size||"",sku:fullSKU});
  saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
+
 function renderCart(){
  if(!P.length)return;
  cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;
@@ -422,6 +442,7 @@ function renderCart(){
   <input class="in" id="cp" placeholder="${T("phone")}" type="tel" inputmode="tel" autocomplete="tel" value="${esc(s.p)}">
   <input class="in" id="ca" placeholder="${T("addr")}" autocomplete="street-address" value="${esc(s.a)}">
   <p class="err" id="err" role="alert"></p><button class="big dark" id="send">${I.wa}${T("send")}</button>`}
+
 function sendOrder(){
  const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err"),gov=ls.get("alora_gov","");
  if(n.split(/\s+/).filter(Boolean).length<2||n.length<5)return e.textContent=T("eName");
@@ -433,16 +454,19 @@ function sendOrder(){
  ls.set("alora_cust",{n,p,a});
  const shipTxt=sc===null?T("mTbd"):sc===0?T("mFree"):`${sc} ${T("cur")}`;
  const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${pd}\n*${T("mGov")}:* ${gov||"-"}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+
-  cart.map((i,k)=>{const x=byId(i.id);return`${k+1}) ${x.name} (${x.id})${i.size?` - ${T("mSize")} ${i.size}`:""}\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+
+  cart.map((i,k)=>{const x=byId(i.id);const itemSKU=i.size?`${x.id}-${i.size}`:x.id;return`${k+1}) ${x.name} (كود: ${itemSKU})${i.size?` - ${T("mSize")} ${i.size}`:""}\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+
   `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mDelivery")}:* ${row?row.days:"-"}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;
  track("Purchase",{value:grand,ids:cart.map(i=>i.id)});
  const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
  cart=[];saveCart();renderCart();closeAll();
  if(!window.open(url,"_blank"))location.href=url}
+
+/* Custom Friendly WhatsApp Inquiry Message */
 function askOne(id){const p=byId(id),wa=waNum();if(!p||!wa)return;track("Lead",p);
- const msg=`🛍 ${T("mAsk")}\n*${p.name}*\n${T("mCode")}: ${p.id}${curSize?`\n${T("mSize")}: ${curSize}`:""}\n${T("mPrice")}: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;
+ const msg=`أهلاً Black & White Alora ✨\nحابّة أسألك عن تفاصيل القطعة دي 💕: ${p.name}${curSize?` (مقاس: ${curSize})`:""}\nكود المنتج: ${curSize?`${p.id}-${curSize}`:p.id}\nالسعر: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;
  const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
 
+/* ===== MODAL / PRODUCT ===== */
 let SCROLLY=0;
 function lock(on){$("#ov").classList.toggle("on",on);const b=document.body;
  if(on&&b.style.position!=="fixed"){SCROLLY=window.scrollY;b.style.cssText+=`;position:fixed;top:-${SCROLLY}px;left:0;right:0;width:100%`}
@@ -454,7 +478,7 @@ function openProduct(id){const p=byId(id);if(!p)return;curId=id;curSize="";track
  const sizes=p.sizes.length?`<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>`:"";
  $("#mIn").innerHTML=`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
   ${ims.length>1?`<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>`:""}</div>
-  <div class="pi"><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
+  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
   <button class="big dark" data-addm="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
   ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
   <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
@@ -469,15 +493,28 @@ function toggleWish(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id
  renderReels();renderGrid();const b=document.querySelector(`[data-heartm="${CSS.escape(id)}"]`);if(b)b.innerHTML=(on?I.heart:I.heartF)+(on?T("addWish"):T("inWish"))}
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
 
+/* ===== EVENTS & SCROLL ===== */
+window.addEventListener('scroll', () => {
+ const header = $('#mainHeader');
+ if (header) {
+  if (window.scrollY > 40) {
+   header.classList.add('scrolled');
+  } else {
+   header.classList.remove('scrolled');
+  }
+ }
+});
+
 document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
 document.addEventListener("click",e=>{
- const t=e.target.closest("[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
+ const t=e.target.closest("[data-add-direct],[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
  if(!t)return;const d=t.dataset;
  if(t.id==="send")return sendOrder();
  if(t.id==="lbN")return openLB((lbIdx+1)%lbList.length);
  if(t.id==="lbP")return openLB((lbIdx-1+lbList.length)%lbList.length);
  if(t.id==="lbX"||t.id==="lb")return $("#lb").classList.remove("on");
- if(d.heart!==undefined||d.heartm!==undefined){e.stopPropagation();toggleWish(d.heart??d.heartm)}
+ if(d.addDirect!==undefined){e.stopPropagation();handleAddToCartDirect(d.addDirect)}
+ else if(d.heart!==undefined||d.heartm!==undefined){e.stopPropagation();toggleWish(d.heart??d.heartm)}
  else if(d.addm!==undefined)addFromModal(d.addm);
  else if(d.size!==undefined)pickSize(t);
  else if(d.th!==undefined){const g=$("#gal");g.scrollTo({left:(LANG==="en"?1:-1)*g.clientWidth*(+d.th),behavior:"smooth"})}
@@ -489,6 +526,7 @@ document.addEventListener("click",e=>{
  else if(d.wa!==undefined)askOne(d.wa);
  else if(d.lb!==undefined)openLB(+d.lb);
  else if(d.close!==undefined)closeAll()});
+
 document.addEventListener("keydown",e=>{
  if(e.key==="Escape"){$("#lb").classList.contains("on")?$("#lb").classList.remove("on"):closeAll()}
  if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")$("#lbN").click();if(e.key==="ArrowRight")$("#lbP").click()}});
@@ -502,6 +540,7 @@ document.addEventListener("change",e=>{if(e.target.id!=="gov")return;
  const n=$("#cn"),p=$("#cp"),a=$("#ca");
  ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});ls.set("alora_gov",e.target.value);renderCart()});
 
+/* ===== BOOT ===== */
 function apply(pT,sT,shT){
  if(sT){const r=parseCSV(sT);if(r.length)S=buildSettings(r)}
  if(pT)P=buildProducts(parseCSV(pT));
