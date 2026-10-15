@@ -14,8 +14,8 @@ gtag('js',new Date());gtag('config','GT-KT54SJNK');
 fbq('init','788558267315755');fbq('track','PageView');
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Black &amp; White Alora</title>
-<meta name="description" content="Black & White Alora">
+<title>Black &amp; White Alora | شنط وإكسسوارات ترندي</title>
+<meta name="description" content="Black & White Alora - شنط وإكسسوارات بتصميم هادئ وأنيق.">
 <meta name="theme-color" content="#FAF9F6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@ fbq('init','788558267315755');fbq('track','PageView');
 <link rel="apple-touch-icon" href="https://res.cloudinary.com/qb1cuzha/image/upload/v1791671513/c6db326a-03bd-4345-9aa7-41f11f9f205a.jpg">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Black &amp; White Alora">
-<meta property="og:title" content="Black &amp; White Alora">
+<meta property="og:title" content="Black &amp; White Alora | More Than Accessories">
 <meta property="og:description" content="مش مجرد شنطة أو إكسسوار؛ دي تفاصيل بتختاريها على مزاجك.">
 <meta property="og:image" content="https://res.cloudinary.com/qb1cuzha/image/upload/f_auto,q_auto,w_1200,h_630,c_fill,g_auto/0cf914b8-07e4-440f-88b8-42a75cdbfbc5">
 <meta name="twitter:card" content="summary_large_image">
@@ -345,375 +345,216 @@ const shipFor=(row,t)=>!row?null:(row.free&&t>=row.free)?0:row.cost;
 /* ===== TRACKING ===== */
 function track(ev,d={}){try{
  const v=d.value??(d.price?eff(d):0),ids=d.ids||[d.id],C="EGP";
- const FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"};
- if(window.fbq&&FB[ev])fbq("track",FB[ev],{content_ids:ids,content_type:"product",value:v,currency:C});
- if(window.gtag)gtag("event",ev,{items:ids.map(id=>({id})),value:v,currency:C});
+ const FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"}[ev];
+ if(window.fbq&&FB)fbq("track",FB,ev==="Checkout"?{value:v,num_items:d.n,currency:C}:{content_ids:ids,content_name:d.name,content_type:"product",value:v,currency:C});
+ if(window.gtag){const it=d.name?[{item_id:ids[0],item_name:d.name,price:v}]:undefined,G={ViewContent:"view_item",AddToCart:"add_to_cart",Lead:"generate_lead",Checkout:"begin_checkout"}[ev];
+  if(G)gtag("event",G,{currency:C,value:v,items:it});
+  if(ev==="Purchase"){gtag("event","generate_lead",{currency:C,value:v});gtag("event","purchase",{transaction_id:"WA-"+Date.now(),currency:C,value:v})}}
 }catch(e){}}
 
-/* ===== CART & MODAL LOGIC ===== */
-function handleAddToCart(productId) {
-    const product = byId(productId);
-    if (!product || product.out) return;
+/* ===== RENDER ===== */
+function waNum(){let n=(sv("Store_Phone_WhatsApp")||CFG.WA).replace(/\D/g,"");if(n.startsWith("00"))return n.slice(2);return n.startsWith("0")?CFG.CC+n.slice(1):n}
+const href=v=>!v?"#":/^https?:\/\//i.test(v)?https(v):"https://"+v.replace(/^\/+/,"");
+function applyHead(){
+ const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
+ const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
+function applyLang(){const ar=LANG!=="en";
+ document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";
+ document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";
+ $("#langBtn").textContent=ar?"EN":"عربي";
+ $("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");
+ $("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP");
+ $("#brandP").textContent=(ar?sv("Footer_Text"):"")||T("brandP");
+ const set=(id,k)=>$(id).textContent=T(k);
+ set("#heroBtn","shopNow");set("#tBest","best");set("#tSwipe","swipe");set("#tCols","cols");set("#tInfo","info");set("#tContact","contact");set("#tCart","cart");
+ set("#aboutLink","about");set("#lShip","pShip");set("#lPriv","pPriv");set("#lRet","pRet");
+ $("#q").placeholder=T("search");
+ $("#nav").innerHTML=`<a href="#best">${T("best")}</a><a href="#cols">${T("cols")}</a><a href="#shop">${T("navShop")}</a>`;
+ const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textContent=a;e.hidden=false}else e.hidden=true}
+function renderFooter(){
+ const soc=[[sv("Facebook_URL","Facebook"),I.fb,"Facebook"],[sv("Instagram_URL","Instagram"),I.ig,"Instagram"],[sv("TikTok_URL","TikTok"),I.tt,"TikTok"]].filter(x=>x[0]);
+ const em=(sv("Store_Email","Email")||CFG.EMAIL).replace(/^mailto:/i,"");
+ $("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(href(u))}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+
+  `<a href="mailto:${esc(em)}" aria-label="Email">${I.mail}</a><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
+ $("#copyLine").textContent=`© ${new Date().getFullYear()} ${CFG.STORE} — ${T("rights")}`;
+ const f=$("#waFab");f.href="https://wa.me/"+waNum();f.hidden=false}
+const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
+const priceHTML=p=>`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`;
 
-    if (product.sizes && product.sizes.length > 0) {
-        openProduct(productId);
-    } else {
-        addToCart(productId, "");
-    }
+/* Card HTML - Uniform "أضيفي للسلة" Button */
+function cardHTML(p,cls){const w=wish.includes(p.id),off=p.sale?Math.round((1-p.sale/p.price)*100):0;
+ return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
+ <button class="fav ${w?"on":""}" data-heart="${esc(p.id)}" aria-label="wish">${w?I.heartF:I.heart}</button></div>
+ <div class="bd"><h3 data-view="${esc(p.id)}">${esc(p.name)}</h3>${priceHTML(p)}
+ <button class="add" data-add-direct="${esc(p.id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button></div></article>`}
+
+function renderReels(){
+ let L=P.filter(p=>p.best).sort((a,b)=>(b.ts-a.ts)||(b.ord-a.ord));
+ if(!L.length)L=P.filter(p=>p.featured);if(!L.length)L=P.slice(0,6);L=L.slice(0,10);
+ $("#reels").innerHTML=L.map(p=>cardHTML(p,"reel")).join("");
+ $("#dots").innerHTML=L.length>1?L.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join(""):"";
+ const r=$("#reels");r.onscroll=()=>{const w=(r.children[0]?.offsetWidth||1)+10,i=Math.round(Math.abs(r.scrollLeft)/w);[...$("#dots").children].forEach((d,k)=>d.classList.toggle("on",k===i))}}
+function renderCols(){$("#colGrid").innerHTML=COLS.map(c=>`<button class="col" data-coll="${c.k}">${img(fixImg(sv(c.key))||c.fb,400,'alt=""')}<span>${LANG==="en"?c.en:c.ar}</span></button>`).join("")}
+function renderChips(){const cats=[ALL,...new Set(P.map(p=>p.cat))];
+ $("#chips").innerHTML=cats.map(c=>`<button class="chip ${c===cat&&!wishOnly?"on":""}" data-cat="${esc(c)}">${c===ALL?T("all"):esc(c)}</button>`).join("")}
+function renderGrid(){
+ const L=P.filter(p=>{if(wishOnly)return wish.includes(p.id);if(cat!==ALL&&p.cat!==cat)return false;if(collRe&&!collRe.test(p.cat))return false;
+  return!term||norm(p.name+p.cat+p.desc+p.id).includes(norm(term))});
+ $("#grid").innerHTML=L.length?L.map(p=>cardHTML(p,"card")).join(""):`<div class="empty">${wishOnly?T("emptyWish"):T("emptyCat")}</div>`;
+ const wc=$("#wc");wc.textContent=wish.length;wc.hidden=!wish.length}
+function renderAll(){applyLang();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
+
+/* ===== CART & SMART ADD ===== */
+const saveCart=()=>ls.set("alora_cart",cart);
+const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
+
+function handleAddToCartDirect(id){
+ const p=byId(id);if(!p||p.out)return;
+ if(p.sizes && p.sizes.length>0){
+  openProduct(id);
+ } else {
+  addToCart(id,"");
+ }
 }
 
-function addToCart(productId, size = "") {
-    const product = byId(productId);
-    if (!product || product.out) return;
+function addToCart(id,size){const p=byId(id);if(!p||p.out)return false;
+ if(p.sizes.length&&!size)return false;
+ const fullSKU = size ? `${id}-${size}` : id;
+ const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));
+ it?it.q++:cart.push({id,q:1,size:size||"",sku:fullSKU});
+ saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
 
-    if (product.sizes && product.sizes.length > 0 && !size) {
-        showToast(T("needSize"));
-        return;
-    }
+function renderCart(){
+ if(!P.length)return;
+ cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;
+ if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}
+ const gov=ls.get("alora_gov",""),row=govRow(gov),th=row&&row.free?row.free:0,t=cartTotal();
+ const bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";
+ $("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id);return`<div class="ci">${img(p.imgs[0],160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div>
+  <div class="qty"><button data-q="${idx}:-1" aria-label="-">−</button><span>${i.q}</span><button data-q="${idx}:1" aria-label="+">+</button></div>
+  <button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");
+ const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc;
+ const govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>`<option value="${esc(x.gov)}" ${x.gov===gov?"selected":""}>${esc(x.gov)}</option>`).join("")}</select>`:"";
+ const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(row.days))}`:T("govAsk")}</div>${row&&row.free?`<div class="ship">${T("freeNote",row.free)}</div>`:""}`:"";
+ $("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}
+  <div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div>
+  <input class="in" id="cn" placeholder="${T("name")}" autocomplete="name" value="${esc(s.n)}">
+  <input class="in" id="cp" placeholder="${T("phone")}" type="tel" inputmode="tel" autocomplete="tel" value="${esc(s.p)}">
+  <input class="in" id="ca" placeholder="${T("addr")}" autocomplete="street-address" value="${esc(s.a)}">
+  <p class="err" id="err" role="alert"></p><button class="big dark" id="send">${I.wa}${T("send")}</button>`}
 
-    const existing = cart.find(item => item.id === productId && item.size === size);
-    if (existing) {
-        existing.qty += 1;
-    } else {
-        cart.push({ id: productId, qty: 1, size: size });
-    }
+function sendOrder(){
+ const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err"),gov=ls.get("alora_gov","");
+ if(n.split(/\s+/).filter(Boolean).length<2||n.length<5)return e.textContent=T("eName");
+ const pd=p.replace(/\D/g,"").replace(/^20/,"0");if(!/^01[0125]\d{8}$/.test(pd))return e.textContent=T("ePhone");
+ if(a.length<15||a.split(/\s+/).filter(Boolean).length<4)return e.textContent=T("eAddr");
+ if(SHIP.length&&!gov)return e.textContent=T("eGov");
+ const wa=waNum();if(!wa)return e.textContent=T("eWa");
+ const t=cartTotal(),row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;
+ ls.set("alora_cust",{n,p,a});
+ const shipTxt=sc===null?T("mTbd"):sc===0?T("mFree"):`${sc} ${T("cur")}`;
+ const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${pd}\n*${T("mGov")}:* ${gov||"-"}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+
+  cart.map((i,k)=>{const x=byId(i.id);const itemSKU=i.size?`${x.id}-${i.size}`:x.id;return`${k+1}) ${x.name} (كود: ${itemSKU})${i.size?` - ${T("mSize")} ${i.size}`:""}\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+
+  `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mDelivery")}:* ${row?row.days:"-"}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;
+ track("Purchase",{value:grand,ids:cart.map(i=>i.id)});
+ const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
+ cart=[];saveCart();renderCart();closeAll();
+ if(!window.open(url,"_blank"))location.href=url}
 
-    ls.set("alora_cart", cart);
-    updateCartUI();
-    showToast(T("toastAdd"));
-    track("AddToCart", {id: productId, price: eff(product)});
-    
-    const modal = document.getElementById("modal");
-    if(modal) modal.classList.remove("on");
-}
+/* Custom Friendly WhatsApp Inquiry Message */
+function askOne(id){const p=byId(id),wa=waNum();if(!p||!wa)return;track("Lead",p);
+ const msg=`أهلاً Black & White Alora ✨\nحابّة أسألك عن تفاصيل القطعة دي 💕: ${p.name}${curSize?` (مقاس: ${curSize})`:""}\nكود المنتج: ${curSize?`${p.id}-${curSize}`:p.id}\nالسعر: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;
+ const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
 
-function updateCartUI() {
-    const cc = $("#cc");
-    const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-    if (cc) {
-        if (totalCount > 0) {
-            cc.textContent = totalCount;
-            cc.removeAttribute("hidden");
-        } else {
-            cc.setAttribute("hidden", "true");
-        }
-    }
-    renderCartDrawer();
-}
+/* ===== MODAL / PRODUCT ===== */
+let SCROLLY=0;
+function lock(on){$("#ov").classList.toggle("on",on);const b=document.body;
+ if(on&&b.style.position!=="fixed"){SCROLLY=window.scrollY;b.style.cssText+=`;position:fixed;top:-${SCROLLY}px;left:0;right:0;width:100%`}
+ else if(!on&&b.style.position==="fixed"){b.style.position=b.style.top=b.style.left=b.style.right=b.style.width="";window.scrollTo(0,SCROLLY)}}
+function closeAll(){["#cart","#modal","#lb"].forEach(s=>$(s).classList.remove("on"));lock(false)}
+function openCart(){closeAll();$("#cart").classList.add("on");lock(true);if(cart.length)track("Checkout",{value:cartTotal(),n:cart.reduce((s,i)=>s+i.q,0),ids:cart.map(i=>i.id)})}
+function openProduct(id){const p=byId(id);if(!p)return;curId=id;curSize="";track("ViewContent",p);
+ const ims=p.imgs.length?p.imgs:[PH],w=wish.includes(id);lbList=ims;
+ const sizes=p.sizes.length?`<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>`:"";
+ $("#mIn").innerHTML=`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
+  ${ims.length>1?`<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>`:""}</div>
+  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
+  <button class="big dark" data-addm="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
+  ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
+  <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
+ $("#modal").classList.add("on");lock(true);$(".mbox").scrollTop=0;
+ const g=$("#gal");if(g)g.onscroll=()=>{const i=Math.round(Math.abs(g.scrollLeft)/(g.clientWidth||1));document.querySelectorAll("#th button").forEach((b,k)=>b.classList.toggle("on",k===i))}}
+function pickSize(btn){curSize=btn.dataset.size;document.querySelectorAll("#sizes .chip").forEach(c=>{const on=c===btn;c.classList.toggle("on",on);c.setAttribute("aria-checked",on)});$("#szErr").textContent=""}
+function addFromModal(id){const p=byId(id);
+ if(p.sizes.length&&!curSize){$("#szErr").textContent=T("needSize");$("#sizes").scrollIntoView({block:"center",behavior:"smooth"});return}
+ if(addToCart(id,curSize))closeAll()}
+function openLB(i){lbIdx=i;$("#lbI").src=optImg(lbList[i],1400);$("#lb").classList.add("on")}
+function toggleWish(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id):[...wish,id];ls.set("alora_wish",wish);toast(on?T("toastRm"):T("toastWish"));
+ renderReels();renderGrid();const b=document.querySelector(`[data-heartm="${CSS.escape(id)}"]`);if(b)b.innerHTML=(on?I.heart:I.heartF)+(on?T("addWish"):T("inWish"))}
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
 
-function renderCartDrawer() {
-    const cb = $("#cartBody"), cf = $("#cartFoot");
-    if (!cb || !cf) return;
-
-    if (!cart.length) {
-        cb.innerHTML = `<div class="empty">${T("emptyCart")}</div>`;
-        cf.innerHTML = "";
-        return;
-    }
-
-    const subtotal = cart.reduce((sum, item) => {
-        const p = byId(item.id);
-        return sum + (p ? eff(p) * item.qty : 0);
-    }, 0);
-
-    cb.innerHTML = cart.map(item => {
-        const p = byId(item.id);
-        if (!p) return "";
-        return `
-            <div class="ci">
-                <img src="${esc(optImg(p.imgs[0]||PH, 150))}" alt="${esc(p.name)}">
-                <div class="t">
-                    <b>${esc(p.name)}</b>
-                    ${item.size ? `<br><small>${T("size")}: ${esc(item.size)}</small>` : ""}
-                    <div>${money(eff(p))}</div>
-                    <div class="qty">
-                        <button onclick="changeQty('${item.id}', '${item.size}', -1)">-</button>
-                        <span>${item.qty}</span>
-                        <button onclick="changeQty('${item.id}', '${item.size}', 1)">+</button>
-                    </div>
-                    <button class="rm" onclick="removeFromCart('${item.id}', '${item.size}')">${T("rm")}</button>
-                </div>
-            </div>
-        `;
-    }).join("");
-
-    cf.innerHTML = `
-        <div class="tot"><span>${T("total")}</span><span>${money(subtotal)}</span></div>
-        <input class="in" id="custName" placeholder="${T("name")}">
-        <input class="in" id="custPhone" type="tel" placeholder="${T("phone")}">
-        <select class="in" id="custGov" onchange="renderCartDrawer()">
-            <option value="">${T("govPick")}</option>
-            ${SHIP.map(s => `<option value="${esc(s.gov)}">${esc(s.gov)}</option>`).join("")}
-        </select>
-        <input class="in" id="custAddr" placeholder="${T("addr")}">
-        <div class="err" id="cartErr"></div>
-        <button class="big dark" onclick="sendOrderWhatsApp()">${T("send")}</button>
-    `;
-}
-
-function changeQty(id, size, delta) {
-    const item = cart.find(i => i.id === id && i.size === size);
-    if (item) {
-        item.qty += delta;
-        if (item.qty <= 0) cart = cart.filter(i => !(i.id === id && i.size === size));
-        ls.set("alora_cart", cart);
-        updateCartUI();
-    }
-}
-
-function removeFromCart(id, size) {
-    cart = cart.filter(i => !(i.id === id && i.size === size));
-    ls.set("alora_cart", cart);
-    updateCartUI();
-}
-
-function sendOrderWhatsApp() {
-    const name = $("#custName")?.value.trim();
-    const phone = $("#custPhone")?.value.trim();
-    const gov = $("#custGov")?.value;
-    const addr = $("#custAddr")?.value.trim();
-    const err = $("#cartErr");
-
-    if (!name || name.split(/\s+/).length < 2) { err.textContent = T("eName"); return; }
-    if (!phone || !/^01[0125]\d{8}$/.test(phone)) { err.textContent = T("ePhone"); return; }
-    if (!gov) { err.textContent = T("eGov"); return; }
-    if (!addr) { err.textContent = T("eAddr"); return; }
-    err.textContent = "";
-
-    const subtotal = cart.reduce((sum, item) => {
-        const p = byId(item.id);
-        return sum + (p ? eff(p) * item.qty : 0);
-    }, 0);
-
-    const sRow = govRow(gov);
-    const shipCost = shipFor(sRow, subtotal);
-    const grandTotal = subtotal + (shipCost || 0);
-
-    let msg = `*${T("mNew")} - ${CFG.STORE}*\n\n`;
-    msg += `*${T("mName")}:* ${name}\n`;
-    msg += `*${T("mPhone")}:* ${phone}\n`;
-    msg += `*${T("mGov")}:* ${gov}\n`;
-    msg += `*${T("mAddr")}:* ${addr}\n\n`;
-    msg += `*${T("mItems")}:*\n`;
-
-    cart.forEach(item => {
-        const p = byId(item.id);
-        if (p) msg += `- ${p.name} ${item.size ? `(${T("mSize")}: ${item.size})` : ""} x${item.qty} = ${eff(p) * item.qty} ${T("cur")}\n`;
-    });
-
-    msg += `\n*${T("mTotal")}:* ${subtotal} ${T("cur")}\n`;
-    msg += `*${T("mShip")}:* ${shipCost === 0 ? T("mFree") : `${shipCost}${T("cur")}`}\n`;
-    msg += `*${T("mGrand")}:* ${grandTotal} ${T("cur")}`;
-
-    const waNum = CFG.WA.replace(/[^\d]/g, "");
-    window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, "_blank");
-}
-
-function showToast(msg) {
-    const toast = $("#toast");
-    if (!toast) return;
-    toast.textContent = msg;
-    toast.classList.add("on");
-    setTimeout(() => toast.classList.remove("on"), 2500);
-}
-
-function openProduct(productId) {
-    curId = productId;
-    curSize = "";
-    const product = byId(productId);
-    if (!product) return;
-    
-    const mIn = $("#mIn");
-    if (!mIn) return;
-
-    let sizesHtml = "";
-    if (product.sizes && product.sizes.length > 0) {
-        sizesHtml = `
-            <div class="szt">${T("mSize")}:</div>
-            <div class="sizes">
-                ${product.sizes.map(s => `<button class="chip" onclick="selectSize('${s}', this)">${s}</button>`).join("")}
-            </div>
-            <div class="szerr" id="szErr"></div>
-        `;
-    }
-
-    mIn.innerHTML = `
-        <div class="pm">
-            <div class="gal">${img(product.imgs[0], 800)}</div>
-            <div class="pi">
-                <h2>${esc(product.name)}</h2>
-                <div class="price"><b>${money(eff(product))}</b>${product.sale ? `<s>${money(product.price)}</s>` : ""}</div>
-                <p>${esc(product.desc)}</p>
-                ${sizesHtml}
-                <button class="add" onclick="confirmModalAdd()">${T("add")}</button>
-            </div>
-        </div>
-    `;
-    $("#modal").classList.add("on");
-    track("ViewContent", {id: product.id, price: eff(product)});
-}
-
-function selectSize(size, el) {
-    curSize = size;
-    document.querySelectorAll(".mbox .sizes .chip").forEach(c => c.classList.remove("on"));
-    el.classList.add("on");
-    const err = $("#szErr");
-    if (err) err.textContent = "";
-}
-
-function confirmModalAdd() {
-    if (!curId) return;
-    const product = byId(curId);
-    if (!product) return;
-
-    if (product.sizes && product.sizes.length > 0 && !curSize) {
-        const err = $("#szErr");
-        if (err) err.textContent = T("needSize");
-        return;
-    }
-    addToCart(curId, curSize);
-}
-
-function renderUI() {
-    $("#heroT").textContent = sv("herotitle") || T("heroH");
-    $("#heroS").textContent = sv("herosubtitle") || T("heroP");
-    $("#heroBtn").textContent = T("shopNow");
-    $("#tBest").textContent = T("best");
-    $("#tSwipe").textContent = T("swipe");
-    $("#tCols").textContent = T("cols");
-    $("#q").placeholder = T("search");
-    $("#tInfo").textContent = T("info");
-    $("#tContact").textContent = T("contact");
-    $("#tCart").textContent = T("cart");
-    $("#brandP").textContent = sv("footertext") || T("brandP");
-    $("#aboutLink").textContent = T("about");
-    $("#lShip").textContent = T("pShip");
-    $("#lPriv").textContent = T("pPriv");
-    $("#lRet").textContent = T("pRet");
-    $("#copyLine").textContent = `© ${new Date().getFullYear()} ${CFG.STORE}. ${T("rights")}.`;
-
-    renderNav();
-    renderReels();
-    renderCols();
-    renderProducts();
-    updateCartUI();
-}
-
-function renderNav() {
-    const nav = $("#nav");
-    if (!nav) return;
-    const cats = [ALL, ...new Set(P.map(p => p.cat))];
-    nav.innerHTML = cats.map(c => `<a href="#shop" onclick="filterCat('${c}')" class="${cat === c ? "on" : ""}">${esc(c)}</a>`).join("");
-}
-
-function filterCat(c) {
-    cat = c;
-    renderNav();
-    renderProducts();
-}
-
-function renderReels() {
-    const reels = $("#reels");
-    if (!reels) return;
-    const bests = P.filter(p => p.best || p.featured);
-    if (!bests.length) { 
-        reels.innerHTML = `<div class="empty">${T("soon")}</div>`; 
-        return; 
-    }
-    reels.innerHTML = bests.map(p => `
-        <div class="reel" onclick="openProduct('${p.id}')">
-            <div class="im">${img(p.imgs[0], 400)}</div>
-            <div class="bd">
-                <h3>${esc(p.name)}</h3>
-                <div class="price"><b>${money(eff(p))}</b>${p.sale ? `<s>${money(p.price)}</s>` : ""}</div>
-                <button class="add" onclick="event.stopPropagation(); handleAddToCart('${p.id}')">${p.out ? T("out") : T("add")}</button>
-            </div>
-        </div>
-    `).join("");
-}
-
-function renderCols() {
-    const colGrid = $("#colGrid");
-    if (!colGrid) return;
-    colGrid.innerHTML = COLS.map(c => `
-        <div class="col" onclick="filterCat('${c.ar}')">
-            <img src="${c.fb}" alt="${c.ar}" loading="lazy">
-            <span>${c.ar}</span>
-        </div>
-    `).join("");
-}
-
-function renderProducts() {
-    const grid = $("#grid");
-    if (!grid) return;
-
-    let filtered = P.filter(p => {
-        const matchCat = (cat === ALL || p.cat === cat);
-        const matchSearch = (!term || norm(p.name).includes(norm(term)) || norm(p.id).includes(norm(term)));
-        return matchCat && matchSearch;
-    });
-
-    if (!filtered.length) {
-        grid.innerHTML = `<div class="empty">${T("emptyCat")}</div>`;
-        return;
-    }
-
-    grid.innerHTML = filtered.map(p => `
-        <div class="card">
-            <div class="im" onclick="openProduct('${p.id}')">
-                ${img(p.imgs[0], 500)}
-                ${p.sale ? `<span class="badge">خصم</span>` : ""}
-            </div>
-            <div class="bd">
-                <h3 onclick="openProduct('${p.id}')">${esc(p.name)}</h3>
-                <div class="price"><b>${money(eff(p))}</b>${p.sale ? `<s>${money(p.price)}</s>` : ""}</div>
-                <button class="add" onclick="handleAddToCart('${p.id}')">${p.out ? T("out") : T("add")}</button>
-            </div>
-        </div>
-    `).join("");
-}
-
-/* ===== INIT ===== */
-async function init() {
-    try {
-        const [pCsv, sCsv, shCsv] = await Promise.all([
-            fetchText(CFG.PRODUCTS),
-            fetchText(CFG.SETTINGS).catch(() => ""),
-            fetchText(CFG.SHIP).catch(() => "")
-        ]);
-
-        P = buildProducts(parseCSV(pCsv));
-        S = buildSettings(parseCSV(sCsv));
-        SHIP = parseShip(shCsv);
-
-        renderUI();
-    } catch (e) {
-        $("#grid").innerHTML = `<div class="empty">${T("fail")}<br><button class="btn" onclick="init()">${T("retry")}</button></div>`;
-    }
-}
-
-document.addEventListener("click", e => {
-    if (e.target.matches("[data-close], .ov")) {
-        $("#modal").classList.remove("on");
-        $("#cart").classList.remove("on");
-        $("#ov").classList.remove("on");
-    }
+/* ===== EVENTS & SCROLL ===== */
+window.addEventListener('scroll', () => {
+ const header = $('#mainHeader');
+ if (header) {
+  if (window.scrollY > 40) {
+   header.classList.add('scrolled');
+  } else {
+   header.classList.remove('scrolled');
+  }
+ }
 });
 
-const cartBtn = $("#cartBtn");
-if (cartBtn) {
-    cartBtn.addEventListener("click", () => {
-        $("#cart").classList.add("on");
-        $("#ov").classList.add("on");
-    });
-}
+document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
+document.addEventListener("click",e=>{
+ const t=e.target.closest("[data-add-direct],[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
+ if(!t)return;const d=t.dataset;
+ if(t.id==="send")return sendOrder();
+ if(t.id==="lbN")return openLB((lbIdx+1)%lbList.length);
+ if(t.id==="lbP")return openLB((lbIdx-1+lbList.length)%lbList.length);
+ if(t.id==="lbX"||t.id==="lb")return $("#lb").classList.remove("on");
+ if(d.addDirect!==undefined){e.stopPropagation();handleAddToCartDirect(d.addDirect)}
+ else if(d.heart!==undefined||d.heartm!==undefined){e.stopPropagation();toggleWish(d.heart??d.heartm)}
+ else if(d.addm!==undefined)addFromModal(d.addm);
+ else if(d.size!==undefined)pickSize(t);
+ else if(d.th!==undefined){const g=$("#gal");g.scrollTo({left:(LANG==="en"?1:-1)*g.clientWidth*(+d.th),behavior:"smooth"})}
+ else if(d.view!==undefined)openProduct(d.view);
+ else if(d.coll!==undefined){collRe=COLS.find(x=>x.k===d.coll).re;cat=ALL;wishOnly=false;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})}
+ else if(d.cat!==undefined){cat=d.cat;collRe=null;wishOnly=false;renderChips();renderGrid()}
+ else if(d.q!==undefined){const[ix,dl]=d.q.split(":"),it=cart[+ix];if(it){it.q+=+dl;if(it.q<1)cart=cart.filter(i=>i!==it);saveCart();renderCart()}}
+ else if(d.rm!==undefined){cart=cart.filter((_,ix)=>ix!==+d.rm);saveCart();renderCart()}
+ else if(d.wa!==undefined)askOne(d.wa);
+ else if(d.lb!==undefined)openLB(+d.lb);
+ else if(d.close!==undefined)closeAll()});
 
-$("#q")?.addEventListener("input", e => {
-    term = e.target.value;
-    renderProducts();
-});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"){$("#lb").classList.contains("on")?$("#lb").classList.remove("on"):closeAll()}
+ if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")$("#lbN").click();if(e.key==="ArrowRight")$("#lbP").click()}});
+$("#ov").onclick=closeAll;
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeAll()});
+$("#cartBtn").onclick=openCart;
+$("#wishBtn").onclick=()=>{wishOnly=!wishOnly;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})};
+$("#langBtn").onclick=()=>{LANG=LANG==="en"?"ar":"en";ls.set("alora_lang",LANG);closeAll();renderAll()};
+$("#q").addEventListener("input",e=>{term=e.target.value;renderGrid()});
+document.addEventListener("change",e=>{if(e.target.id!=="gov")return;
+ const n=$("#cn"),p=$("#cp"),a=$("#ca");
+ ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});ls.set("alora_gov",e.target.value);renderCart()});
 
-init();
+/* ===== BOOT ===== */
+function apply(pT,sT,shT){
+ if(sT){const r=parseCSV(sT);if(r.length)S=buildSettings(r)}
+ if(pT)P=buildProducts(parseCSV(pT));
+ if(shT)SHIP=parseShip(shT);
+ applyHead();renderAll()}
+(async function boot(){
+ const cp=ls.get("alora_csv_p",null),cs=ls.get("alora_csv_s",null),csh=ls.get("alora_csv_ship",null);
+ renderAll();if(cp)apply(cp,cs,csh);
+ const [rp,rs,rsh]=await Promise.allSettled([fetchText(CFG.PRODUCTS),fetchText(CFG.SETTINGS),fetchText(CFG.SHIP)]);
+ const pT=rp.status==="fulfilled"?rp.value:null,sT=rs.status==="fulfilled"?rs.value:null,shT=rsh.status==="fulfilled"?rsh.value:null;
+ if(pT)ls.set("alora_csv_p",pT);if(sT)ls.set("alora_csv_s",sT);if(shT)ls.set("alora_csv_ship",shT);
+ if(!pT&&!cp){$("#grid").innerHTML=`<div class="empty">${T("fail")} <button style="text-decoration:underline" onclick="location.reload()">${T("retry")}</button></div>`;return}
+ apply(pT||cp,sT||cs,shT||csh);
+ if(!pT&&cp)toast(T("stale"))})();
 </script>
 </body>
 </html>
