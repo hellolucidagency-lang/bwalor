@@ -23,7 +23,7 @@ fbq('init','788558267315755');fbq('track','PageView');
 <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/qb1cuzha/image/upload/v1791671513/c6db326a-03bd-4345-9aa7-41f11f9f205a.jpg">
 <link rel="apple-touch-icon" href="https://res.cloudinary.com/qb1cuzha/image/upload/v1791671513/c6db326a-03bd-4345-9aa7-41f11f9f205a.jpg">
 <style>
-:root{--bg:#FAF9F6;--card:#F2F0EC;--ink:#1A1A1A;--mut:#77736a;--line:#E6E3DC;--gold:#C9A84C}
+:root{--bg:#F1EDE5;--card:#E9E4D9;--ink:#302E2A;--mut:#82776A;--line:#DDD6C9;--gold:#82776A}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px;-webkit-tap-highlight-color:transparent}
@@ -48,13 +48,13 @@ header.scrolled .ann{display:none!important}
 .nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px 10px;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 .nav a{white-space:nowrap;padding:5px 13px;border:1px solid var(--line);border-radius:16px;font-size:12.5px;background:#fff;text-decoration:none}
-.hero{background:var(--card);text-align:center;padding:30px 20px 34px}
-.hero h1{font-size:clamp(23px,6vw,40px);font-weight:800;line-height:1.4;max-width:620px;margin:0 auto}
-.hero p{color:#55524b;margin:10px auto 20px;max-width:500px;font-size:14.5px}
+.hero{background:var(--card);text-align:center;padding:22px 20px 26px}
+.hero h1{font-size:clamp(19px,4.6vw,28px);font-weight:700;line-height:1.4;max-width:620px;margin:0 auto}
+.hero p{color:var(--mut);margin:8px auto 16px;max-width:500px;font-size:13.5px}
 .btn{display:inline-block;background:var(--ink);color:#fff;padding:11px 28px;border-radius:24px;font-weight:700;text-decoration:none;font-size:14px}
 section{padding-top:24px}
 .sh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
-.sh h2{font-size:19px;font-weight:800}.sh small{color:var(--mut);font-size:12px}
+.sh h2{font-size:16px;font-weight:700}.sh small{color:var(--mut);font-size:12px}
 .hs{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 0 4px;scrollbar-width:none}
 .hs::-webkit-scrollbar{display:none}.hs>*{scroll-snap-align:start;flex:none}
 .dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
@@ -93,10 +93,24 @@ section{padding-top:24px}
 .empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:44px 10px;font-size:14px;line-height:1.9}
 .skel{background:#ECE9E2;animation:pulse 1.4s ease-in-out infinite;border-radius:14px;aspect-ratio:4/5}
 @keyframes pulse{50%{opacity:.5}}
-footer{background:#fff;border-top:1px solid var(--line);margin-top:14px;padding:30px 0 104px}
+footer{background:var(--bg);border-top:1px solid var(--line);margin-top:14px;padding:30px 0 104px}
+.rv{background:var(--card);border-radius:14px;padding:14px;width:250px;display:flex;flex-direction:column;gap:8px}
+.rv img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+.rv .top{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px}
+.rv .top svg{width:18px;height:18px;flex:none;margin-inline-start:auto}
+.rv .st{color:#E0A526;letter-spacing:2px;font-size:13px}
+.rv p{font-size:12.5px;color:var(--ink);line-height:1.7}
+.rvb{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.rvb a{flex:1 1 200px;text-align:center;padding:9px 12px;border:1px solid var(--mut);border-radius:22px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none}
+.about{display:block;background:var(--ink);color:var(--bg)!important;padding:12px 16px;border-radius:14px;text-align:center;font-weight:700;font-size:14px;margin-bottom:12px;text-decoration:none}
+.acc summary{list-style:none;cursor:pointer;font-size:13.5px;font-weight:700;display:flex;justify-content:space-between;align-items:center;padding:4px 0}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";font-size:18px;color:var(--mut)}.acc[open] summary::after{content:"–"}
+@media(min-width:760px){.acc summary{pointer-events:none}.acc summary::after{display:none}}
+.cpn{display:flex;gap:6px;margin-bottom:9px}.cpn .in{margin:0;flex:1}.cpn button{flex:none;padding:0 16px;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:700;font-size:12.5px}
 .fcols{display:grid;gap:22px}@media(min-width:760px){.fcols{grid-template-columns:repeat(3,1fr)}}
 footer h4{font-size:13.5px;font-weight:700;margin-bottom:9px}
-.flink{display:block;color:#55524b;font-size:13px;padding:4px 0;text-decoration:none}
+.flink{display:block;color:var(--mut);font-size:13px;padding:4px 0;text-decoration:none}
 .soc{display:flex;gap:10px;flex-wrap:wrap}
 .soc a{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%}
 .soc svg{width:16px;height:16px}
@@ -145,7 +159,7 @@ html .drawer.on{transform:none}
 .th img{width:100%;height:100%;object-fit:cover}
 .pi{padding:18px;display:flex;flex-direction:column;gap:11px}
 .pi h2{font-size:19px;font-weight:800;padding-inline-end:36px}
-.pi p{color:#55524b;white-space:pre-line;font-size:13.5px;line-height:1.85}
+.pi p{color:var(--mut);white-space:pre-line;font-size:13.5px;line-height:1.85}
 .sizes{display:flex;gap:6px;flex-wrap:wrap}
 .szt{font-size:13px;font-weight:700}
 .szerr{color:#a4372b;font-size:12.5px;min-height:18px}
@@ -192,14 +206,32 @@ html .drawer.on{transform:none}
  <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
 </section>
 
- <!-- Elfsight Google Reviews | Untitled Google Reviews -->
-<script src="https://elfsightcdn.com/platform.js" async></script>
-<div class="elfsight-app-2900b764-1934-4fb2-8c84-0c90aabb4108" data-elfsight-app-lazy></div>
+<section id="reviews" class="wrap" hidden>
+ <div class="sh"><h2>آراء جميلات أورا 🤍</h2></div>
+ <div class="hs" id="rvReel"></div>
+ <div class="rvb"><a href="https://search.google.com/local/writereview?placeid=ChIJ6wtd-3ABQqgR2vDAtYfoTUc" target="_blank" rel="noopener">شاركينا رأيكِ واكتبي تقييمكِ ✍️</a><a href="https://maps.google.com/maps?cid=5138018419467153626" target="_blank" rel="noopener">مشاهدة التقييمات على خرائط جوجل 🗺️</a></div>
+</section>
+<script>
+const GLOGO='<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>';
+const REVIEWS = [
+  {"name": "aia", "rating": 5, "text": "ماشاء الله، الشنطة جميلة أوي وخامتها تحفة، شكراً لذوقكم وتعاملكم الراقي حقيقي 💜.", "image": "https://lh3.googleusercontent.com/grass-cs/AABkmLfgW2Ap3p7XIEPnzBZj1ISExdlPTGP14Kz2f7_SH8JVsM-fwWMifRP5jteHxL1KL9Y1Cl5Mc51AODnAaq4xvZ-jouFDm0fJ2fi135ug0zCIYi5MngiMo_A0T82tw9T3Sn0E5fpW7u5dZ0oB=k-no"},
+  {"name": "Dina Ebrahim", "rating": 5, "text": "ماشاء الله ♥ مكان ثقة وحاجتكم حلوة اوى هافضل اجيب منكم ع طول 💕💕💕💕", "image": ""},
+  {"name": "Menna Allah", "rating": 5, "text": "بجد من أشيك و أفخم صفحات الإكسسوارات اللي شفتها ❤️ كل قطعة تم اختيارها بذوق جميل جداً وتفاصيلها مميزة جداً هيا فعلاً لمسة أناقة بتكمل أي لوك ❤️ الخامات ممتازة جداً والتصميمات متنوعة ❤️", "image": ""},
+  {"name": "Abeer Maher", "rating": 5, "text": "جيبت من عندهم 3 شنط بصراحه خامتهم حلوه اوى ليا و لبناتى اسعارهم حلوه و الخامات ممتازه بصراحه مستنية الكولكشن الجديد من عندهم", "image": ""},
+  {"name": "Rania Youssef", "rating": 5, "text": "بجد الحاجه شكرا الشنطه و الاكسسوارات كله تحفه الشنطه خامتها تجنن بجد تسلم ايدك و الاكسسوارات كمان تحفه", "image": ""},
+  {"name": "Rotailla Mezo", "rating": 5, "text": "من احسن الصفحات إلى اتعاملت معاهم خامه ممتازه و سرعه فى الرد و المنتجات وصلتلى منتهى السرعه وزي الصور و احسن كمان", "image": ""},
+  {"name": "Nona Nona", "rating": 5, "text": "حقيقى من اكتر الصفحات مصدقيه في التعامل وحاجاات كوالتى عالى اوي جيبت منهم شنطه تحفه و اكسسوارات جميله جدا انا حاجاتي خلاص هاتبقى من عندهم", "image": ""},
+  {"name": "Aya Yoyo", "rating": 5, "text": "من احسن البيدجاات في التعامل و حاجاتهم فعلا زي الصور وخامه حلوه جدا و مستنيه الكوليكشن الجديد", "image": ""}
+];
+(function(){const r=REVIEWS.filter(x=>x.text);if(!r.length)return;
+document.getElementById("rvReel").innerHTML=r.map(x=>`<div class="rv">${x.image?`<img src="${x.image}" alt="${x.name}" loading="lazy" referrerpolicy="no-referrer">`:""}<div class="top">${x.name}${GLOGO}</div><div class="st">${"★".repeat(x.rating||5)}</div><p>${x.text}</p></div>`).join("");
+document.getElementById("reviews").hidden=false})();
+</script>
 <footer><div class="wrap">
  <div class="fcols">
-  <div><div class="brand" style="font-size:17px">Black &amp; White <span>Alora</span></div><p id="brandP" style="font-size:13px;color:#55524b;margin-top:8px"></p></div>
-  <div><a class="flink" id="aboutLink" href="about.html" style="font-weight:800;font-size:15px"></a><h4 id="tInfo"></h4>
-   <a class="flink" href="shipping.html" id="lShip"></a><a class="flink" href="privacy.html" id="lPriv"></a><a class="flink" href="returns.html" id="lRet"></a></div>
+  <div><div class="brand" style="font-size:17px">Black &amp; White <span>Alora</span></div><p id="brandP" style="font-size:13px;color:var(--mut);margin-top:8px"></p></div>
+  <div><a class="about" id="aboutLink" href="about.html"></a><details class="acc" id="accInfo"><summary id="tInfo"></summary>
+   <a class="flink" href="shipping.html" id="lShip"></a><a class="flink" href="privacy.html" id="lPriv"></a><a class="flink" href="returns.html" id="lRet"></a></details></div>
   <div><h4 id="tContact"></h4><div class="soc" id="soc"></div></div>
  </div>
  <div class="copy"><div id="copyLine"></div><div style="font-size:10px;font-weight:300;opacity:.65;margin-top:3px;letter-spacing:.02em">بلاك آند وايت التجارية</div></div>
@@ -335,7 +367,9 @@ async function loadStoreDataFromN8N() {
   }
 }
 
-const govRow=v=>SHIP.find(x=>x.gov===v||x.Governorate===v)||null;
+const gOf=x=>x.gov||x.Governorate||x["المحافظة"]||x["المحافظه"]||x["محافظة"]||"";
+const govRow=v=>SHIP.find(x=>gOf(x)===v)||null;
+const isBag=p=>/bag|شنط|حقيب/i.test(String(p.cat||""));
 const shipFor=(row,t)=>{if(!row)return null;const f=num(row.free||row.Free_Above),c=num(row.cost||row.Shipping_Cost);return(f&&t>=f)?0:c};
 
 function track(ev,d={}){try{const v=d.value??(d.price?eff(d):0),ids=d.ids||[d.id],C="EGP",FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"}[ev];if(window.fbq&&FB)fbq("track",FB,ev==="Checkout"?{value:v,num_items:d.n,currency:C}:{content_ids:ids,content_name:d.name,content_type:"product",value:v,currency:C});if(window.gtag){const it=d.name?[{item_id:ids[0],item_name:d.name,price:v}]:undefined,G={ViewContent:"view_item",AddToCart:"add_to_cart",Lead:"generate_lead",Checkout:"begin_checkout"}[ev];if(G)gtag("event",G,{currency:C,value:v,items:it});if(ev==="Purchase"){gtag("event","generate_lead",{currency:C,value:v});gtag("event","purchase",{transaction_id:"WA-"+Date.now(),currency:C,value:v})}}}catch(e){}}
@@ -373,16 +407,16 @@ function renderAll(){applyHead();applyLang();renderFooter();renderReels();render
 const saveCart=()=>ls.set("alora_cart",cart);
 const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
 
-function handleAddToCartDirect(id){const p=byId(id);if(!p||p.stock==='out_of_stock')return;if(p.sizes&&p.sizes.length>0){openProduct(id)}else{addToCart(id,"")}}
-function addToCart(id,size){const p=byId(id);if(!p||p.stock==='out_of_stock')return false;if(p.sizes.length&&!size)return false;const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));it?it.q++:cart.push({id,q:1,size:size||"",sku:size?`${id}-${size}`:id});saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
+function handleAddToCartDirect(id){const p=byId(id);if(!p||p.stock==='out_of_stock')return;if(p.sizes&&p.sizes.length>0&&!isBag(p)){openProduct(id)}else{addToCart(id,"")}}
+function addToCart(id,size){const p=byId(id);if(!p||p.stock==='out_of_stock')return false;if(p.sizes.length&&!size&&!isBag(p))return false;const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));it?it.q++:cart.push({id,q:1,size:size||"",sku:size?`${id}-${size}`:id});saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
 
-function renderCart(){if(!P.length)return;cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?num(row.free||row.Free_Above):0,t=cartTotal(),bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";$("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id),mImg=p.imgs[0]||PH;return`<div class="ci">${img(mImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div><div class="qty"><button data-q="${idx}:-1">−</button><span>${i.q}</span><button data-q="${idx}:1">+</button></div><button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc,govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=x.gov||x.Governorate;return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"",daysVal=row?(row.days||row.Delivery_Days||3):3,shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";
+function renderCart(){if(!P.length)return;cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?num(row.free||row.Free_Above):0,t=cartTotal(),bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";$("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id),mImg=p.imgs[0]||PH;return`<div class="ci">${img(mImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div><div class="qty"><button data-q="${idx}:-1">−</button><span>${i.q}</span><button data-q="${idx}:1">+</button></div><button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc,govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=gOf(x);return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"",daysVal=row?(row.days||row.Delivery_Days||3):3,shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";
 
 const paySel = `<select class="in" id="payMethod"><option value="cod" ${PAY==="cod"?"selected":""}>${LANG==="en"?"Cash on delivery":"الدفع عند الاستلام (كاش)"}</option><option value="instapay" ${PAY==="instapay"?"selected":""}>${LANG==="en"?"InstaPay":"InstaPay (انستا باي)"}</option><option value="wallet" ${PAY==="wallet"?"selected":""}>${LANG==="en"?"Vodafone Cash wallet":"محفظة فودافون كاش"}</option></select>
-<div id="instapayInfo" style="display:${PAY==="instapay"?"block":"none"};background:#eef5f0;padding:12px;border-radius:10px;font-size:12px;margin-bottom:7px;color:#2f6b4a;text-align:center"><img src="${IP_QR}" alt="InstaPay QR" style="width:170px;height:170px;margin:0 auto 8px;background:#fff;border-radius:8px"><div><b>${LANG==="en"?"InstaPay address":"عنوان InstaPay"}:</b></div><div dir="ltr" style="font-weight:700;font-size:13px;margin:3px 0 7px;user-select:all">${IPA}</div><button type="button" class="big dark" style="padding:8px;font-size:12px" data-copy="${IPA}">${LANG==="en"?"Copy address":"نسخ العنوان"}</button><div style="margin-top:7px;color:#55524b">${LANG==="en"?"After transferring, send the receipt on":"بعد التحويل ابعتي صورة التحويل على"} <a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" style="color:#2f6b4a;font-weight:700">WhatsApp</a></div></div>
-<div id="walletInfo" style="display:${PAY==="wallet"?"block":"none"};background:#eef5f0;padding:12px;border-radius:10px;font-size:12px;margin-bottom:7px;color:#2f6b4a;text-align:center"><div><b>${LANG==="en"?"Vodafone Cash wallet number":"رقم محفظة فودافون كاش"}:</b></div><div dir="ltr" style="font-weight:700;font-size:14px;margin:3px 0 7px;user-select:all">${localNum()}</div><button type="button" class="big dark" style="padding:8px;font-size:12px" data-copy="${localNum()}">${LANG==="en"?"Copy number":"نسخ الرقم"}</button><div style="margin-top:7px;color:#55524b">${LANG==="en"?"You can send from any wallet. After transferring, send the receipt on":"تقدري تحوّلي من أي محفظة. بعد التحويل ابعتي صورة التحويل على"} <a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" style="color:#2f6b4a;font-weight:700">WhatsApp</a></div></div>`;
+<div id="instapayInfo" style="display:${PAY==="instapay"?"block":"none"};background:#eef5f0;padding:12px;border-radius:10px;font-size:12px;margin-bottom:7px;color:#2f6b4a;text-align:center"><img src="${IP_QR}" alt="InstaPay QR" style="width:170px;height:170px;margin:0 auto 8px;background:#fff;border-radius:8px"><div><b>${LANG==="en"?"InstaPay address":"عنوان InstaPay"}:</b></div><div dir="ltr" style="font-weight:700;font-size:13px;margin:3px 0 7px;user-select:all">${IPA}</div><button type="button" class="big dark" style="padding:8px;font-size:12px" data-copy="${IPA}">${LANG==="en"?"Copy address":"نسخ العنوان"}</button><div style="margin-top:7px;color:var(--mut)">${LANG==="en"?"After transferring, send the receipt on":"بعد التحويل ابعتي صورة التحويل على"} <a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" style="color:#2f6b4a;font-weight:700">WhatsApp</a></div></div>
+<div id="walletInfo" style="display:${PAY==="wallet"?"block":"none"};background:#eef5f0;padding:12px;border-radius:10px;font-size:12px;margin-bottom:7px;color:#2f6b4a;text-align:center"><div><b>${LANG==="en"?"Vodafone Cash wallet number":"رقم محفظة فودافون كاش"}:</b></div><div dir="ltr" style="font-weight:700;font-size:14px;margin:3px 0 7px;user-select:all">${localNum()}</div><button type="button" class="big dark" style="padding:8px;font-size:12px" data-copy="${localNum()}">${LANG==="en"?"Copy number":"نسخ الرقم"}</button><div style="margin-top:7px;color:var(--mut)">${LANG==="en"?"You can send from any wallet. After transferring, send the receipt on":"تقدري تحوّلي من أي محفظة. بعد التحويل ابعتي صورة التحويل على"} <a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" style="color:#2f6b4a;font-weight:700">WhatsApp</a></div></div>`;
 
-$("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}<div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div><input class="in" id="cn" placeholder="${T("name")}" value="${esc(s.n)}"><input class="in" id="cp" placeholder="${T("phone")}" type="tel" value="${esc(s.p)}"><input class="in" id="ca" placeholder="${T("addr")}" value="${esc(s.a)}">${paySel}<p class="err" id="err"></p><button class="big dark" id="send">${T("send")}</button>`}
+$("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}<div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div><div class="cpn"><input class="in" type="text" placeholder="${LANG==="en"?"Discount code":"كود الخصم"}" autocomplete="off"><button type="button">${LANG==="en"?"Apply":"تطبيق"}</button></div><input class="in" id="cn" placeholder="${T("name")}" value="${esc(s.n)}"><input class="in" id="cp" placeholder="${T("phone")}" type="tel" value="${esc(s.p)}"><input class="in" id="ca" placeholder="${T("addr")}" value="${esc(s.a)}">${paySel}<p class="err" id="err"></p><button class="big dark" id="send">${T("send")}</button>`}
 
 async function sendOrder() {
   const n = $("#cn").value.trim(), p = $("#cp").value.trim(), a = $("#ca").value.trim(), e = $("#err"), gov = ls.get("alora_gov", "");
@@ -466,7 +500,7 @@ function openProduct(id){
 }
 
 function pickSize(btn){curSize=btn.dataset.size;document.querySelectorAll("#sizes .chip").forEach(c=>{const on=c===btn;c.classList.toggle("on",on);c.setAttribute("aria-checked",on)});$("#szErr").textContent=""}
-function addFromModal(id){const p=byId(id);if(p.sizes.length&&!curSize){$("#szErr").textContent=T("needSize");$("#sizes").scrollIntoView({block:"center",behavior:"smooth"});return}if(addToCart(id,curSize))closeAll()}
+function addFromModal(id){const p=byId(id);if(p.sizes.length&&!curSize&&!isBag(p)){$("#szErr").textContent=T("needSize");$("#sizes").scrollIntoView({block:"center",behavior:"smooth"});return}if(addToCart(id,curSize))closeAll()}
 function openLB(i){lbIdx=i;$("#lbI").src=optImg(lbList[i],1400);$("#lb").classList.add("on")}
 function toggleWish(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id):[...wish,id];ls.set("alora_wish",wish);toast(on?T("toastRm"):T("toastWish"));renderReels();renderGrid();const b=document.querySelector(`[data-heartm="${CSS.escape(id)}"]`);if(b)b.innerHTML=(on?I.heart:I.heartF)+(on?T("addWish"):T("inWish"))}
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
@@ -507,7 +541,7 @@ document.addEventListener("change",e=>{
   }
 });
 
-document.addEventListener("DOMContentLoaded", loadStoreDataFromN8N);
+document.addEventListener("DOMContentLoaded", ()=>{ if(matchMedia("(min-width:760px)").matches){const a=document.getElementById("accInfo"); if(a) a.open=true;} loadStoreDataFromN8N(); });
 </script>
 </body>
 </html>
