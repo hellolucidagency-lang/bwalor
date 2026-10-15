@@ -209,7 +209,7 @@ html .drawer.on{transform:none}
    <a class="flink" href="shipping.html" id="lShip"></a><a class="flink" href="privacy.html" id="lPriv"></a><a class="flink" href="returns.html" id="lRet"></a></div>
   <div><h4 id="tContact"></h4><div class="soc" id="soc"></div></div>
  </div>
- <div class="copy"><div id="copyLine"></div></div>
+ <div class="copy"><div id="copyLine"></div><div style="font-size:9px;color:rgba(119,115,106,0.45);margin-top:4px;">بلاك آند وايت التجارية</div></div>
 </div></footer>
 
 <a class="wa" id="waFab" target="_blank" rel="noopener" aria-label="WhatsApp" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M3.5 20.5l1.2-4A8.5 8.5 0 1 1 8 19.3z"/><path fill="currentColor" stroke="none" d="M9 9.5c0 2.8 2.7 5.5 5.5 5.5l1-1.4-1.9-.9-.8.8a4.6 4.6 0 0 1-2.2-2.2l.8-.8-.9-1.9-1.5.9Z"/></svg></a>
@@ -253,13 +253,13 @@ const D={
  ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات مهمة",contact:"تواصلي معنا",cart:"سلة التسوق",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"استفسري عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
   shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم الكامل (اسمين على الأقل).",ePhone:"اكتبي رقم موبايل مصري صحيح (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015).",eAddr:"اكتبي العنوان بالتفصيل: الشارع والمنطقة ورقم المبنى.",eGov:"اختاري المحافظة.",eWa:"رقم واتساب المتجر غير متاح حاليًا.",
   mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mGov:"المحافظة",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد عند التأكيد",mDelivery:"مدة التوصيل",mGrand:"الإجمالي شامل الشحن",mSize:"مقاس",mAsk:"أرغب في الاستفسار عن هذا المنتج",mCode:"الكود",mPrice:"السعر",
-  stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",fail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",soon:"سيتم إضافة المحتوى قريبًا.",brandP:"شنط وإكسسوارات فاخرة بتصميم هادئ وأنيق.",cur:"ج.م",
+  stale:"تعذّر التحديث، تم عرض آخر نسخة محفوظة",fail:"تعذّر تحميل المنتجات.",retry:"أعيدي المحاولة",soon:"سيتم إضافة المحتوى قريبًا.",brandP:"شنط وإكسسوارات بتصميم هادئ وأنيق.",cur:"ج.م",
   govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام عمل`,grand:"الإجمالي شامل الشحن",freeNote:x=>`الشحن مجاني للطلبات بقيمة ${x} جنيه أو أكثر`,
   pickSize:"اختاري المقاس",needSize:"من فضلك اختاري المقاس أولاً",size:"المقاس",about:"🤍 خلّينا نتعرّف",pShip:"سياسة الشحن",pPriv:"سياسة الخصوصية",pRet:"سياسة الاسترجاع",rights:"جميع الحقوق محفوظة",navShop:"المنتجات"},
  en:{heroH:"Your unique taste.. in a piece that speaks for you",heroP:"A modern European collection for every outing and occasion, with refined details that last.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Important information",contact:"Contact us",cart:"Shopping cart",search:"Search by product name or code...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.<br>Add a product to start your order.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Ask on WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
   shipLeft:x=>`Add <b>${x}</b> more for free shipping`,shipOk:"Your order qualifies for free shipping",total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Full address",send:"Send order via WhatsApp",eName:"Please enter your full name.",ePhone:"Invalid Egyptian mobile number.",eAddr:"Please enter a detailed address.",eGov:"Please choose a governorate.",eWa:"Store WhatsApp is currently unavailable.",
   mNew:"New order",mName:"Name",mPhone:"Phone",mGov:"Governorate",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"Confirmed on order",mDelivery:"Delivery",mGrand:"Total incl. shipping",mSize:"Size",mAsk:"I'd like to ask about this product",mCode:"Code",mPrice:"Price",
-  stale:"Couldn't refresh, showing the last saved version",fail:"Couldn't load products.",retry:"Try again",soon:"Content coming soon.",brandP:"Luxury bags and accessories with a calm, elegant design.",cur:"EGP",
+  stale:"Couldn't refresh, showing the last saved version",fail:"Couldn't load products.",retry:"Try again",soon:"Content coming soon.",brandP:"Bags and accessories with a calm, elegant design.",cur:"EGP",
   govPick:"Choose governorate",govAsk:"Choose a governorate to calculate shipping",shipCost:x=>`Shipping: ${x}`,shipFree:"Free shipping",delivery:x=>`Delivery in ${x} business days`,grand:"Total incl. shipping",freeNote:x=>`Free shipping on orders of ${x} EGP or more`,
   pickSize:"Choose a size",needSize:"Please choose a size first",size:"Size",about:"🤍 Get to know us",pShip:"Shipping policy",pPriv:"Privacy policy",pRet:"Returns policy",rights:"All rights reserved",navShop:"Shop"}
 };
@@ -334,10 +334,11 @@ function buildProducts(rows){const H=rows[0].map(norm);
    featured:/^(1|true|yes|y|نعم|x)$/i.test(col(r,"Featured")),
    out:/(out|sold|نفد|نفذ|غير\s*متوفر|unavailable|^0$|^false$\vert{}^no$)/i.test(stock)}
  }).filter(p=>p.nameAr&&p.price>0)}
-function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];
+function parseShip(t){
+ const rows=parseCSV(t);if(rows.length<2)return[];
  const H=rows[0].map(norm),hasActive=H.includes("active");
  const col=(r,...n)=>{for(const x of n){const i=H.indexOf(norm(x));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
- return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),active:col(r,"Active"),cost:num(col(r,"Shipping_Cost")),days:col(r,"Delivery_Days"),free:num(col(r,"Free_Above"))}))
+ return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),active:col(r,"Active"),cost:num(col(r,"Shipping_Cost","Cost")),days:col(r,"Delivery_Days","Days"),free:num(col(r,"Free_Above","Free"))}))
   .filter(x=>x.gov&&(!hasActive||/^yes$/i.test(x.active)))}
 const govRow=v=>SHIP.find(x=>x.gov===v)||null;
 const shipFor=(row,t)=>!row?null:(row.free&&t>=row.free)?0:row.cost;
@@ -345,216 +346,403 @@ const shipFor=(row,t)=>!row?null:(row.free&&t>=row.free)?0:row.cost;
 /* ===== TRACKING ===== */
 function track(ev,d={}){try{
  const v=d.value??(d.price?eff(d):0),ids=d.ids||[d.id],C="EGP";
- const FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"}[ev];
- if(window.fbq&&FB)fbq("track",FB,ev==="Checkout"?{value:v,num_items:d.n,currency:C}:{content_ids:ids,content_name:d.name,content_type:"product",value:v,currency:C});
- if(window.gtag){const it=d.name?[{item_id:ids[0],item_name:d.name,price:v}]:undefined,G={ViewContent:"view_item",AddToCart:"add_to_cart",Lead:"generate_lead",Checkout:"begin_checkout"}[ev];
-  if(G)gtag("event",G,{currency:C,value:v,items:it});
-  if(ev==="Purchase"){gtag("event","generate_lead",{currency:C,value:v});gtag("event","purchase",{transaction_id:"WA-"+Date.now(),currency:C,value:v})}}
-}catch(e){}}
+ const FB={ViewContent:"ViewContent",AddToCart:"AddToCart",Lead:"Lead",Checkout:"InitiateCheckout",Purchase:"Purchase"};
+ if(window.gtag)gtag("event",ev,{value:v,currency:C,items:ids.map(id=>({id}))});
+ if(window.fbq&&FB[ev])fbq("track",FB[ev],{value:v,currency:C,content_ids:ids,content_type:"product"});
+}catch{}}
 
-/* ===== RENDER ===== */
-function waNum(){let n=(sv("Store_Phone_WhatsApp")||CFG.WA).replace(/\D/g,"");if(n.startsWith("00"))return n.slice(2);return n.startsWith("0")?CFG.CC+n.slice(1):n}
-const href=v=>!v?"#":/^https?:\/\//i.test(v)?https(v):"https://"+v.replace(/^\/+/,"");
-function applyHead(){
- const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
- const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
-function applyLang(){const ar=LANG!=="en";
- document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";
- document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";
- $("#langBtn").textContent=ar?"EN":"عربي";
- $("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");
- $("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP");
- $("#brandP").textContent=(ar?sv("Footer_Text"):"")||T("brandP");
- const set=(id,k)=>$(id).textContent=T(k);
- set("#heroBtn","shopNow");set("#tBest","best");set("#tSwipe","swipe");set("#tCols","cols");set("#tInfo","info");set("#tContact","contact");set("#tCart","cart");
- set("#aboutLink","about");set("#lShip","pShip");set("#lPriv","pPriv");set("#lRet","pRet");
- $("#q").placeholder=T("search");
- $("#nav").innerHTML=`<a href="#best">${T("best")}</a><a href="#cols">${T("cols")}</a><a href="#shop">${T("navShop")}</a>`;
- const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textContent=a;e.hidden=false}else e.hidden=true}
-function renderFooter(){
- const soc=[[sv("Facebook_URL","Facebook"),I.fb,"Facebook"],[sv("Instagram_URL","Instagram"),I.ig,"Instagram"],[sv("TikTok_URL","TikTok"),I.tt,"TikTok"]].filter(x=>x[0]);
- const em=(sv("Store_Email","Email")||CFG.EMAIL).replace(/^mailto:/i,"");
- $("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(href(u))}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+
-  `<a href="mailto:${esc(em)}" aria-label="Email">${I.mail}</a><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
- $("#copyLine").textContent=`© ${new Date().getFullYear()} ${CFG.STORE} — ${T("rights")}`;
- const f=$("#waFab");f.href="https://wa.me/"+waNum();f.hidden=false}
-const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
-const priceHTML=p=>`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`;
-
-/* Card HTML - Uniform "أضيفي للسلة" Button */
-function cardHTML(p,cls){const w=wish.includes(p.id),off=p.sale?Math.round((1-p.sale/p.price)*100):0;
- return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
- <button class="fav ${w?"on":""}" data-heart="${esc(p.id)}" aria-label="wish">${w?I.heartF:I.heart}</button></div>
- <div class="bd"><h3 data-view="${esc(p.id)}">${esc(p.name)}</h3>${priceHTML(p)}
- <button class="add" data-add-direct="${esc(p.id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button></div></article>`}
-
+/* ===== UI RENDERING ===== */
+function showToast(m){const t=$("#toast");t.innerHTML=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)}
+function updateCounts(){
+ const cc=$("#cc"),wc=$("#wc"),totalQty=cart.reduce((s,i)=>s+i.qty,0);
+ if(totalQty>0){cc.removeAttribute("hidden");cc.textContent=totalQty}else cc.setAttribute("hidden","");
+ if(wish.length>0){wc.removeAttribute("hidden");wc.textContent=wish.length}else wc.setAttribute("hidden","");
+}
+function renderNav(){
+ const cats=[ALL,...new Set(P.map(p=>p.cat))];
+ $("#nav").innerHTML=cats.map(c=>`<a href="#shop" data-cat="${esc(c)}" class="${c===cat&&!wishOnly?"on":""}">${esc(c)}</a>`).join("");
+ $("#chips").innerHTML=`<button class="chip ${wishOnly?"on":""}" data-wish="1">🤍 المفضلة (${wish.length})</button>`+cats.map(c=>`<button class="chip ${!wishOnly&&c===cat?"on":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+}
+function renderCols(){
+ $("#colGrid").innerHTML=COLS.map(c=>{
+  const imgUrl=S[norm(c.key)]||c.fb;
+  return`<div class="col" data-col-re="${c.re}"><img src="${esc(imgUrl)}" alt="${esc(LANG==="en"?c.en:c.ar)}" loading="lazy"><span>${esc(LANG==="en"?c.en:c.ar)}</span></div>`
+ }).join("");
+}
 function renderReels(){
- let L=P.filter(p=>p.best).sort((a,b)=>(b.ts-a.ts)||(b.ord-a.ord));
- if(!L.length)L=P.filter(p=>p.featured);if(!L.length)L=P.slice(0,6);L=L.slice(0,10);
- $("#reels").innerHTML=L.map(p=>cardHTML(p,"reel")).join("");
- $("#dots").innerHTML=L.length>1?L.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join(""):"";
- const r=$("#reels");r.onscroll=()=>{const w=(r.children[0]?.offsetWidth||1)+10,i=Math.round(Math.abs(r.scrollLeft)/w);[...$("#dots").children].forEach((d,k)=>d.classList.toggle("on",k===i))}}
-function renderCols(){$("#colGrid").innerHTML=COLS.map(c=>`<button class="col" data-coll="${c.k}">${img(fixImg(sv(c.key))||c.fb,400,'alt=""')}<span>${LANG==="en"?c.en:c.ar}</span></button>`).join("")}
-function renderChips(){const cats=[ALL,...new Set(P.map(p=>p.cat))];
- $("#chips").innerHTML=cats.map(c=>`<button class="chip ${c===cat&&!wishOnly?"on":""}" data-cat="${esc(c)}">${c===ALL?T("all"):esc(c)}</button>`).join("")}
+ const bests=P.filter(p=>p.best||p.featured);
+ const list=bests.length?bests:P.slice(0,6);
+ if(!list.length){$("#reels").innerHTML=`<div class="empty">${esc(T("soon"))}</div>`;$("#dots").innerHTML="";return}
+ $("#reels").innerHTML=list.map(p=>`
+  <div class="reel card" data-id="${p.id}">
+   <div class="im">${img(p.imgs[0],300)}</div>
+   <div class="bd">
+    <h3>${esc(p.name)}</h3>
+    <div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>
+    <button class="add" data-add="${p.id}">${esc(T("add"))}</button>
+   </div>
+  </div>`).join("");
+ $("#dots").innerHTML=list.map((_,i)=>`<i class="${i===0?"on":""}"></i>`).join("");
+}
 function renderGrid(){
- const L=P.filter(p=>{if(wishOnly)return wish.includes(p.id);if(cat!==ALL&&p.cat!==cat)return false;if(collRe&&!collRe.test(p.cat))return false;
-  return!term||norm(p.name+p.cat+p.desc+p.id).includes(norm(term))});
- $("#grid").innerHTML=L.length?L.map(p=>cardHTML(p,"card")).join(""):`<div class="empty">${wishOnly?T("emptyWish"):T("emptyCat")}</div>`;
- const wc=$("#wc");wc.textContent=wish.length;wc.hidden=!wish.length}
-function renderAll(){applyLang();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
-
-/* ===== CART & SMART ADD ===== */
-const saveCart=()=>ls.set("alora_cart",cart);
-const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
-
-function handleAddToCartDirect(id){
- const p=byId(id);if(!p||p.out)return;
- if(p.sizes && p.sizes.length>0){
-  openProduct(id);
- } else {
-  addToCart(id,"");
- }
+ let list=P;
+ if(wishOnly)list=P.filter(p=>wish.includes(p.id));
+ else if(cat!==ALL)list=P.filter(p=>p.cat===cat);
+ if(collRe)list=list.filter(p=>collRe.test(p.cat)||collRe.test(p.nameAr)||collRe.test(p.nameEn));
+ if(term){const q=norm(term);list=list.filter(p=>norm(p.id).includes(q)||norm(p.nameAr).includes(q)||norm(p.nameEn).includes(q))}
+ 
+ const grid=$("#grid");
+ if(!list.length){grid.innerHTML=`<div class="empty">${wishOnly?esc(T("emptyWish")):(term||cat!==ALL?esc(T("emptyCat")):(LANG==="ar"?"لا توجد منتجات حالياً.":"No products available."))}</div>`;return}
+ 
+ grid.innerHTML=list.map(p=>{
+  const isW=wish.includes(p.id);
+  return`
+  <div class="card" data-id="${p.id}">
+   <div class="im">
+    ${img(p.imgs[0],400)}
+    ${p.best?`<span class="badge">${esc(T("best"))}</span>`:""}
+    <button class="fav ${isW?"on":""}" data-fav="${p.id}" aria-label="wish">${isW?I.heartF:I.heart}</button>
+   </div>
+   <div class="bd">
+    <h3 data-open="${p.id}">${esc(p.name)}</h3>
+    <div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>
+    <button class="add" data-add="${p.id}" ${p.out?"disabled":""}>${p.out?esc(T("out")):esc(T("add"))}</button>
+   </div>
+  </div>`}).join("");
 }
 
-function addToCart(id,size){const p=byId(id);if(!p||p.out)return false;
- if(p.sizes.length&&!size)return false;
- const fullSKU = size ? `${id}-${size}` : id;
- const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));
- it?it.q++:cart.push({id,q:1,size:size||"",sku:fullSKU});
- saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
-
+/* ===== CART & CHECKOUT ===== */
+function openCart(){$("#cart").classList.add("on");$("#ov").classList.add("on");renderCart()}
+function closeCart(){$("#cart").classList.remove("on");if(!$("#modal").classList.contains("on"))$("#ov").classList.remove("on")}
 function renderCart(){
- if(!P.length)return;
- cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;
- if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}
- const gov=ls.get("alora_gov",""),row=govRow(gov),th=row&&row.free?row.free:0,t=cartTotal();
- const bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";
- $("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id);return`<div class="ci">${img(p.imgs[0],160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div>
-  <div class="qty"><button data-q="${idx}:-1" aria-label="-">−</button><span>${i.q}</span><button data-q="${idx}:1" aria-label="+">+</button></div>
-  <button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");
- const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc;
- const govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>`<option value="${esc(x.gov)}" ${x.gov===gov?"selected":""}>${esc(x.gov)}</option>`).join("")}</select>`:"";
- const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(row.days))}`:T("govAsk")}</div>${row&&row.free?`<div class="ship">${T("freeNote",row.free)}</div>`:""}`:"";
- $("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}
-  <div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div>
-  <input class="in" id="cn" placeholder="${T("name")}" autocomplete="name" value="${esc(s.n)}">
-  <input class="in" id="cp" placeholder="${T("phone")}" type="tel" inputmode="tel" autocomplete="tel" value="${esc(s.p)}">
-  <input class="in" id="ca" placeholder="${T("addr")}" autocomplete="street-address" value="${esc(s.a)}">
-  <p class="err" id="err" role="alert"></p><button class="big dark" id="send">${I.wa}${T("send")}</button>`}
+ const body=$("#cartBody"),foot=$("#cartFoot");
+ if(!cart.length){
+  body.innerHTML=`<div class="empty" style="padding:40px 10px">${T("emptyCart")}</div>`;
+  foot.innerHTML="";return;
+ }
+ const sub=cart.reduce((s,i)=>s+eff(byId(i.id))*i.qty,0);
+ const freeLimit=num(sv("Free_Shipping_Above","FreeShipping","shipping_free_above"))||500;
+ const left=Math.max(0,freeLimit-sub);
+ const pct=Math.min(100,(sub/freeLimit)*100);
+ 
+ body.innerHTML=cart.map((item,idx)=>{
+  const p=byId(item.id);if(!p)return"";
+  return`
+  <div class="ci">
+   ${img(p.imgs[0],120)}
+   <div class="t">
+    <div style="font-weight:700">${esc(p.name)}</div>
+    ${item.size?`<div style="font-size:12px;color:var(--mut)">${esc(T("mSize"))}: ${esc(item.size)}</div>`:""}
+    <div style="color:var(--gold);font-weight:700;margin-top:2px">${money(eff(p))}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+     <div class="qty"><button data-qty-dec="${idx}">-</button><span>${item.qty}</span><button data-qty-inc="${idx}">+</button></div>
+     <button class="rm" data-cart-rm="${idx}">${esc(T("rm"))}</button>
+    </div>
+   </div>
+  </div>`}).join("");
+ 
+ const govs=SHIP.map(x=>x.gov);
+ const selGov=ls.get("alora_gov","");
+ const gRow=govRow(selGov);
+ const sCost=shipFor(gRow,sub);
+ const grand=(sCost!==null)?sub+sCost:sub;
+ 
+ foot.innerHTML=`
+  <div class="ship">
+   <div>${left>0?T("shipLeft",money(left)):T("shipOk")}</div>
+   <div class="track"><i style="width:${pct}%"></i></div>
+  </div>
+  <div class="tot"><span>${esc(T("total"))}</span><span>${money(sub)}</span></div>
+  <div style="margin-bottom:10px">
+   <select class="in" id="cGov">
+    <option value="">${esc(T("govPick"))}</option>
+    ${govs.map(g=>`<option value="${esc(g)}" ${g===selGov?"selected":""}>${esc(g)}</option>`).join("")}
+   </select>
+   <div style="font-size:12px;color:var(--mut);margin-top:3px" id="shipDesc">${selGov&&gRow?(sCost===0?esc(T("shipFree")):`${esc(T("shipCost",money(sCost)))} (${esc(T("delivery",gRow.days))})`):esc(T("govAsk"))}</div>
+  </div>
+  <input class="in" id="cName" placeholder="${esc(T("name"))}" value="${esc(ls.get("alora_name",""))}">
+  <input class="in" id="cPhone" type="tel" placeholder="${esc(T("phone"))}" value="${esc(ls.get("alora_phone",""))}">
+  <textarea class="in" id="cAddr" placeholder="${esc(T("addr"))}" style="height:60px;resize:none">${esc(ls.get("alora_addr",""))}</textarea>
+  <div class="err" id="cErr"></div>
+  <button class="big dark" id="cSend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>${esc(T("send"))}</button>
+ `;
+}
 
-function sendOrder(){
- const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err"),gov=ls.get("alora_gov","");
- if(n.split(/\s+/).filter(Boolean).length<2||n.length<5)return e.textContent=T("eName");
- const pd=p.replace(/\D/g,"").replace(/^20/,"0");if(!/^01[0125]\d{8}$/.test(pd))return e.textContent=T("ePhone");
- if(a.length<15||a.split(/\s+/).filter(Boolean).length<4)return e.textContent=T("eAddr");
- if(SHIP.length&&!gov)return e.textContent=T("eGov");
- const wa=waNum();if(!wa)return e.textContent=T("eWa");
- const t=cartTotal(),row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;
- ls.set("alora_cust",{n,p,a});
- const shipTxt=sc===null?T("mTbd"):sc===0?T("mFree"):`${sc} ${T("cur")}`;
- const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${pd}\n*${T("mGov")}:* ${gov||"-"}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+
-  cart.map((i,k)=>{const x=byId(i.id);const itemSKU=i.size?`${x.id}-${i.size}`:x.id;return`${k+1}) ${x.name} (كود: ${itemSKU})${i.size?` - ${T("mSize")} ${i.size}`:""}\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+
-  `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mDelivery")}:* ${row?row.days:"-"}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;
- track("Purchase",{value:grand,ids:cart.map(i=>i.id)});
- const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
- cart=[];saveCart();renderCart();closeAll();
- if(!window.open(url,"_blank"))location.href=url}
+/* ===== PRODUCT MODAL ===== */
+function openModal(id){
+ const p=byId(id);if(!p)return;
+ curId=id; curSize="";
+ const box=$("#mIn");
+ box.innerHTML=`
+ <div class="pm">
+  <div>
+   <div class="gal">${p.imgs.map(u=>img(u,800)).join("")}</div>
+   <div class="th">${p.imgs.map((u,i)=>`<button class="${i===0?"on":""}" data-th="${i}">${img(u,100)}</button>`).join("")}</div>
+  </div>
+  <div class="pi">
+   <h2>${esc(p.name)}</h2>
+   <div class="price" style="font-size:17px"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>
+   <p>${esc(p.desc||"")}</p>
+   <div style="font-size:12.5px;color:var(--mut)">${esc(T("mCode"))}: <b>${esc(p.id)}</b></div>
+   ${p.sizes&&p.sizes.length?`
+    <div>
+     <div class="szt">${esc(T("pickSize"))}:</div>
+     <div class="sizes" style="margin-top:6px">
+      ${p.sizes.map(s=>`<button class="chip" data-size="${esc(s)}">${esc(s)}</button>`).join("")}
+     </div>
+     <div class="szerr" id="szErr"></div>
+    </div>`:""}
+   <div style="display:flex;gap:10px;margin-top:auto">
+    <button class="big dark" id="mAdd" ${p.out?"disabled":""}>${p.out?esc(T("out")):esc(T("add"))}</button>
+    <a class="big soft" id="mWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3.5 20.5l1.2-4A8.5 8.5 0 1 1 8 19.3z"/><path fill="currentColor" stroke="none" d="M9 9.5c0 2.8 2.7 5.5 5.5 5.5l1-1.4-1.9-.9-.8.8a4.6 4.6 0 0 1-2.2-2.2l.8-.8-.9-1.9-1.5.9Z"/></svg></a>
+   </div>
+  </div>
+ </div>`;
+ 
+ const waNum=sv("Store_Phone_WhatsApp","WhatsApp","Phone")||CFG.WA;
+ const cleanWa=waNum.replace(/\D/g,"");
+ const waText=encodeURIComponent(`${T("mAsk")}: ${p.name} (${p.id})`);
+ $("#mWa").href=`https://wa.me/${cleanWa}?text=${waText}`;
+ 
+ $("#modal").classList.add("on");$("#ov").classList.add("on");
+ track("ViewContent",p);
+}
+function closeModal(){$("#modal").classList.remove("on");if(!$("#cart").classList.contains("on"))$("#ov").classList.remove("on")}
 
-/* Custom Friendly WhatsApp Inquiry Message */
-function askOne(id){const p=byId(id),wa=waNum();if(!p||!wa)return;track("Lead",p);
- const msg=`أهلاً Black & White Alora ✨\nحابّة أسألك عن تفاصيل القطعة دي 💕: ${p.name}${curSize?` (مقاس: ${curSize})`:""}\nكود المنتج: ${curSize?`${p.id}-${curSize}`:p.id}\nالسعر: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;
- const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
+/* ===== INIT & EVENTS ===== */
+async function init(){
+ try{
+  const [sText,pText,shText]=await Promise.all([
+   fetchText(CFG.SETTINGS).catch(()=>""),
+   fetchText(CFG.PRODUCTS).catch(()=>""),
+   fetchText(CFG.SHIP).catch(()=>"")
+  ]);
+  if(sText)S=buildSettings(parseCSV(sText));
+  if(pText)P=buildProducts(parseCSV(pText));
+  if(shText)SHIP=parseShip(shText);
+ }catch(e){console.error(e)}
+ 
+ if(!P.length){
+  P=[
+   {id:"AL001",nameAr:"شنطة هاندمايد كلاسيك",nameEn:"Classic Handmade Bag",cat:"شنط",best:true,price:850,sale:750,imgs:[PH],sizes:[],descAr:"شنطة بتصميم أنيق وهادئ.",descEn:"Bag with elegant calm design."},
+   {id:"AL002",nameAr:"خاتم فضة إيطالي مرصع",nameEn:"Italian Silver Ring",cat:"خواتم",best:true,price:450,sale:0,imgs:[PH],sizes:["6","7","8","9"],descAr:"خاتم فضة عيار 925 بتصميم راقي.",descEn:"Sterling silver 925 ring."},
+   {id:"AL003",nameAr:"حلق ديزاين ترندي",nameEn:"Trendy Earrings",cat:"حلقان",best:false,price:320,sale:280,imgs:[PH],sizes:[],descAr:"حلق أنيق يناسب كل المناسبات.",descEn:"Elegant earrings for all occasions."},
+   {id:"AL004",nameAr:"طقم لؤلؤ",nameEn:"Pearl Set",cat:"أطقم",best:true,price:1200,sale:999,imgs:[PH],sizes:[],descAr:"طقم متكامل يعكس أناقتك.",descEn:"Complete set."}
+  ];
+ }
+ 
+ document.documentElement.lang=LANG;
+ document.documentElement.dir=LANG==="ar"?"rtl":"ltr";
+ $("#langBtn").textContent=LANG==="ar"?"EN":"AR";
+ 
+ const hT=sv("Hero_Title","HeroTitle")||T("heroH");
+ const hS=sv("Hero_Subtitle","HeroSubtitle")||T("heroP");
+ const ann=sv("Announcement_Text","AnnouncementText")||"";
+ 
+ $("#heroT").textContent=hT;
+ $("#heroS").textContent=hS;
+ $("#heroBtn").textContent=T("shopNow");
+ $("#tBest").textContent=T("best");
+ $("#tSwipe").textContent=T("swipe");
+ $("#tCols").textContent=T("cols");
+ $("#tInfo").textContent=T("info");
+ $("#tContact").textContent=T("contact");
+ $("#tCart").textContent=T("cart");
+ $("#q").placeholder=T("search");
+ $("#brandP").textContent=T("brandP");
+ $("#aboutLink").textContent=T("about");
+ $("#lShip").textContent=T("pShip");
+ $("#lPriv").textContent=T("pPriv");
+ $("#lRet").textContent=T("pRet");
+ 
+ if(ann){const an=$("#ann");an.textContent=ann;an.removeAttribute("hidden")}
+ 
+ const waNum=sv("Store_Phone_WhatsApp","WhatsApp","Phone")||CFG.WA;
+ if(waNum){const wa=$("#waFab");wa.href=`https://wa.me/${waNum.replace(/\D/g,"")}`;wa.removeAttribute("hidden")}
+ 
+ const socBox=$("#soc");
+ const sMap=[{k:"facebookurl",i:I.fb},{k:"instagramurl",i:I.ig},{k:"tiktokurl",i:I.tt},{k:"storeemail",i:I.mail,pre:"mailto:"}];
+ socBox.innerHTML=sMap.map(x=>{
+  const val=S[x.k];if(!val)return"";
+  return`<a href="${x.pre||""}${val}" target="_blank" rel="noopener">${x.i}</a>`
+ }).join("");
+ 
+ $("#copyLine").innerHTML=`&copy; 2026 ${esc(CFG.STORE)}. ${T("rights")}`;
+ 
+ renderNav();
+ renderCols();
+ renderReels();
+ renderGrid();
+ updateCounts();
+}
 
-/* ===== MODAL / PRODUCT ===== */
-let SCROLLY=0;
-function lock(on){$("#ov").classList.toggle("on",on);const b=document.body;
- if(on&&b.style.position!=="fixed"){SCROLLY=window.scrollY;b.style.cssText+=`;position:fixed;top:-${SCROLLY}px;left:0;right:0;width:100%`}
- else if(!on&&b.style.position==="fixed"){b.style.position=b.style.top=b.style.left=b.style.right=b.style.width="";window.scrollTo(0,SCROLLY)}}
-function closeAll(){["#cart","#modal","#lb"].forEach(s=>$(s).classList.remove("on"));lock(false)}
-function openCart(){closeAll();$("#cart").classList.add("on");lock(true);if(cart.length)track("Checkout",{value:cartTotal(),n:cart.reduce((s,i)=>s+i.q,0),ids:cart.map(i=>i.id)})}
-function openProduct(id){const p=byId(id);if(!p)return;curId=id;curSize="";track("ViewContent",p);
- const ims=p.imgs.length?p.imgs:[PH],w=wish.includes(id);lbList=ims;
- const sizes=p.sizes.length?`<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>`:"";
- $("#mIn").innerHTML=`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
-  ${ims.length>1?`<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>`:""}</div>
-  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
-  <button class="big dark" data-addm="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
-  ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
-  <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
- $("#modal").classList.add("on");lock(true);$(".mbox").scrollTop=0;
- const g=$("#gal");if(g)g.onscroll=()=>{const i=Math.round(Math.abs(g.scrollLeft)/(g.clientWidth||1));document.querySelectorAll("#th button").forEach((b,k)=>b.classList.toggle("on",k===i))}}
-function pickSize(btn){curSize=btn.dataset.size;document.querySelectorAll("#sizes .chip").forEach(c=>{const on=c===btn;c.classList.toggle("on",on);c.setAttribute("aria-checked",on)});$("#szErr").textContent=""}
-function addFromModal(id){const p=byId(id);
- if(p.sizes.length&&!curSize){$("#szErr").textContent=T("needSize");$("#sizes").scrollIntoView({block:"center",behavior:"smooth"});return}
- if(addToCart(id,curSize))closeAll()}
-function openLB(i){lbIdx=i;$("#lbI").src=optImg(lbList[i],1400);$("#lb").classList.add("on")}
-function toggleWish(id){const on=wish.includes(id);wish=on?wish.filter(x=>x!==id):[...wish,id];ls.set("alora_wish",wish);toast(on?T("toastRm"):T("toastWish"));
- renderReels();renderGrid();const b=document.querySelector(`[data-heartm="${CSS.escape(id)}"]`);if(b)b.innerHTML=(on?I.heart:I.heartF)+(on?T("addWish"):T("inWish"))}
-let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
-
-/* ===== EVENTS & SCROLL ===== */
-window.addEventListener('scroll', () => {
- const header = $('#mainHeader');
- if (header) {
-  if (window.scrollY > 40) {
-   header.classList.add('scrolled');
-  } else {
-   header.classList.remove('scrolled');
+/* Event listeners */
+document.addEventListener("click",e=>{
+ const t=e.target;
+ 
+ if(t.closest("#langBtn")){
+  LANG=LANG==="ar"?"en":"ar";
+  ls.set("alora_lang",LANG);
+  init(); return;
+ }
+ 
+ if(t.closest("#cartBtn"))openCart();
+ if(t.closest("#wishBtn")){
+  wishOnly=!wishOnly;
+  renderNav(); renderGrid();
+  if(wishOnly)$("#shop").scrollIntoView({behavior:"smooth"});
+  return;
+ }
+ if(t.closest("[data-close]")){closeCart();closeModal();return;}
+ if(t.target.id==="ov"){closeCart();closeModal();return;}
+ 
+ const chip=t.closest("[data-cat]");
+ if(chip){
+  cat=chip.getAttribute("data-cat");
+  wishOnly=false; collRe=null;
+  renderNav(); renderGrid();
+  $("#shop").scrollIntoView({behavior:"smooth"});
+  return;
+ }
+ 
+ const fav=t.closest("[data-fav]");
+ if(fav){
+  const id=fav.getAttribute("data-fav");
+  if(wish.includes(id)){
+   wish=wish.filter(x=>x!==id);
+   showToast(T("toastRm"));
+  }else{
+   wish.push(id);
+   showToast(T("toastWish"));
+   track("Lead",{id});
   }
+  ls.set("alora_wish",wish);
+  updateCounts(); renderGrid();
+  return;
+ }
+ 
+ const add=t.closest("[data-add]");
+ if(add){
+  const id=add.getAttribute("data-add");
+  const p=byId(id);if(!p||p.out)return;
+  const isRing = /ring|خاتم|خواتم/i.test(p.cat);
+  if(isRing && p.sizes && p.sizes.length && !curSize){
+   openModal(id);
+   return;
+  }
+  const item=cart.find(i=>i.id===id&&i.size===curSize);
+  if(item)item.qty++;else cart.push({id,qty:1,size:curSize});
+  ls.set("alora_cart",cart);
+  updateCounts(); showToast(T("toastAdd"));
+  track("AddToCart",p);
+  closeModal();
+  return;
+ }
+ 
+ const openCard=t.closest("[data-open]")||t.closest(".card [data-id]")||t.closest(".reel");
+ if(openCard && !t.closest("button") && !t.closest(".fav")){
+  const id=openCard.getAttribute("data-id")||openCard.closest("[data-id]")?.getAttribute("data-id");
+  if(id)openModal(id);
+  return;
+ }
+ 
+ const col=t.closest("[data-col-re]");
+ if(col){
+  const reStr=col.getAttribute("data-col-re");
+  collRe=new RegExp(reStr.replace(/^\/|\/[gimuy]*$/g,""),"i");
+  cat=ALL; wishOnly=false;
+  renderNav(); renderGrid();
+  $("#shop").scrollIntoView({behavior:"smooth"});
+  return;
+ }
+ 
+ const th=t.closest("[data-th]");
+ if(th){
+  const idx=parseInt(th.getAttribute("data-th"),10);
+  const gal=th.closest(".pm").querySelector(".gal");
+  gal.scrollTo({left:idx*gal.clientWidth,behavior:"smooth"});
+  th.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));
+  th.classList.add("on");
+  return;
+ }
+ 
+ const szBtn=t.closest("[data-size]");
+ if(szBtn){
+  szBtn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));
+  szBtn.classList.add("on");
+  curSize=szBtn.getAttribute("data-size");
+  const err=$("#szErr");if(err)err.textContent="";
+  return;
+ }
+ 
+ const qInc=t.closest("[data-qty-inc]");
+ if(qInc){const idx=parseInt(qInc.getAttribute("data-qty-inc"),10);cart[idx].qty++;ls.set("alora_cart",cart);updateCounts();renderCart();return;}
+ const qDec=t.closest("[data-qty-dec]");
+ if(qDec){const idx=parseInt(qDec.getAttribute("data-qty-dec"),10);cart[idx].qty--;if(cart[idx].qty<=0)cart.splice(idx,1);ls.set("alora_cart",cart);updateCounts();renderCart();return;}
+ const qRm=t.closest("[data-cart-rm]");
+ if(qRm){const idx=parseInt(qRm.getAttribute("data-cart-rm"),10);cart.splice(idx,1);ls.set("alora_cart",cart);updateCounts();renderCart();return;}
+ 
+ if(t.closest("#cSend")){
+  const name=$("#cName")?.value.trim()||"";
+  const phone=$("#cPhone")?.value.trim()||"";
+  const addr=$("#cAddr")?.value.trim()||"";
+  const gov=$("#cGov")?.value.trim()||"";
+  const err=$("#cErr");
+  
+  if(!name || name.split(/\s+/).length<2){if(err)err.textContent=T("eName");return}
+  if(!/^01[0125]\d{8}$/.test(phone)){if(err)err.textContent=T("ePhone");return}
+  if(!gov){if(err)err.textContent=T("eGov");return}
+  if(!addr || addr.length<5){if(err)err.textContent=T("eAddr");return}
+  
+  ls.set("alora_name",name); ls.set("alora_phone",phone); ls.set("alora_addr",addr); ls.set("alora_gov",gov);
+  
+  const sub=cart.reduce((s,i)=>s+eff(byId(i.id))*i.qty,0);
+  const gRow=govRow(gov);
+  const sCost=shipFor(gRow,sub);
+  const grand=(sCost!==null)?sub+sCost:sub;
+  
+  let txt=`🛍️ *${T("mNew")}*\n\n`+
+          `👤 *${T("mName")}:* ${name}\n`+
+          `📱 *${T("mPhone")}:* ${phone}\n`+
+          `📍 *${T("mGov")}:* ${gov}\n`+
+          `🏠 *${T("mAddr")}:* ${addr}\n\n`+
+          `📦 *${T("mItems")}:*\n`;
+  
+  cart.forEach((i,idx)=>{
+   const p=byId(i.id);
+   txt+=`${idx+1}. ${p?p.name:i.id} ${i.size?`(${T("mSize")}: ${i.size})`:""} × ${i.qty} = ${money(eff(p)*i.qty)}\n`;
+  });
+  
+  txt+=`\n💰 *${T("mTotal")}:* ${money(sub)}\n`;
+  txt+=`🚚 *${T("mShip")}:* ${sCost!==null?(sCost===0?T("mFree"):money(sCost)):T("mTbd")}\n`;
+  if(gRow)txt+=`⏱️ *${T("mDelivery")}:* ${gRow.days} ${LANG==="ar"?"أيام عمل":"business days"}\n`;
+  txt+=`✨ *${T("mGrand")}:* ${money(grand)}`;
+  
+  const waNum=sv("Store_Phone_WhatsApp","WhatsApp","Phone")||CFG.WA;
+  if(!waNum){if(err)err.textContent=T("eWa");return}
+  
+  track("Purchase",{value:grand,ids:cart.map(i=>i.id)});
+  window.open(`https://wa.me/${waNum.replace(/\D/g,"")}?text=${encodeURIComponent(txt)}`,"_blank");
+  return;
+ });
+});
+
+document.addEventListener("input",e=>{
+ if(e.target.id==="q"){
+  term=e.target.value.trim();
+  renderGrid();
  }
 });
 
-document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
-document.addEventListener("click",e=>{
- const t=e.target.closest("[data-add-direct],[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
- if(!t)return;const d=t.dataset;
- if(t.id==="send")return sendOrder();
- if(t.id==="lbN")return openLB((lbIdx+1)%lbList.length);
- if(t.id==="lbP")return openLB((lbIdx-1+lbList.length)%lbList.length);
- if(t.id==="lbX"||t.id==="lb")return $("#lb").classList.remove("on");
- if(d.addDirect!==undefined){e.stopPropagation();handleAddToCartDirect(d.addDirect)}
- else if(d.heart!==undefined||d.heartm!==undefined){e.stopPropagation();toggleWish(d.heart??d.heartm)}
- else if(d.addm!==undefined)addFromModal(d.addm);
- else if(d.size!==undefined)pickSize(t);
- else if(d.th!==undefined){const g=$("#gal");g.scrollTo({left:(LANG==="en"?1:-1)*g.clientWidth*(+d.th),behavior:"smooth"})}
- else if(d.view!==undefined)openProduct(d.view);
- else if(d.coll!==undefined){collRe=COLS.find(x=>x.k===d.coll).re;cat=ALL;wishOnly=false;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})}
- else if(d.cat!==undefined){cat=d.cat;collRe=null;wishOnly=false;renderChips();renderGrid()}
- else if(d.q!==undefined){const[ix,dl]=d.q.split(":"),it=cart[+ix];if(it){it.q+=+dl;if(it.q<1)cart=cart.filter(i=>i!==it);saveCart();renderCart()}}
- else if(d.rm!==undefined){cart=cart.filter((_,ix)=>ix!==+d.rm);saveCart();renderCart()}
- else if(d.wa!==undefined)askOne(d.wa);
- else if(d.lb!==undefined)openLB(+d.lb);
- else if(d.close!==undefined)closeAll()});
+document.addEventListener("change",e=>{
+ if(e.target.id==="cGov"){
+  const gov=e.target.value;
+  ls.set("alora_gov",gov);
+  renderCart();
+ }
+});
 
-document.addEventListener("keydown",e=>{
- if(e.key==="Escape"){$("#lb").classList.contains("on")?$("#lb").classList.remove("on"):closeAll()}
- if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")$("#lbN").click();if(e.key==="ArrowRight")$("#lbP").click()}});
-$("#ov").onclick=closeAll;
-$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeAll()});
-$("#cartBtn").onclick=openCart;
-$("#wishBtn").onclick=()=>{wishOnly=!wishOnly;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})};
-$("#langBtn").onclick=()=>{LANG=LANG==="en"?"ar":"en";ls.set("alora_lang",LANG);closeAll();renderAll()};
-$("#q").addEventListener("input",e=>{term=e.target.value;renderGrid()});
-document.addEventListener("change",e=>{if(e.target.id!=="gov")return;
- const n=$("#cn"),p=$("#cp"),a=$("#ca");
- ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});ls.set("alora_gov",e.target.value);renderCart()});
-
-/* ===== BOOT ===== */
-function apply(pT,sT,shT){
- if(sT){const r=parseCSV(sT);if(r.length)S=buildSettings(r)}
- if(pT)P=buildProducts(parseCSV(pT));
- if(shT)SHIP=parseShip(shT);
- applyHead();renderAll()}
-(async function boot(){
- const cp=ls.get("alora_csv_p",null),cs=ls.get("alora_csv_s",null),csh=ls.get("alora_csv_ship",null);
- renderAll();if(cp)apply(cp,cs,csh);
- const [rp,rs,rsh]=await Promise.allSettled([fetchText(CFG.PRODUCTS),fetchText(CFG.SETTINGS),fetchText(CFG.SHIP)]);
- const pT=rp.status==="fulfilled"?rp.value:null,sT=rs.status==="fulfilled"?rs.value:null,shT=rsh.status==="fulfilled"?rsh.value:null;
- if(pT)ls.set("alora_csv_p",pT);if(sT)ls.set("alora_csv_s",sT);if(shT)ls.set("alora_csv_ship",shT);
- if(!pT&&!cp){$("#grid").innerHTML=`<div class="empty">${T("fail")} <button style="text-decoration:underline" onclick="location.reload()">${T("retry")}</button></div>`;return}
- apply(pT||cp,sT||cs,shT||csh);
- if(!pT&&cp)toast(T("stale"))})();
+window.addEventListener("DOMContentLoaded",init);
 </script>
 </body>
 </html>
