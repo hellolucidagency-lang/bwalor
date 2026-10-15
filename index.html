@@ -255,7 +255,7 @@ const D={
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
-const num=v=>{const n=parseFloat(String(v??"").replace(/[٠-٩]/g,d=>"٠١٢٣\.٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,""));return isNaN(n)?0:n};
+const num=v=>{const n=parseFloat(String(v??"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,""));return isNaN(n)?0:n};
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
 
 let LANG=ls.get("alora_lang","ar"),SHIP=[],S={},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null,curSize="";
@@ -290,12 +290,13 @@ async function loadStoreDataFromN8N() {
     P = rawProds.map((item, idx) => {
       let mainImg = fixImg(item.Main_Image || item.image || item.img);
       let galImgs = splitImgs(item.Gallery_Images || item.gallery);
-      let allImgs = [mainImg, ...galImgs].filter(Boolean);
+      let allImgs = [...new Set([mainImg, ...galImgs].filter(Boolean))];
       if(!allImgs.length) allImgs = [PH];
 
       return {
         id: String(item.row_number || item.id || idx + 1),
         code: item.Code || item.code || "",
+        alt: item.Main_Image_Alt || item.alt || "",
         name: item.Name || item.name || "",
         price: num(item.Price || item.price || 0),
         sale: item.Discount_Price ? num(item.Discount_Price) : null,
@@ -304,7 +305,7 @@ async function loadStoreDataFromN8N() {
         imgs: allImgs,
         sizes: item.Size ? String(item.Size).split(',').map(s => s.trim()).filter(Boolean) : [],
         stock: String(item.Stock_Status || item.stock || "in_stock").trim(),
-        best: String(item.Best_Seller || item.best_seller || "").toLowerCase() === "true" || String(item.Best_Seller || "").trim() !== "",
+        best: /^(yes|true|1|y|نعم)$/i.test(String(item.Best_Seller || item.best_seller || "").trim()),
         featured: String(item.Featured || item.featured || "").toLowerCase() === "true"
       };
     });
@@ -345,7 +346,7 @@ const href=v=>!v?"#":/^https?:\/\//i.test(v)?https(v):"https://"+v.replace(/^\/+
 
 function applyHead(){const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
 
-function applyLang(){const ar=LANG!=="en";document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";$("#langBtn").textContent=ar?"EN":"عربي";$("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");$("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))\vert{}\vert{}T("heroP");$("#brandP").textContent=(ar?sv("Footer_Text"):"")||T("brandP");const set=(id,k)=>$(id).textContent=T(k);set("#heroBtn","shopNow");set("#tBest","best");set("#tSwipe","swipe");set("#tCols","cols");set("#tInfo","info");set("#tContact","contact");set("#tCart","cart");set("#aboutLink","about");set("#lShip","pShip");set("#lPriv","pPriv");set("#lRet","pRet");$("#q").placeholder=T("search");$("#nav").innerHTML=`<a href="#best">${T("best")}</a><a href="#cols">${T("cols")}</a><a href="#shop">${T("navShop")}</a>`;const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textContent=a;e.hidden=false}else e.hidden=true}
+function applyLang(){const ar=LANG!=="en";document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";$("#langBtn").textContent=ar?"EN":"عربي";$("#heroT").textContent=(ar?sv("Hero_Title"):sv("Hero_Title_EN"))||T("heroH");$("#heroS").textContent=(ar?sv("Hero_Subtitle"):sv("Hero_Subtitle_EN"))||T("heroP");$("#brandP").textContent=(ar?sv("Footer_Text"):"")||T("brandP");const set=(id,k)=>$(id).textContent=T(k);set("#heroBtn","shopNow");set("#tBest","best");set("#tSwipe","swipe");set("#tCols","cols");set("#tInfo","info");set("#tContact","contact");set("#tCart","cart");set("#aboutLink","about");set("#lShip","pShip");set("#lPriv","pPriv");set("#lRet","pRet");$("#q").placeholder=T("search");$("#nav").innerHTML=`<a href="#best">${T("best")}</a><a href="#cols">${T("cols")}</a><a href="#shop">${T("navShop")}</a>`;const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textContent=a;e.hidden=false}else e.hidden=true}
 
 function renderFooter(){const soc=[[sv("Facebook_URL","Facebook"),I.fb,"Facebook"],[sv("Instagram_URL","Instagram"),I.ig,"Instagram"],[sv("TikTok_URL","TikTok"),I.tt,"TikTok"]].filter(x=>x[0]);const em=(sv("Store_Email","Email")||CFG.EMAIL||"").replace(/^mailto:/i,"");$("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(href(u))}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+`<a href="mailto:${esc(em)}" aria-label="Email">${I.mail}</a><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;$("#copyLine").textContent=`© ${new Date().getFullYear()} ${CFG.STORE} — ${T("rights")}`;const f=$("#waFab");f.href="https://wa.me/"+waNum();f.hidden=false}
 
@@ -392,12 +393,17 @@ async function sendOrder() {
     customerGov: gov,
     customerAddress: a,
     paymentMethod: payMethodText,
+    paymentCode: payVal,
+    orderDate: new Date().toISOString(),
+    lang: LANG,
+    itemsCount: cart.reduce((s, i) => s + i.q, 0),
     totalItems: t,
-    shippingCost: sc,
+    subtotal: t,
+    shippingCost: sc === null ? 0 : sc,
     grandTotal: grand,
     items: cart.map(i => {
       const x = byId(i.id);
-      return { id: x.id, name: x.name, size: i.size || "-", qty: i.q, price: eff(x), itemTotal: eff(x) * i.q };
+      return { id: x.id, code: x.code || "", name: x.name, size: i.size || "-", qty: i.q, price: eff(x), itemTotal: eff(x) * i.q };
     })
   };
 
