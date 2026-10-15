@@ -236,7 +236,7 @@ const ALL="الكل",BEST_RE=/best[\s_\-]*sellers?/i;
 const COLS=[
  {k:"bags",key:"Category_Bags_Image",ar:"شنط",en:"Bags",re:/bag|شنط|شنطة|حقيب/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791676088/508f8618-4ed6-4db8-aa7e-92260ec3e05d.jpg"},
  {k:"rings",key:"Category_Rings_Image",ar:"خواتم",en:"Rings",re:/ring|خاتم|خواتم/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791675660/e0b46028-cacb-49ab-a5f2-b0cc78c1e4dc.jpg"},
- {k:"earrings",key:"Category_Earrings_Image",ar:"حلقان",en:"Earrings",re:/earring|hلق|اقراط|أقراط|حلقان/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791675660/9eeb458f-2e1f-4a97-a890-17453931fcbf.jpg"},
+ {k:"earrings",key:"Category_Earrings_Image",ar:"حلقان",en:"Earrings",re:/earring|حلق|اقراط|أقراط|حلقان/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791675660/9eeb458f-2e1f-4a97-a890-17453931fcbf.jpg"},
  {k:"sets",key:"Category_Sets_Image",ar:"أطقم",en:"Sets",re:/set|طقم|أطقم|اطقم/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791675164/luxury-gold-jewelry-sets-black-and-white-alora.png"}
 ];
 const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500"><rect width="100%" height="100%" fill="#ECE9E2"/><text x="50%" y="52%" fill="#8a857a" font-family="serif" font-size="24" text-anchor="middle" letter-spacing="4">ALORA</text></svg>');
@@ -355,11 +355,9 @@ function handleAddToCart(productId) {
     const product = byId(productId);
     if (!product || product.out) return;
 
-    // الخواتم والتي لها مقاسات وأرقام فقط تفتح المودال لاختيار المقاس
     if (product.sizes && product.sizes.length > 0) {
         openProduct(productId);
     } else {
-        // الشنط والأقسام الثابتة تتضاف للسلة مباشرة وبدون تعقيد
         addToCart(productId, "");
     }
 }
@@ -595,6 +593,8 @@ function renderUI() {
     $("#copyLine").textContent = `© ${new Date().getFullYear()} ${CFG.STORE}. ${T("rights")}.`;
 
     renderNav();
+    renderReels();
+    renderCols();
     renderProducts();
     updateCartUI();
 }
@@ -610,6 +610,37 @@ function filterCat(c) {
     cat = c;
     renderNav();
     renderProducts();
+}
+
+function renderReels() {
+    const reels = $("#reels");
+    if (!reels) return;
+    const bests = P.filter(p => p.best || p.featured);
+    if (!bests.length) { 
+        reels.innerHTML = `<div class="empty">${T("soon")}</div>`; 
+        return; 
+    }
+    reels.innerHTML = bests.map(p => `
+        <div class="reel" onclick="openProduct('${p.id}')">
+            <div class="im">${img(p.imgs[0], 400)}</div>
+            <div class="bd">
+                <h3>${esc(p.name)}</h3>
+                <div class="price"><b>${money(eff(p))}</b>${p.sale ? `<s>${money(p.price)}</s>` : ""}</div>
+                <button class="add" onclick="event.stopPropagation(); handleAddToCart('${p.id}')">${p.out ? T("out") : T("add")}</button>
+            </div>
+        </div>
+    `).join("");
+}
+
+function renderCols() {
+    const colGrid = $("#colGrid");
+    if (!colGrid) return;
+    colGrid.innerHTML = COLS.map(c => `
+        <div class="col" onclick="filterCat('${c.ar}')">
+            <img src="${c.fb}" alt="${c.ar}" loading="lazy">
+            <span>${c.ar}</span>
+        </div>
+    `).join("");
 }
 
 function renderProducts() {
