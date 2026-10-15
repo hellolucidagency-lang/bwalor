@@ -255,9 +255,11 @@ const D={
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g,"");
-const num=v=>{const n=parseFloat(String(v??"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,""));return isNaN(n)?0:n};
+const num=v=>{const n=parseFloat(String(v??"").replace(/[٠-٩]/g,d=>"٠١٢٣\.٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,""));return isNaN(n)?0:n};
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+
 let LANG=ls.get("alora_lang","ar"),SHIP=[],S={},P=[],cart=ls.get("alora_cart",[]),wish=ls.get("alora_wish",[]),cat=ALL,collRe=null,term="",wishOnly=false,lbList=[],lbIdx=0,curId=null,curSize="";
+
 const T=(k,...a)=>{const v=(D[LANG]||D.ar)[k];return typeof v==="function"?v(...a):(v??"")};
 const money=n=>Number(n).toLocaleString("en-US")+" "+T("cur");
 const sv=(...keys)=>{for(const k of keys){const v=S[norm(k)];if(v)return v}return""};
@@ -364,9 +366,12 @@ const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.
 function handleAddToCartDirect(id){const p=byId(id);if(!p||p.stock==='out_of_stock')return;if(p.sizes&&p.sizes.length>0){openProduct(id)}else{addToCart(id,"")}}
 function addToCart(id,size){const p=byId(id);if(!p||p.stock==='out_of_stock')return false;if(p.sizes.length&&!size)return false;const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));it?it.q++:cart.push({id,q:1,size:size||"",sku:size?`${id}-${size}`:id});saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
 
-function renderCart(){if(!P.length)return;cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?num(row.free||row.Free_Above):0,t=cartTotal(),bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";$("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id),mImg=p.imgs[0]||PH;return`<div class="ci">${img(mImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div><div class="qty"><button data-q="${idx}:-1">−</button><span>${i.q}</span><button data-q="${idx}:1">+</button></div><button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc,govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=x.gov||x.Governorate;return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"",daysVal=row?(row.days||row.Delivery_Days||3):3,shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";$("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}<div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div><input class="in" id="cn" placeholder="${T("name")}" value="${esc(s.n)}"><input class="in" id="cp" placeholder="${T("phone")}" type="tel" value="${esc(s.p)}"><input class="in" id="ca" placeholder="${T("addr")}" value="${esc(s.a)}"><p class="err" id="err"></p><button class="big dark" id="send">${T("send")}</button>`}
+function renderCart(){if(!P.length)return;cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?num(row.free||row.Free_Above):0,t=cartTotal(),bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";$("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id),mImg=p.imgs[0]||PH;return`<div class="ci">${img(mImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div><div class="qty"><button data-q="${idx}:-1">−</button><span>${i.q}</span><button data-q="${idx}:1">+</button></div><button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc,govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=x.gov||x.Governorate;return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"",daysVal=row?(row.days||row.Delivery_Days||3):3,shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";
 
-/* ======= WEBHOOK ORDER SUBMISSION ======= */
+const paySel = `<select class="in" id="payMethod"><option value="cod">الدفع عند الاستلام (كاش)</option><option value="instapay">InstaPay (انستا باي)</option></select><div id="instapayInfo" style="display:none;background:#eef5f0;padding:10px;border-radius:10px;font-size:12px;margin-bottom:7px;color:#2f6b4a;"><b>حساب InstaPay:</b> ${waNum()}</div>`;
+
+$("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}<div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div><input class="in" id="cn" placeholder="${T("name")}" value="${esc(s.n)}"><input class="in" id="cp" placeholder="${T("phone")}" type="tel" value="${esc(s.p)}"><input class="in" id="ca" placeholder="${T("addr")}" value="${esc(s.a)}">${paySel}<p class="err" id="err"></p><button class="big dark" id="send">${T("send")}</button>`}
+
 async function sendOrder() {
   const n = $("#cn").value.trim(), p = $("#cp").value.trim(), a = $("#ca").value.trim(), e = $("#err"), gov = ls.get("alora_gov", "");
   if (n.length < 4) return e.textContent = T("eName");
@@ -374,6 +379,9 @@ async function sendOrder() {
   if (!/^01[0125]\d{8}$/.test(pd)) return e.textContent = T("ePhone");
   if (a.length < 10) return e.textContent = T("eAddr");
   if (SHIP.length && !gov) return e.textContent = T("eGov");
+
+  const payVal = $("#payMethod") ? $("#payMethod").value : "cod";
+  const payMethodText = payVal === "instapay" ? "InstaPay" : "الدفع عند الاستلام";
 
   const t = cartTotal(), row = govRow(gov), sc = shipFor(row, t), grand = sc === null ? t : t + sc;
   ls.set("alora_cust", { n, p, a });
@@ -383,6 +391,7 @@ async function sendOrder() {
     customerPhone: pd,
     customerGov: gov,
     customerAddress: a,
+    paymentMethod: payMethodText,
     totalItems: t,
     shippingCost: sc,
     grandTotal: grand,
@@ -466,7 +475,18 @@ $("#ov").onclick=closeAll;$("#modal").addEventListener("click",e=>{if(e.target.i
 $("#wishBtn").onclick=()=>{wishOnly=!wishOnly;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})};
 $("#langBtn").onclick=()=>{LANG=LANG==="en"?"ar":"en";ls.set("alora_lang",LANG);closeAll();renderAll()};
 $("#q").addEventListener("input",e=>{term=e.target.value;renderGrid()});
-document.addEventListener("change",e=>{if(e.target.id!=="gov")return;const n=$("#cn"),p=$("#cp"),a=$("#ca");ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});ls.set("alora_gov",e.target.value);renderCart()});
+document.addEventListener("change",e=>{
+  if(e.target.id==="payMethod"){
+    const info = $("#instapayInfo");
+    if(info) info.style.display = e.target.value === "instapay" ? "block" : "none";
+  }
+  if(e.target.id==="gov"){
+    const n=$("#cn"),p=$("#cp"),a=$("#ca");
+    ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});
+    ls.set("alora_gov",e.target.value);
+    renderCart();
+  }
+});
 
 document.addEventListener("DOMContentLoaded", loadStoreDataFromN8N);
 </script>
