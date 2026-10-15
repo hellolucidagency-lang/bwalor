@@ -229,11 +229,19 @@ html .drawer.on{transform:none}
 
 <script>
 /* ===== CONFIG ===== */
-/* ===== N8N CONFIG ===== */
 const N8N_GET_URL = "https://n8n.hellolucidagency.com/webhook/alora-api/data";
 const N8N_POST_URL = "https://n8n.hellolucidagency.com/webhook/alora-api/order";
-const API_TOKEN = "BWA_Secret_Token_2026";
- const ALL="الكل",BEST_RE=/best[\s_\-]*sellers?/i;
+const CFG = { 
+  PRODUCTS: N8N_GET_URL, 
+  SETTINGS: N8N_GET_URL, 
+  SHIP: N8N_GET_URL, 
+  WA: "1110737388", 
+  CC: "+20", 
+  EMAIL: "info@bwalora.com", 
+  STORE: "Black & White Alora" 
+};
+
+const ALL="الكل",BEST_RE=/best[\s_\-]*sellers?/i;
 const COLS=[
  {k:"bags",key:"Category_Bags_Image",ar:"شنط",en:"Bags",re:/bag|شنط|شنطة|حقيب/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791676088/508f8618-4ed6-4db8-aa7e-92260ec3e05d.jpg"},
  {k:"rings",key:"Category_Rings_Image",ar:"خواتم",en:"Rings",re:/ring|خاتم|خواتم/i,fb:"https://res.cloudinary.com/qb1cuzha/image/upload/v1791675660/e0b46028-cacb-49ab-a5f2-b0cc78c1e4dc.jpg"},
@@ -283,20 +291,6 @@ const optImg=(u,w)=>{if(!u)return u;
  return u};
 const img=(src,w,attrs="")=>`<img src="${esc(optImg(src||PH,w))}" loading="lazy" decoding="async" draggable="false" referrerpolicy="no-referrer" ${attrs} onerror="this.onerror=null;this.src='${PH}'">`;
 
-/* ===== CSV PARSER ===== */
-function parseCSV(t){t=t.replace(/^\uFEFF/,"");const rows=[];let r=[],c="",q=false;
- for(let i=0;i<t.length;i++){const ch=t[i];
-  if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
-  else if(ch==='"')q=true;else if(ch===","){r.push(c);c=""}
-  else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);rows.push(r);r=[];c=""}else c+=ch}
- if(c!==""||r.length){r.push(c);rows.push(r)}
- return rows.filter(x=>x.some(v=>v.trim()))}
-async function fetchText(url){
- const ac=new AbortController(),id=setTimeout(()=>ac.abort(),12000);
- try{const r=await fetch(url,{cache:"no-cache",signal:ac.signal});if(!r.ok)throw new Error("HTTP "+r.status);
-  const t=await r.text();if(!t.trim()||/^\s*<(!doctype|html)/i.test(t))throw new Error("not csv");return t}
- finally{clearTimeout(id)}}
-const CFG = { PRODUCTS: N8N_GET_URL, SETTINGS: N8N_GET_URL, SHIP: N8N_GET_URL };
 /* ===== IMAGES ===== */
 function fixImg(u){
  u=String(u||"").trim().replace(/^["'\s]+|["'\s]+$/g,"");if(!u)return"";
@@ -307,34 +301,42 @@ function fixImg(u){
  if(d)return`https://drive.google.com/thumbnail?id=${d[1]}&sz=w1000`;
  try{return encodeURI(decodeURI(u))}catch{return u.replace(/\s/g,"%20")}}
 const splitImgs=s=>String(s||"").split(/\s*(?:\n|\||;)\s*|,\s*(?=https?:\/\/|\/\/)/).map(fixImg).filter(Boolean);
+
 /* ===== N8N DATA LOADER & MAPPING ===== */
 async function loadStoreDataFromN8N() {
   try {
     const res = await fetch(N8N_GET_URL);
     if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
-    
-    // ترجمة وتطابق أسماء الحقول من n8n لتفهمها واجهة الموقع فوراً
-    P = (data.products || []).map(item => ({
+
+    P = (data.products || []).map((item, idx) => ({
+      id: String(item.row_number || item.id || idx + 1),
       code: item.Code || item.code || "",
       name: item.Name || item.name || "",
-      price: item.Price || item.price || 0,
+      price: num(item.Price || item.price || 0),
+      sale: item.Discount_Price ? num(item.Discount_Price) : null,
       cat: item.Category || item.category || "",
       desc: item.Description || item.desc || "",
-      image: item.Main_Image || item.image || "",
-      gallery: item.Gallery_Images || item.gallery || "",
-      sizes: item.Size ? String(item.Size).split(',').map(s => s.trim()) : [],
-      stock: item.Stock_Status || item.stock || "in_stock"
+      imgs: splitImgs(item.Main_Image || item.image || item.img || ""),
+      gallery: splitImgs(item.Gallery_Images || item.gallery || ""),
+      sizes: item.Size ? String(item.Size).split(',').map(s => s.trim()).filter(Boolean) : [],
+      stock: String(item.Stock_Status || item.stock || "in_stock").trim(),
+      best: String(item.Best_Seller || item.best_seller || "").toLowerCase() === "true" || String(item.Best_Seller || "").trim() !== "",
+      featured: String(item.Featured || item.featured || "").toLowerCase() === "true"
     }));
-    
-    S = data.settings || {};
+
+    const rawSettings = data.settings || {};
+    S = {};
+    for (let key in rawSettings) {
+      S[norm(key)] = rawSettings[key];
+    }
+
     SHIP = data.shipping || [];
-    
-    // حفظ النسخة الاحتياطية
+
     ls.set("alora_cached_products", P);
     ls.set("alora_cached_settings", S);
     ls.set("alora_cached_shipping", SHIP);
-    
+
     renderAll();
   } catch (e) {
     console.warn("Error loading from n8n, using cache", e);
@@ -345,13 +347,13 @@ async function loadStoreDataFromN8N() {
   }
 }
 
-function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];
- const H=rows[0].map(norm),hasActive=H.includes("active");
- const col=(r,...n)=>{for(const x of n){const i=H.indexOf(norm(x));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
- return rows.slice(1).map(r=>({gov:col(r,"Governorate","المحافظة"),active:col(r,"Active"),cost:num(col(r,"Shipping_Cost")),days:col(r,"Delivery_Days"),free:num(col(r,"Free_Above"))}))
-  .filter(x=>x.gov&&(!hasActive||/^yes$/i.test(x.active)))}
-const govRow=v=>SHIP.find(x=>x.gov===v)||null;
-const shipFor=(row,t)=>!row?null:(row.free&&t>=row.free)?0:row.cost;
+const govRow=v=>SHIP.find(x=>x.gov===v||x.Governorate===v)||null;
+const shipFor=(row,t)=>{
+  if(!row) return null;
+  const freeVal = num(row.free || row.Free_Above);
+  const costVal = num(row.cost || row.Shipping_Cost);
+  return (freeVal && t >= freeVal) ? 0 : costVal;
+};
 
 /* ===== TRACKING ===== */
 function track(ev,d={}){try{
@@ -364,11 +366,18 @@ function track(ev,d={}){try{
 }catch(e){}}
 
 /* ===== RENDER ===== */
-function waNum(){let n=(sv("Store_Phone_WhatsApp")||CFG.WA).replace(/\D/g,"");if(n.startsWith("00"))return n.slice(2);return n.startsWith("0")?CFG.CC+n.slice(1):n}
+function waNum(){
+  let n = (sv("Store_Phone_WhatsApp") || CFG.WA || "").replace(/\D/g, "");
+  if(!n) return "201110737388";
+  if(n.startsWith("00")) return n.slice(2);
+  return n.startsWith("0") ? (CFG.CC || "+20").replace("+","") + n.slice(1) : n;
+}
 const href=v=>!v?"#":/^https?:\/\//i.test(v)?https(v):"https://"+v.replace(/^\/+/,"");
+
 function applyHead(){
  const fav=fixImg(sv("Favicon_URL"));if(fav)document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(l=>l.href=fav);
  const sh=fixImg(sv("Share_Image_URL"));if(sh)["og:image","twitter:image"].forEach(k=>{const m=document.querySelector(`meta[property="${k}"],meta[name="${k}"]`);if(m)m.content=sh})}
+
 function applyLang(){const ar=LANG!=="en";
  document.documentElement.lang=LANG;document.documentElement.dir=ar?"rtl":"ltr";
  document.title=ar?"Black & White Alora | شنط وإكسسوارات ترندي":"Black & White Alora | Luxury Bags & Accessories";
@@ -382,22 +391,26 @@ function applyLang(){const ar=LANG!=="en";
  $("#q").placeholder=T("search");
  $("#nav").innerHTML=`<a href="#best">${T("best")}</a><a href="#cols">${T("cols")}</a><a href="#shop">${T("navShop")}</a>`;
  const a=sv("Announcement_Text"),e=$("#ann");if(a){e.textContent=a;e.hidden=false}else e.hidden=true}
+
 function renderFooter(){
  const soc=[[sv("Facebook_URL","Facebook"),I.fb,"Facebook"],[sv("Instagram_URL","Instagram"),I.ig,"Instagram"],[sv("TikTok_URL","TikTok"),I.tt,"TikTok"]].filter(x=>x[0]);
- const em=(sv("Store_Email","Email")||CFG.EMAIL).replace(/^mailto:/i,"");
+ const em = (sv("Store_Email","Email") || CFG.EMAIL || "").replace(/^mailto:/i,"");
  $("#soc").innerHTML=soc.map(([u,ic,lb])=>`<a href="${esc(href(u))}" target="_blank" rel="noopener" aria-label="${lb}">${ic}</a>`).join("")+
   `<a href="mailto:${esc(em)}" aria-label="Email">${I.mail}</a><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${I.wa}</a>`;
- $("#copyLine").textContent=`© ${new Date().getFullYear()} ${CFG.STORE} — ${T("rights")}`;
+ $("#copyLine").textContent=`© ${new Date().getFullYear()} ${CFG.STORE || "Black & White Alora"} — ${T("rights")}`;
  const f=$("#waFab");f.href="https://wa.me/"+waNum();f.hidden=false}
+
 const altOf=p=>p.alt||(p.desc?`${p.name} - ${p.desc.slice(0,90)}`:p.name);
 const priceHTML=p=>`<div class="price"><b>${money(eff(p))}</b>${p.sale?`<s>${money(p.price)}</s>`:""}</div>`;
 
 /* Card HTML - Uniform "أضيفي للسلة" Button */
-function cardHTML(p,cls){const w=wish.includes(p.id),off=p.sale?Math.round((1-p.sale/p.price)*100):0;
- return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(p.imgs[0],560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
+function cardHTML(p,cls){
+  const w=wish.includes(p.id), off=p.sale?Math.round((1-p.sale/p.price)*100):0;
+  const mainImg = (p.imgs && p.imgs[0]) ? p.imgs[0] : PH;
+  return`<article class="${cls}"><div class="im" data-view="${esc(p.id)}">${img(mainImg,560,`alt="${esc(altOf(p))}"`)}${off?`<span class="badge">-${off}%</span>`:""}
  <button class="fav ${w?"on":""}" data-heart="${esc(p.id)}" aria-label="wish">${w?I.heartF:I.heart}</button></div>
  <div class="bd"><h3 data-view="${esc(p.id)}">${esc(p.name)}</h3>${priceHTML(p)}
- <button class="add" data-add-direct="${esc(p.id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button></div></article>`}
+ <button class="add" data-add-direct="${esc(p.id)}" ${p.stock==='out_of_stock'?"disabled":""}>${p.stock==='out_of_stock'?T("out"):T("add")}</button></div></article>`}
 
 function renderReels(){
  let L=P.filter(p=>p.best).sort((a,b)=>(b.ts-a.ts)||(b.ord-a.ord));
@@ -405,22 +418,26 @@ function renderReels(){
  $("#reels").innerHTML=L.map(p=>cardHTML(p,"reel")).join("");
  $("#dots").innerHTML=L.length>1?L.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join(""):"";
  const r=$("#reels");r.onscroll=()=>{const w=(r.children[0]?.offsetWidth||1)+10,i=Math.round(Math.abs(r.scrollLeft)/w);[...$("#dots").children].forEach((d,k)=>d.classList.toggle("on",k===i))}}
+
 function renderCols(){$("#colGrid").innerHTML=COLS.map(c=>`<button class="col" data-coll="${c.k}">${img(fixImg(sv(c.key))||c.fb,400,'alt=""')}<span>${LANG==="en"?c.en:c.ar}</span></button>`).join("")}
-function renderChips(){const cats=[ALL,...new Set(P.map(p=>p.cat))];
+
+function renderChips(){const cats=[ALL,...new Set(P.map(p=>p.cat).filter(Boolean))];
  $("#chips").innerHTML=cats.map(c=>`<button class="chip ${c===cat&&!wishOnly?"on":""}" data-cat="${esc(c)}">${c===ALL?T("all"):esc(c)}</button>`).join("")}
+
 function renderGrid(){
  const L=P.filter(p=>{if(wishOnly)return wish.includes(p.id);if(cat!==ALL&&p.cat!==cat)return false;if(collRe&&!collRe.test(p.cat))return false;
   return!term||norm(p.name+p.cat+p.desc+p.id).includes(norm(term))});
  $("#grid").innerHTML=L.length?L.map(p=>cardHTML(p,"card")).join(""):`<div class="empty">${wishOnly?T("emptyWish"):T("emptyCat")}</div>`;
  const wc=$("#wc");wc.textContent=wish.length;wc.hidden=!wish.length}
-function renderAll(){applyLang();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
+
+function renderAll(){applyHead();applyLang();renderFooter();renderReels();renderCols();renderChips();renderGrid();renderCart()}
 
 /* ===== CART & SMART ADD ===== */
 const saveCart=()=>ls.set("alora_cart",cart);
 const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.q:0)},0);
 
 function handleAddToCartDirect(id){
- const p=byId(id);if(!p||p.out)return;
+ const p=byId(id);if(!p||p.stock==='out_of_stock')return;
  if(p.sizes && p.sizes.length>0){
   openProduct(id);
  } else {
@@ -428,7 +445,7 @@ function handleAddToCartDirect(id){
  }
 }
 
-function addToCart(id,size){const p=byId(id);if(!p||p.out)return false;
+function addToCart(id,size){const p=byId(id);if(!p||p.stock==='out_of_stock')return false;
  if(p.sizes.length&&!size)return false;
  const fullSKU = size ? `${id}-${size}` : id;
  const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));
@@ -439,14 +456,15 @@ function renderCart(){
  if(!P.length)return;
  cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;
  if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}
- const gov=ls.get("alora_gov",""),row=govRow(gov),th=row&&row.free?row.free:0,t=cartTotal();
+ const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?(num(row.free || row.Free_Above)):0,t=cartTotal();
  const bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";
- $("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id);return`<div class="ci">${img(p.imgs[0],160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div>
+ $("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id);const mainImg=(p.imgs && p.imgs[0])?p.imgs[0]:PH;return`<div class="ci">${img(mainImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div>
   <div class="qty"><button data-q="${idx}:-1" aria-label="-">−</button><span>${i.q}</span><button data-q="${idx}:1" aria-label="+">+</button></div>
   <button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");
  const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc;
- const govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>`<option value="${esc(x.gov)}" ${x.gov===gov?"selected":""}>${esc(x.gov)}</option>`).join("")}</select>`:"";
- const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(row.days))}`:T("govAsk")}</div>${row&&row.free?`<div class="ship">${T("freeNote",row.free)}</div>`:""}`:"";
+ const govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=x.gov||x.Governorate;return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"";
+ const daysVal = row ? (row.days || row.Delivery_Days || 3) : 3;
+ const shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";
  $("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}
   <div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div>
   <input class="in" id="cn" placeholder="${T("name")}" autocomplete="name" value="${esc(s.n)}">
@@ -466,7 +484,7 @@ function sendOrder(){
  const shipTxt=sc===null?T("mTbd"):sc===0?T("mFree"):`${sc} ${T("cur")}`;
  const msg=`🛍 *${T("mNew")} - ${CFG.STORE}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${pd}\n*${T("mGov")}:* ${gov||"-"}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+
   cart.map((i,k)=>{const x=byId(i.id);const itemSKU=i.size?`${x.id}-${i.size}`:x.id;return`${k+1}) ${x.name} (كود: ${itemSKU})${i.size?` - ${T("mSize")} ${i.size}`:""}\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+
-  `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mDelivery")}:* ${row?row.days:"-"}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;
+  `\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mDelivery")}:* ${row?(row.days||row.Delivery_Days):"-"}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;
  track("Purchase",{value:grand,ids:cart.map(i=>i.id)});
  const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
  cart=[];saveCart();renderCart();closeAll();
@@ -485,13 +503,13 @@ function lock(on){$("#ov").classList.toggle("on",on);const b=document.body;
 function closeAll(){["#cart","#modal","#lb"].forEach(s=>$(s).classList.remove("on"));lock(false)}
 function openCart(){closeAll();$("#cart").classList.add("on");lock(true);if(cart.length)track("Checkout",{value:cartTotal(),n:cart.reduce((s,i)=>s+i.q,0),ids:cart.map(i=>i.id)})}
 function openProduct(id){const p=byId(id);if(!p)return;curId=id;curSize="";track("ViewContent",p);
- const ims=p.imgs.length?p.imgs:[PH],w=wish.includes(id);lbList=ims;
+ const ims=(p.imgs && p.imgs.length)?p.imgs:[PH],w=wish.includes(id);lbList=ims;
  const sizes=p.sizes.length?`<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>`:"";
  $("#mIn").innerHTML=`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
   ${ims.length>1?`<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>`:""}</div>
   <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
-  <button class="big dark" data-addm="${esc(id)}" ${p.out?"disabled":""}>${p.out?T("out"):T("add")}</button>
-  ${p.out?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
+  <button class="big dark" data-addm="${esc(id)}" ${p.stock==='out_of_stock'?"disabled":""}>${p.stock==='out_of_stock'?T("out"):T("add")}</button>
+  ${p.stock==='out_of_stock'?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
   <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
  $("#modal").classList.add("on");lock(true);$(".mbox").scrollTop=0;
  const g=$("#gal");if(g)g.onscroll=()=>{const i=Math.round(Math.abs(g.scrollLeft)/(g.clientWidth||1));document.querySelectorAll("#th button").forEach((b,k)=>b.classList.toggle("on",k===i))}}
@@ -551,8 +569,10 @@ document.addEventListener("change",e=>{if(e.target.id!=="gov")return;
  const n=$("#cn"),p=$("#cp"),a=$("#ca");
  ls.set("alora_cust",{n:n?n.value:"",p:p?p.value:"",a:a?a.value:""});ls.set("alora_gov",e.target.value);renderCart()});
 
- /* ===== BOOT N8N ===== */
-loadStoreDataFromN8N();
+/* ===== BOOT N8N ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  loadStoreDataFromN8N();
+});
 </script>
 </body>
 </html>
