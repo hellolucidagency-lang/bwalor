@@ -296,7 +296,7 @@ async function fetchText(url){
  try{const r=await fetch(url,{cache:"no-cache",signal:ac.signal});if(!r.ok)throw new Error("HTTP "+r.status);
   const t=await r.text();if(!t.trim()||/^\s*<(!doctype|html)/i.test(t))throw new Error("not csv");return t}
  finally{clearTimeout(id)}}
-
+const CFG = { PRODUCTS: N8N_GET_URL, SETTINGS: N8N_GET_URL, SHIP: N8N_GET_URL };
 /* ===== IMAGES ===== */
 function fixImg(u){
  u=String(u||"").trim().replace(/^["'\s]+|["'\s]+$/g,"");if(!u)return"";
