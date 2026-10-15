@@ -398,18 +398,67 @@ let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on
 window.addEventListener('scroll', ()=>{const h=$('#mainHeader');if(h){window.scrollY>40?h.classList.add('scrolled'):h.classList.remove('scrolled')}});
 document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
 document.addEventListener("click",e=>{
- const t=e.target.closest("[data-add-direct],[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
- if(!t)return;const d=t.dataset;
- if(t.id==="send")return sendOrder();if(t.id==="lbN")return openLB((lbIdx+1)%lbList.length);if(t.id==="lbP")return openLB((lbIdx-1+lbList.length)%lbList.length);if(t.id==="lbX"||t.id==="lb")return $("#lb").classList.remove("on");
- if(d.addDirect!==undefined){e.stopPropagation();handleAddToCartDirect(d.addDirect)}
- else if(d.heart!==undefined||d.heartm!==undefined){e.stopPropagation();toggleWish(d.heart??d.heartm)}
- else if(d.addm!==undefined)addFromModal(d.addm);else if(d.size!==undefined)pickSize(t);
- else if(d.th!==undefined){const g=$("#gal");g.scrollTo({left:(LANG==="en"?1:-1)*g.clientWidth*(+d.th),behavior:"smooth"})}
- else if(d.view!==undefined)openProduct(d.view);else if(d.coll!==undefined){collRe=COLS.find(x=>x.k===d.coll).re;cat=ALL;wishOnly=false;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})}
- else if(d.cat!==undefined){cat=d.cat;collRe=null;wishOnly=false;renderChips();renderGrid()}
- else if(d.q!==undefined){const[ix,dl]=d.q.split(":"),it=cart[+ix];if(it){it.q+=+dl;if(it.q<1)cart=cart.filter(i=>i!==it);saveCart();renderCart()}}
- else if(d.rm!==undefined){cart=cart.filter((_,ix)=>ix!==+d.rm);saveCart();renderCart()}
- else if(d.wa!==undefined)askOne(d.wa);else if(d.lb!==undefined)openLB(+d.lb);else if(d.close!==undefined)closeAll()});
+async function sendOrder() {
+  const n = $("#cn").value.trim(), p = $("#cp").value.trim(), a = $("#ca").value.trim(), e = $("#err"), gov = ls.get("alora_gov", "");
+  if (n.length < 4) return e.textContent = T("eName");
+  const pd = p.replace(/\D/g, "").replace(/^20/, "0");
+  if (!/^01[0125]\d{8}$/.test(pd)) return e.textContent = T("ePhone");
+  if (a.length < 10) return e.textContent = T("eAddr");
+  if (SHIP.length && !gov) return e.textContent = T("eGov");
+
+  const t = cartTotal(), row = govRow(gov), sc = shipFor(row, t), grand = sc === null ? t : t + sc;
+  ls.set("alora_cust", { n, p, a });
+
+  // تجهيز بيانات الطلب كـ JSON
+  const orderPayload = {
+    customerName: n,
+    customerPhone: pd,
+    customerGov: gov,
+    customerAddress: a,
+    totalItems: t,
+    shippingCost: sc,
+    grandTotal: grand,
+    items: cart.map(i => {
+      const x = byId(i.id);
+      return { 
+        id: x.id, 
+        name: x.name, 
+        size: i.size || "-", 
+        qty: i.q, 
+        price: eff(x), 
+        itemTotal: eff(x) * i.q 
+      };
+    })
+  };
+
+  const btn = $("#send");
+  btn.disabled = true;
+  btn.textContent = "جاري إرسال الطلب...";
+
+  try {
+    // إرسال البيانات لمسار الأوردرات في n8n
+    const res = await fetch("https://n8n.hellolucidagency.com/webhook/alora-api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderPayload)
+    });
+
+    if (!res.ok) throw new Error("فشل الإرسال");
+
+    track("Purchase", { value: grand, ids: cart.map(i => i.id) });
+    cart = [];
+    saveCart();
+    renderCart();
+    closeAll();
+    toast("تم إرسال طلبك بنجاح! 🤍");
+
+  } catch (error) {
+    e.textContent = "حدث خطأ، حاولي مرة أخرى.";
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `${I.wa}${T("send")}`;
+  }
+}
 
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("#lb").classList.contains("on")?$("#lb").classList.remove("on"):closeAll()}if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")$("#lbN").click();if(e.key==="ArrowRight")$("#lbP").click()}});
 $("#ov").onclick=closeAll;$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeAll()});$("#cartBtn").onclick=openCart;
