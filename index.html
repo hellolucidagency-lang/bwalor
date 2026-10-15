@@ -124,7 +124,7 @@ html .drawer.on{transform:none}
 .tot{display:flex;justify-content:space-between;font-weight:800;margin-bottom:9px}
 .in{width:100%;height:38px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font:inherit;font-size:13px;background:#fff;color:var(--ink);margin-bottom:7px}
 .err{color:#a4372b;font-size:12px;min-height:16px;margin-bottom:5px}
-.big{width:100%;padding:12px;border-radius:24px;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+.big{width:100%;padding:12px;border-radius:24px;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer}
 .big svg{width:18px;height:18px}
 .big.dark{background:var(--ink);color:#fff}.big.soft{border:1px solid #c9d8cd;color:#2f6b4a}
 .modal{position:fixed;inset:0;z-index:70;display:none;align-items:flex-end;justify-content:center}
@@ -219,6 +219,7 @@ html .drawer.on{transform:none}
 
 <script>
 const N8N_GET_URL = "https://n8n.hellolucidagency.com/webhook/alora-api/data";
+const N8N_POST_URL = "https://n8n.hellolucidagency.com/webhook/alora-api/order";
 const CFG = { WA: "1110737888", CC: "+20", EMAIL: "info@bwalora.com", STORE: "Black & White Alora" };
 
 const ALL="الكل",BEST_RE=/best[\s_\-]*sellers?/i;
@@ -240,12 +241,12 @@ const I={
 };
 const D={
  ar:{heroH:"ذوقك الفريد.. في قطعة تعبّر عنك",heroP:"تشكيلة أوربية عصرية تناسب كل خروجة ومناسبة، بلمسات متقنة تدوم معاكي.",shopNow:"تسوقي الآن",best:"الأكثر مبيعًا",swipe:"اسحبي للمزيد",cols:"التصنيفات",info:"معلومات مهمة",contact:"تواصلي معنا",cart:"سلة التسوق",search:"ابحثي باسم المنتج أو الكود...",all:"الكل",add:"أضيفي للسلة",out:"نفدت الكمية",emptyWish:"لم تضيفي أي منتج للمفضلة بعد.",emptyCat:"لا توجد منتجات مطابقة.",emptyCart:"السلة فارغة.<br>أضيفي منتجًا لتبدئي طلبك.",addWish:"أضيفي للمفضلة",inWish:"في المفضلة",orderWa:"استفسري عبر واتساب",toastAdd:"تمت الإضافة إلى السلة",toastRm:"تمت الإزالة من المفضلة",toastWish:"أضيفت إلى المفضلة",
-  shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"إرسال الطلب عبر واتساب",eName:"اكتبي الاسم الكامل.",ePhone:"اكتبي رقم موبايل صحيح.",eAddr:"اكتبي العنوان بالتفصيل.",eGov:"اختاري المحافظة.",eWa:"رقم الواتساب غير متاح.",
+  shipLeft:x=>`أضيفي <b>${x}</b> للحصول على شحن مجاني`,shipOk:"طلبك مؤهل للشحن المجاني",total:"المجموع",rm:"حذف",name:"الاسم",phone:"رقم الهاتف",addr:"العنوان بالتفصيل",send:"تأكيد الطلب",eName:"اكتبي الاسم الكامل.",ePhone:"اكتبي رقم موبايل صحيح.",eAddr:"اكتبي العنوان بالتفصيل.",eGov:"اختاري المحافظة.",eWa:"رقم الواتساب غير متاح.",
   mNew:"طلب جديد",mName:"الاسم",mPhone:"الهاتف",mGov:"المحافظة",mAddr:"العنوان",mItems:"المنتجات",mTotal:"المجموع",mShip:"الشحن",mFree:"مجاني",mTbd:"يُحدد لاحقاً",mDelivery:"التوصيل",mGrand:"الإجمالي",mSize:"مقاس",
   govPick:"اختاري المحافظة",govAsk:"اختاري المحافظة عشان نحسب الشحن",shipCost:x=>`الشحن: ${x}`,shipFree:"الشحن مجاني",delivery:x=>`التوصيل خلال ${x} أيام`,grand:"الإجمالي",freeNote:x=>`شحن مجاني للطلبات فوق ${x} ج.م`,
   needSize:"من فضلك اختاري المقاس",size:"المقاس",about:"🤍 خلّينا نتعرّف",pShip:"سياسة الشحن",pPriv:"سياسة الخصوصية",pRet:"سياسة الاسترجاع",rights:"جميع الحقوق محفوظة",navShop:"المنتجات",cur:"ج.م"},
  en:{heroH:"Your unique taste..",heroP:"A modern European collection for every outing.",shopNow:"Shop now",best:"Best sellers",swipe:"Swipe for more",cols:"Collections",info:"Important information",contact:"Contact us",cart:"Shopping cart",search:"Search...",all:"All",add:"Add to cart",out:"Out of stock",emptyWish:"Your wishlist is empty.",emptyCat:"No matching products.",emptyCart:"Your cart is empty.",addWish:"Add to wishlist",inWish:"In wishlist",orderWa:"Ask on WhatsApp",toastAdd:"Added to cart",toastRm:"Removed from wishlist",toastWish:"Added to wishlist",
-  shipLeft:x=>`Add <b>${x}</b> for free shipping`,shipOk:"Qualifies for free shipping",total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Address",send:"Send order via WhatsApp",eName:"Enter full name.",ePhone:"Invalid phone.",eAddr:"Enter full address.",eGov:"Choose governorate.",eWa:"WhatsApp unavailable.",
+  shipLeft:x=>`Add <b>${x}</b> for free shipping`,shipOk:"Qualifies for free shipping",total:"Total",rm:"Remove",name:"Name",phone:"Phone",addr:"Address",send:"Confirm Order",eName:"Enter full name.",ePhone:"Invalid phone.",eAddr:"Enter full address.",eGov:"Choose governorate.",eWa:"WhatsApp unavailable.",
   mNew:"New order",mName:"Name",mPhone:"Phone",mGov:"Governorate",mAddr:"Address",mItems:"Items",mTotal:"Total",mShip:"Shipping",mFree:"Free",mTbd:"TBD",mDelivery:"Delivery",mGrand:"Grand Total",mSize:"Size",
   govPick:"Choose governorate",govAsk:"Choose governorate for shipping",shipCost:x=>`Shipping: ${x}`,shipFree:"Free shipping",delivery:x=>`Delivery in ${x} days`,grand:"Grand Total",freeNote:x=>`Free shipping above ${x} EGP`,
   needSize:"Please choose a size",size:"Size",about:"🤍 Get to know us",pShip:"Shipping policy",pPriv:"Privacy policy",pRet:"Returns policy",rights:"All rights reserved",navShop:"Shop",cur:"EGP"}
@@ -363,9 +364,58 @@ const cartTotal=()=>cart.reduce((s,i)=>{const p=byId(i.id);return s+(p?eff(p)*i.
 function handleAddToCartDirect(id){const p=byId(id);if(!p||p.stock==='out_of_stock')return;if(p.sizes&&p.sizes.length>0){openProduct(id)}else{addToCart(id,"")}}
 function addToCart(id,size){const p=byId(id);if(!p||p.stock==='out_of_stock')return false;if(p.sizes.length&&!size)return false;const it=cart.find(i=>i.id===id&&(i.size||"")===(size||""));it?it.q++:cart.push({id,q:1,size:size||"",sku:size?`${id}-${size}`:id});saveCart();track("AddToCart",p);renderCart();toast(T("toastAdd"));return true}
 
-function renderCart(){if(!P.length)return;cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?num(row.free||row.Free_Above):0,t=cartTotal(),bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";$("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id),mImg=p.imgs[0]||PH;return`<div class="ci">${img(mImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div><div class="qty"><button data-q="${idx}:-1">−</button><span>${i.q}</span><button data-q="${idx}:1">+</button></div><button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc,govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=x.gov||x.Governorate;return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"",daysVal=row?(row.days||row.Delivery_Days||3):3,shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";$("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}<div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div><input class="in" id="cn" placeholder="${T("name")}" value="${esc(s.n)}"><input class="in" id="cp" placeholder="${T("phone")}" type="tel" value="${esc(s.p)}"><input class="in" id="ca" placeholder="${T("addr")}" value="${esc(s.a)}"><p class="err" id="err"></p><button class="big dark" id="send">${I.wa}${T("send")}</button>`}
+function renderCart(){if(!P.length)return;cart=cart.filter(i=>byId(i.id));const n=cart.reduce((s,i)=>s+i.q,0),cc=$("#cc");cc.textContent=n;cc.hidden=!n;if(!cart.length){$("#cartBody").innerHTML=`<p class="empty" style="padding:50px 0">${T("emptyCart")}</p>`;$("#cartFoot").innerHTML="";return}const gov=ls.get("alora_gov",""),row=govRow(gov),th=row?num(row.free||row.Free_Above):0,t=cartTotal(),bar=th?`<div class="ship">${t<th?T("shipLeft",money(th-t)):T("shipOk")}<div class="track"><i style="width:${Math.min(100,t/th*100)}%"></i></div></div>`:"";$("#cartBody").innerHTML=bar+cart.map((i,idx)=>{const p=byId(i.id),mImg=p.imgs[0]||PH;return`<div class="ci">${img(mImg,160,'alt=""')}<div class="t"><b>${esc(p.name)}</b>${i.size?` <small>(${esc(i.size)})</small>`:""}<div>${money(eff(p))}</div><div class="qty"><button data-q="${idx}:-1">−</button><span>${i.q}</span><button data-q="${idx}:1">+</button></div><button class="rm" data-rm="${idx}">${T("rm")}</button></div></div>`}).join("");const s=ls.get("alora_cust",{}),sc=shipFor(row,t),grand=sc===null?t:t+sc,govSel=SHIP.length?`<select class="in" id="gov"><option value="">${T("govPick")}</option>${SHIP.map(x=>{const gName=x.gov||x.Governorate;return`<option value="${esc(gName)}" ${gName===gov?"selected":""}>${esc(gName)}</option>`}).join("")}</select>`:"",daysVal=row?(row.days||row.Delivery_Days||3):3,shipLine=SHIP.length?`<div class="ship">${row?`${sc===0?T("shipFree"):T("shipCost",money(sc))} · ${T("delivery",esc(daysVal))}`:T("govAsk")}</div>${row&&num(row.free||row.Free_Above)?`<div class="ship">${T("freeNote",num(row.free||row.Free_Above))}</div>`:""}`:"";$("#cartFoot").innerHTML=`<div class="tot"><span>${T("total")}</span><span>${money(t)}</span></div>${govSel}${shipLine}<div class="tot"><span>${T("grand")}</span><span>${money(grand)}</span></div><input class="in" id="cn" placeholder="${T("name")}" value="${esc(s.n)}"><input class="in" id="cp" placeholder="${T("phone")}" type="tel" value="${esc(s.p)}"><input class="in" id="ca" placeholder="${T("addr")}" value="${esc(s.a)}"><p class="err" id="err"></p><button class="big dark" id="send">${T("send")}</button>`}
 
-function sendOrder(){const n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim(),e=$("#err"),gov=ls.get("alora_gov","");if(n.length<4)return e.textContent=T("eName");const pd=p.replace(/\D/g,"").replace(/^20/,"0");if(!/^01[0125]\d{8}$/.test(pd))return e.textContent=T("ePhone");if(a.length<10)return e.textContent=T("eAddr");if(SHIP.length&&!gov)return e.textContent=T("eGov");const wa=waNum();if(!wa)return e.textContent=T("eWa");const t=cartTotal(),row=govRow(gov),sc=shipFor(row,t),grand=sc===null?t:t+sc;ls.set("alora_cust",{n,p,a});const shipTxt=sc===null?T("mTbd"):sc===0?T("mFree"):`${sc} ${T("cur")}`,msg=`🛍 *${T("mNew")}*\n\n*${T("mName")}:* ${n}\n*${T("mPhone")}:* ${pd}\n*${T("mGov")}:* ${gov||"-"}\n*${T("mAddr")}:* ${a}\n\n*${T("mItems")}*\n`+cart.map((i,k)=>{const x=byId(i.id),sku=i.size?`${x.id}-${i.size}`:x.id;return`${k+1}) ${x.name} (${sku})${i.size?` - ${i.size}`:""}\n   ${i.q} × ${eff(x)} = ${eff(x)*i.q} ${T("cur")}`}).join("\n")+`\n\n*${T("mTotal")}:* ${t} ${T("cur")}\n*${T("mShip")}:* ${shipTxt}\n*${T("mGrand")}:* ${grand} ${T("cur")}`;track("Purchase",{value:grand,ids:cart.map(i=>i.id)});const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;cart=[];saveCart();renderCart();closeAll();if(!window.open(url,"_blank"))location.href=url}
+/* ======= WEBHOOK ORDER SUBMISSION ======= */
+async function sendOrder() {
+  const n = $("#cn").value.trim(), p = $("#cp").value.trim(), a = $("#ca").value.trim(), e = $("#err"), gov = ls.get("alora_gov", "");
+  if (n.length < 4) return e.textContent = T("eName");
+  const pd = p.replace(/\D/g, "").replace(/^20/, "0");
+  if (!/^01[0125]\d{8}$/.test(pd)) return e.textContent = T("ePhone");
+  if (a.length < 10) return e.textContent = T("eAddr");
+  if (SHIP.length && !gov) return e.textContent = T("eGov");
+
+  const t = cartTotal(), row = govRow(gov), sc = shipFor(row, t), grand = sc === null ? t : t + sc;
+  ls.set("alora_cust", { n, p, a });
+
+  const orderPayload = {
+    customerName: n,
+    customerPhone: pd,
+    customerGov: gov,
+    customerAddress: a,
+    totalItems: t,
+    shippingCost: sc,
+    grandTotal: grand,
+    items: cart.map(i => {
+      const x = byId(i.id);
+      return { id: x.id, name: x.name, size: i.size || "-", qty: i.q, price: eff(x), itemTotal: eff(x) * i.q };
+    })
+  };
+
+  const btn = $("#send");
+  btn.disabled = true;
+  btn.textContent = "جاري إرسال الطلب...";
+
+  try {
+    const res = await fetch(N8N_POST_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderPayload)
+    });
+
+    if (!res.ok) throw new Error("فشل الإرسال");
+
+    track("Purchase", { value: grand, ids: cart.map(i => i.id) });
+    cart = []; saveCart(); renderCart(); closeAll();
+    toast("تم إرسال طلبك بنجاح! 🤍");
+
+  } catch (error) {
+    e.textContent = "حدث خطأ، حاولي مرة أخرى.";
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = T("send");
+  }
+}
 
 function askOne(id){const p=byId(id),wa=waNum();if(!p||!wa)return;track("Lead",p);const msg=`أهلاً ✨\nبخصوص القطعة دي 💕: ${p.name}${curSize?` (مقاس: ${curSize})`:""}\nالكود: ${curSize?`${p.id}-${curSize}`:p.id}\nالسعر: ${eff(p)} ${T("cur")}\n${location.href.split("#")[0]}`;const url=`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;if(!window.open(url,"_blank"))location.href=url}
 
@@ -398,67 +448,18 @@ let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on
 window.addEventListener('scroll', ()=>{const h=$('#mainHeader');if(h){window.scrollY>40?h.classList.add('scrolled'):h.classList.remove('scrolled')}});
 document.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault()});
 document.addEventListener("click",e=>{
-async function sendOrder() {
-  const n = $("#cn").value.trim(), p = $("#cp").value.trim(), a = $("#ca").value.trim(), e = $("#err"), gov = ls.get("alora_gov", "");
-  if (n.length < 4) return e.textContent = T("eName");
-  const pd = p.replace(/\D/g, "").replace(/^20/, "0");
-  if (!/^01[0125]\d{8}$/.test(pd)) return e.textContent = T("ePhone");
-  if (a.length < 10) return e.textContent = T("eAddr");
-  if (SHIP.length && !gov) return e.textContent = T("eGov");
-
-  const t = cartTotal(), row = govRow(gov), sc = shipFor(row, t), grand = sc === null ? t : t + sc;
-  ls.set("alora_cust", { n, p, a });
-
-  // تجهيز بيانات الطلب كـ JSON
-  const orderPayload = {
-    customerName: n,
-    customerPhone: pd,
-    customerGov: gov,
-    customerAddress: a,
-    totalItems: t,
-    shippingCost: sc,
-    grandTotal: grand,
-    items: cart.map(i => {
-      const x = byId(i.id);
-      return { 
-        id: x.id, 
-        name: x.name, 
-        size: i.size || "-", 
-        qty: i.q, 
-        price: eff(x), 
-        itemTotal: eff(x) * i.q 
-      };
-    })
-  };
-
-  const btn = $("#send");
-  btn.disabled = true;
-  btn.textContent = "جاري إرسال الطلب...";
-
-  try {
-    // إرسال البيانات لمسار الأوردرات في n8n
-    const res = await fetch("https://n8n.hellolucidagency.com/webhook/alora-api/order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderPayload)
-    });
-
-    if (!res.ok) throw new Error("فشل الإرسال");
-
-    track("Purchase", { value: grand, ids: cart.map(i => i.id) });
-    cart = [];
-    saveCart();
-    renderCart();
-    closeAll();
-    toast("تم إرسال طلبك بنجاح! 🤍");
-
-  } catch (error) {
-    e.textContent = "حدث خطأ، حاولي مرة أخرى.";
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = `${I.wa}${T("send")}`;
-  }
-}
+ const t=e.target.closest("[data-add-direct],[data-heart],[data-heartm],[data-view],[data-coll],[data-cat],[data-q],[data-rm],[data-close],[data-wa],[data-lb],[data-size],[data-addm],[data-th],#send,#lbN,#lbP,#lbX,#lb");
+ if(!t)return;const d=t.dataset;
+ if(t.id==="send")return sendOrder();if(t.id==="lbN")return openLB((lbIdx+1)%lbList.length);if(t.id==="lbP")return openLB((lbIdx-1+lbList.length)%lbList.length);if(t.id==="lbX"||t.id==="lb")return $("#lb").classList.remove("on");
+ if(d.addDirect!==undefined){e.stopPropagation();handleAddToCartDirect(d.addDirect)}
+ else if(d.heart!==undefined||d.heartm!==undefined){e.stopPropagation();toggleWish(d.heart??d.heartm)}
+ else if(d.addm!==undefined)addFromModal(d.addm);else if(d.size!==undefined)pickSize(t);
+ else if(d.th!==undefined){const g=$("#gal");g.scrollTo({left:(LANG==="en"?1:-1)*g.clientWidth*(+d.th),behavior:"smooth"})}
+ else if(d.view!==undefined)openProduct(d.view);else if(d.coll!==undefined){collRe=COLS.find(x=>x.k===d.coll).re;cat=ALL;wishOnly=false;renderChips();renderGrid();$("#shop").scrollIntoView({behavior:"smooth"})}
+ else if(d.cat!==undefined){cat=d.cat;collRe=null;wishOnly=false;renderChips();renderGrid()}
+ else if(d.q!==undefined){const[ix,dl]=d.q.split(":"),it=cart[+ix];if(it){it.q+=+dl;if(it.q<1)cart=cart.filter(i=>i!==it);saveCart();renderCart()}}
+ else if(d.rm!==undefined){cart=cart.filter((_,ix)=>ix!==+d.rm);saveCart();renderCart()}
+ else if(d.wa!==undefined)askOne(d.wa);else if(d.lb!==undefined)openLB(+d.lb);else if(d.close!==undefined)closeAll()});
 
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("#lb").classList.contains("on")?$("#lb").classList.remove("on"):closeAll()}if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")$("#lbN").click();if(e.key==="ArrowRight")$("#lbP").click()}});
 $("#ov").onclick=closeAll;$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeAll()});$("#cartBtn").onclick=openCart;
