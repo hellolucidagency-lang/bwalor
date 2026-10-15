@@ -307,24 +307,57 @@ async function loadStoreDataFromN8N() {
   try {
     const res = await fetch(N8N_GET_URL);
     if (!res.ok) throw new Error("Network response was not ok");
-    const data = await res.json();
+    let raw = await res.json();
+    if (Array.isArray(raw)) raw = raw[0];
+    if (raw && raw.json) raw = raw.json;
+    const data = raw || {};
 
-    P = (data.products || []).map((item, idx) => ({
-      id: String(item.row_number || item.id || idx + 1),
-      code: item.Code || item.code || "",
-      name: item.Name || item.name || "",
-      price: num(item.Price || item.price || 0),
-      sale: item.Discount_Price ? num(item.Discount_Price) : null,
-      cat: item.Category || item.category || "",
-      desc: item.Description || item.desc || "",
-      imgs: splitImgs(item.Main_Image || item.image || item.img || ""),
-      gallery: splitImgs(item.Gallery_Images || item.gallery || ""),
-      sizes: item.Size ? String(item.Size).split(',').map(s => s.trim()).filter(Boolean) : [],
-      stock: String(item.Stock_Status || item.stock || "in_stock").trim(),
-      best: String(item.Best_Seller || item.best_seller || "").toLowerCase() === "true" || String(item.Best_Seller || "").trim() !== "",
-      featured: String(item.Featured || item.featured || "").toLowerCase() === "true"
-    }));
+    let rawProds = data.products || (Array.isArray(data) ? data : []);
 
+    P = rawProds.map((item, idx) => {
+      // دمج جميع الصور (الرئيسية + الجاليري) في مصفوفة واحدة للجاليري
+      let mainImg = fixImg(item.Main_Image || item.image || item.img);
+      let galImgs = splitImgs(item.Gallery_Images || item.gallery);
+      let allImgs = [mainImg, ...galImgs].filter(Boolean);
+      if(!allImgs.length) allImgs = [PH];
+
+      return {
+        id: String(item.row_number || item.id || idx + 1),
+        code: item.Code || item.code || "",
+        name: item.Name || item.name || "",
+        price: num(item.Price || item.price || 0),
+        sale: item.Discount_Price ? num(item.Discount_Price) : null,
+        cat: item.Category || item.category || "",
+        desc: item.Description || item.desc || "",
+        imgs: allImgs, // هنا المصفوفة الكاملة للصور
+        sizes: item.Size ? String(item.Size).split(',').map(s => s.trim()).filter(Boolean) : [],
+        stock: String(item.Stock_Status || item.stock || "in_stock").trim(),
+        best: String(item.Best_Seller || item.best_seller || "").toLowerCase() === "true" || String(item.Best_Seller || "").trim() !== "",
+        featured: String(item.Featured || item.featured || "").toLowerCase() === "true"
+      };
+    });
+
+    const rawSettings = data.settings || {};
+    S = {};
+    for (let key in rawSettings) {
+      S[norm(key)] = rawSettings[key];
+    }
+
+    SHIP = data.shipping || [];
+
+    ls.set("alora_cached_products", P);
+    ls.set("alora_cached_settings", S);
+    ls.set("alora_cached_shipping", SHIP);
+
+    renderAll();
+  } catch (e) {
+    console.warn("Error loading from n8n, using cache", e);
+    P = ls.get("alora_cached_products", []);
+    S = ls.get("alora_cached_settings", {});
+    SHIP = ls.get("alora_cached_shipping", []);
+    renderAll();
+  }
+}
     const rawSettings = data.settings || {};
     S = {};
     for (let key in rawSettings) {
@@ -503,16 +536,33 @@ function lock(on){$("#ov").classList.toggle("on",on);const b=document.body;
  else if(!on&&b.style.position==="fixed"){b.style.position=b.style.top=b.style.left=b.style.right=b.style.width="";window.scrollTo(0,SCROLLY)}}
 function closeAll(){["#cart","#modal","#lb"].forEach(s=>$(s).classList.remove("on"));lock(false)}
 function openCart(){closeAll();$("#cart").classList.add("on");lock(true);if(cart.length)track("Checkout",{value:cartTotal(),n:cart.reduce((s,i)=>s+i.q,0),ids:cart.map(i=>i.id)})}
-function openProduct(id){const p=byId(id);if(!p)return;curId=id;curSize="";track("ViewContent",p);
- const ims=(p.imgs && p.imgs.length)?p.imgs:[PH],w=wish.includes(id);lbList=ims;
- const sizes=p.sizes.length?`<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>`:"";
- $("#mIn").innerHTML=`<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
-  ${ims.length>1?`<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>`:""}</div>
-  <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
-  <button class="big dark" data-addm="${esc(id)}" ${p.stock==='out_of_stock'?"disabled":""}>${p.stock==='out_of_stock'?T("out"):T("add")}</button>
-  ${p.stock==='out_of_stock'?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
-  <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
- $("#modal").classList.add("on");lock(true);$(".mbox").scrollTop=0;
+function openProduct(id){
+  const p = byId(id); if(!p) return; 
+  curId = id; curSize = ""; track("ViewContent", p);
+  
+  // دمج الصورة الرئيسية مع باقي صور الجاليري
+  let ims = (p.imgs && p.imgs.length) ? p.imgs : [PH];
+  if(p.gallery && p.gallery.length){
+    ims = [...new Set([...ims, ...p.gallery])];
+  }
+  const w = wish.includes(id); lbList = ims;
+
+  const sizes = p.sizes.length ? `<div><div class="szt">${T("size")}</div><div class="sizes" id="sizes" role="radiogroup">${p.sizes.map(s=>`<button class="chip" role="radio" aria-checked="false" data-size="${esc(s)}">${esc(s)}</button>`).join("")}</div><div class="szerr" id="szErr" role="alert"></div></div>` : "";
+
+  $("#mIn").innerHTML = `<div class="pm"><div><div class="gal" id="gal">${ims.map((u,i)=>img(u,900,`alt="${esc(altOf(p))}" data-lb="${i}"`)).join("")}</div>
+   ${ims.length > 1 ? `<div class="th" id="th">${ims.map((u,i)=>`<button class="${i?"":"on"}" data-th="${i}" aria-label="${i+1}">${img(u,120,'alt=""')}</button>`).join("")}</div>` : ""}</div>
+   <div class="pi"><span style="font-size:12px;color:var(--mut)">${esc(p.cat)}</span><h2>${esc(p.name)}</h2>${priceHTML(p)}<p>${esc(p.desc)}</p>${sizes}
+   <button class="big dark" data-addm="${esc(id)}" ${p.stock==='out_of_stock'?"disabled":""}>${p.stock==='out_of_stock'?T("out"):T("add")}</button>
+   ${p.stock==='out_of_stock'?"":`<button class="big soft" data-wa="${esc(id)}">${I.wa}${T("orderWa")}</button>`}
+   <button class="big" style="border:1px solid var(--ink)" data-heartm="${esc(id)}">${w?I.heartF:I.heart}${w?T("inWish"):T("addWish")}</button></div></div>`;
+
+  $("#modal").classList.add("on"); lock(true); $(".mbox").scrollTop = 0;
+  const g = $("#gal"); 
+  if(g) g.onscroll = () => {
+    const i = Math.round(Math.abs(g.scrollLeft) / (g.clientWidth || 1));
+    document.querySelectorAll("#th button").forEach((b,k) => b.classList.toggle("on", k === i));
+  };
+}
  const g=$("#gal");if(g)g.onscroll=()=>{const i=Math.round(Math.abs(g.scrollLeft)/(g.clientWidth||1));document.querySelectorAll("#th button").forEach((b,k)=>b.classList.toggle("on",k===i))}}
 function pickSize(btn){curSize=btn.dataset.size;document.querySelectorAll("#sizes .chip").forEach(c=>{const on=c===btn;c.classList.toggle("on",on);c.setAttribute("aria-checked",on)});$("#szErr").textContent=""}
 function addFromModal(id){const p=byId(id);
