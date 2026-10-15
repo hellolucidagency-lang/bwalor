@@ -367,8 +367,9 @@ function track(ev,d={}){try{
 
 /* ===== RENDER ===== */
 function waNum(){
-  let n = (sv("Store_Phone_WhatsApp") || CFG.WA || "").replace(/\D/g, "");
-  if(!n) return "201110737388";
+  let rawVal = sv("Store_Phone_WhatsApp") || CFG.WA || "1110737888";
+  let n = String(rawVal).replace(/\D/g, "");
+  if(!n) return "201110737888";
   if(n.startsWith("00")) return n.slice(2);
   return n.startsWith("0") ? (CFG.CC || "+20").replace("+","") + n.slice(1) : n;
 }
