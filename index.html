@@ -307,31 +307,44 @@ function fixImg(u){
  if(d)return`https://drive.google.com/thumbnail?id=${d[1]}&sz=w1000`;
  try{return encodeURI(decodeURI(u))}catch{return u.replace(/\s/g,"%20")}}
 const splitImgs=s=>String(s||"").split(/\s*(?:\n|\||;)\s*|,\s*(?=https?:\/\/|\/\/)/).map(fixImg).filter(Boolean);
-
-/* ===== N8N DATA LOADER (GET) ===== */
+/* ===== N8N DATA LOADER & MAPPING ===== */
 async function loadStoreDataFromN8N() {
   try {
     const res = await fetch(N8N_GET_URL);
     if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
     
-    P = data.products || [];
+    // ترجمة وتطابق أسماء الحقول من n8n لتفهمها واجهة الموقع فوراً
+    P = (data.products || []).map(item => ({
+      code: item.Code || item.code || "",
+      name: item.Name || item.name || "",
+      price: item.Price || item.price || 0,
+      cat: item.Category || item.category || "",
+      desc: item.Description || item.desc || "",
+      image: item.Main_Image || item.image || "",
+      gallery: item.Gallery_Images || item.gallery || "",
+      sizes: item.Size ? String(item.Size).split(',').map(s => s.trim()) : [],
+      stock: item.Stock_Status || item.stock || "in_stock"
+    }));
+    
     S = data.settings || {};
     SHIP = data.shipping || [];
     
+    // حفظ النسخة الاحتياطية
     ls.set("alora_cached_products", P);
     ls.set("alora_cached_settings", S);
     ls.set("alora_cached_shipping", SHIP);
-  
+    
     renderAll();
   } catch (e) {
-    console.warn("Error loading from n8n, falling back to cache", e);
+    console.warn("Error loading from n8n, using cache", e);
     P = ls.get("alora_cached_products", []);
     S = ls.get("alora_cached_settings", {});
     SHIP = ls.get("alora_cached_shipping", []);
     renderAll();
   }
 }
+
 function parseShip(t){const rows=parseCSV(t);if(rows.length<2)return[];
  const H=rows[0].map(norm),hasActive=H.includes("active");
  const col=(r,...n)=>{for(const x of n){const i=H.indexOf(norm(x));if(i>-1&&r[i]!==undefined&&r[i].trim()!=="")return r[i].trim()}return""};
