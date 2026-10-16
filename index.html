@@ -596,9 +596,9 @@ async function submitTrack(){
  try{
   const res=await fetch(TRACK_URL+"?phone="+encodeURIComponent(pd),{method:"GET",signal:ctrl.signal});
   let data=null;try{data=await res.json()}catch(_){}
-  const st=data&&data.status;
-  if(res.ok&&st==="success"){r.className="tmsg ok";r.textContent="تم إرسال تفاصيل وحالة طلبك في رسالة على الواتساب بنجاح 🤍"}
-  else if(res.status===404||st==="not_found"||(res.ok&&st)){r.className="tmsg er";r.textContent="عذراً، لم نتمكن من العثور على طلب مسجل بهذا الرقم."}
+  const st=String((data&&data.status)||"").toLowerCase();
+  if(res.status===404||st==="not_found"){r.className="tmsg er";r.textContent="عذراً، لم نتمكن من العثور على طلب مسجل بهذا الرقم."}
+  else if(res.ok&&!["error","failed","fail"].includes(st)){r.className="tmsg ok";r.textContent="جاري التحقق، ستصلك حالة طلبك في رسالة عبر الواتساب خلال ثوانٍ ✨"}
   else{console.error("Track failed",res.status,data);r.className="tmsg er";r.textContent="حدث خطأ، حاولي مرة أخرى بعد قليل."}
  }catch(err){console.error("Track error",err);r.className="tmsg er";r.textContent="حدث خطأ في الاتصال، حاولي مرة أخرى."}
  finally{clearTimeout(to);b.disabled=false}
