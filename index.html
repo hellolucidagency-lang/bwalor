@@ -446,7 +446,7 @@ async function sendOrder() {
     subtotal: t,
     shippingCost: sc === null ? 0 : sc,
     grandTotal: grand,
-    items: cart.map(i => {
+    items: cart.filter(i => byId(i.id)).map(i => {
       const x = byId(i.id);
       return { id: x.id, code: x.code || "", name: x.name, size: i.size || "-", qty: i.q, price: eff(x), itemTotal: eff(x) * i.q };
     })
@@ -455,23 +455,40 @@ async function sendOrder() {
   const btn = $("#send");
   btn.disabled = true;
   btn.textContent = "جاري إرسال الطلب...";
+  e.textContent = "";
 
+  const ctrl = new AbortController();
+  const to = setTimeout(() => ctrl.abort(), 20000);
   try {
+    console.log("Sending order to", N8N_POST_URL, orderPayload);
     const res = await fetch(N8N_POST_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderPayload)
+      body: JSON.stringify(orderPayload),
+      signal: ctrl.signal
     });
+    const bodyTxt = await res.text().catch(() => "");
+    console.log("Order response:", res.status, bodyTxt);
 
-    if (!res.ok) throw new Error("فشل الإرسال");
+    if (!res.ok) {
+      const err = new Error("HTTP " + res.status);
+      err.status = res.status; err.body = bodyTxt;
+      throw err;
+    }
 
     track("Purchase", { value: grand, ids: cart.map(i => i.id) });
     cart = []; saveCart(); renderCart(); closeAll();
     toast("تم إرسال طلبك بنجاح! 🤍");
 
   } catch (error) {
-    e.textContent = "حدث خطأ، حاولي مرة أخرى.";
+    console.error("Order submit failed:", error, error && error.status, error && error.body);
+    const code = error && error.status ? error.status : (error && error.name === "AbortError" ? "timeout" : "network");
+    const wa = waNum();
+    const lines = orderPayload.items.map(x => `• ${x.name}${x.size && x.size !== "-" ? " (" + x.size + ")" : ""} × ${x.qty}`).join("\n");
+    const msg = `طلب جديد ✨\nالاسم: ${n}\nالهاتف: ${pd}\nالمحافظة: ${gov}\nالعنوان: ${a}\nالدفع: ${payMethodText}\n${lines}\nالإجمالي: ${grand} ج.م`;
+    e.innerHTML = `حدث خطأ (${code})، حاولي مرة أخرى.` + (wa ? ` <a href="https://wa.me/${wa}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener" style="color:#2f6b4a;font-weight:700;text-decoration:underline">أو ابعتي الطلب على واتساب</a>` : "");
   } finally {
+    clearTimeout(to);
     btn.disabled = false;
     btn.innerHTML = T("send");
   }
